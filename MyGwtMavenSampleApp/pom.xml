@@ -19,17 +19,21 @@
   		http://mojo.codehaus.org/gwt-maven-plugin/eclipse/google_plugin.html 
   		http://mojo.codehaus.org/gwt-maven-plugin/user-guide/project.html
   		
-  *************************************************  		
+  ************************************************* 
+  
+  	mvn clean
+  	mvn eclipse:clean
+  	mvn gwt:eclipse
+  	mvn compile gwt:compile
+  	mvn package
+  	mvn install
+  	 		
   -->
 
 
   <properties>
   
-  	 <webapp.dir>src/main/webapp</webapp.dir>
-	 <web.inf>${webapp.dir}/WEB-INF</web.inf>
-	 <webInfLibPath>${web.inf}/lib</webInfLibPath>
-	 
-      <!-- Convenience property to set the GWT version -->
+  	  <!-- Convenience property to set the GWT version -->
       <gwtVersion>2.1.1</gwtVersion>
 	  <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
       
@@ -288,96 +292,123 @@
   </dependencies>
   
   <build>
-    <!-- Generate compiled stuff in the folder used for developing mode --> 
-    <outputDirectory>target/www/WEB-INF/classes</outputDirectory>
+  
+    <!-- Generate compiled stuff in the folder used for developing mode 
+	     To be even more productive you should also configure the build.outputDirectory to ouput classes into /war/WEB-INF/classes 
+	     so that any change to a java source in your favourite IDE is immediatelly usable in the hosted browser with a simple refresh.-->
+	<!-- A la hora de importar el proyecto, vemos que dentro del java build path/source/default output classes/ vamos a tener esto:
+	     "MyGwtMavenSampleApp/target/MyGwtMavenSampleApp-1.0-SNAPSHOT/WEB-INF/classes" -->      
+    <!--outputDirectory>target/www/WEB-INF/classes</outputDirectory-->
+	<outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
     
     <plugins>
       
-      <!-- GWT Maven Plugin-->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>gwt-maven-plugin</artifactId>
-         <dependencies>
-          <!-- En caso que se utilice una version de ls SDK de GWT diferente a la que soporta este plugin (2.4.0)
-               agregamos estas dos dependencias -->
-          <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>${gwtVersion}</version>
-          </dependency>
-          <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-            <version>${gwtVersion}</version>
-          </dependency>
-        </dependencies>
-        <!-- JS is only needed in the package phase, this speeds up testing --> 
-        <executions>
-          <execution>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>compile</goal>
-              <goal>generateAsync</goal>
-              <goal>test</goal>
-            </goals>
-          </execution>
-        </executions>
-        <!-- Plugin configuration. There are many available options, 
-             see gwt-maven-plugin documentation at codehaus.org --> 
-        <configuration>
-          <!-- URL that should be automatically opened in the GWT shell (gwt:run). -->
-          <runTarget>MyGwtMavenSampleApp.html</runTarget>
-          <!-- Location of the develop-mode web application structure (gwt:run). -->
-          <hostedWebapp>target/www</hostedWebapp>
-          <!-- Ask GWT to create the Story of Your Compile (SOYC) (gwt:compile) -->
-          <soyc>true</soyc>
-        </configuration>
-      </plugin>
-
-      <!-- Add source folders to test classpath in order to run gwt-tests as normal junit-tests -->
-      <!-- plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <additionalClasspathElements>
-            <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
-            <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
-          </additionalClasspathElements>
-          <useManifestOnlyJar>false</useManifestOnlyJar>
-          <forkMode>always</forkMode -->
-
-          <!-- Folder for generated testing stuff --> 
-          <!-- systemProperties>
-            <property>
-              <name>gwt.args</name>
-              <value>-out target/www</value>
-            </property>
-          </systemProperties>
-        </configuration>
-      </plugin -->
+      	  <!-- GWT Maven Plugin-->
+	      <plugin>
+	        <groupId>org.codehaus.mojo</groupId>
+	        <artifactId>gwt-maven-plugin</artifactId>
+	         <dependencies>
+	          <!-- En caso que se utilice una version de ls SDK de GWT diferente a la que soporta este plugin (2.4.0)
+	               agregamos estas dos dependencias -->
+	          <dependency>
+	            <groupId>com.google.gwt</groupId>
+	            <artifactId>gwt-user</artifactId>
+	            <version>${gwtVersion}</version>
+	          </dependency>
+	          <dependency>
+	            <groupId>com.google.gwt</groupId>
+	            <artifactId>gwt-dev</artifactId>
+	            <version>${gwtVersion}</version>
+	          </dependency>
+	        </dependencies>
+	        <!-- JS is only needed in the package phase, this speeds up testing --> 
+	        <!-- Esto ejecutara la compilarcion de JavaScript solo a partir de la fase de prepare-package en adelante (mvn package o install) o 
+			     bien, ejecutando de el mvn gwt:compile (pero este ultimo no te compilara las clases, solo te compilara a JS) 
+				 Por eso es recomendabel tirar los dos compandos mvn compile gwt:compile o bien tirar directamente mvn package-->
+	        <executions>
+	          <execution>
+	            <phase>prepare-package</phase>
+	            <goals>
+	              <goal>compile</goal>
+	              <!--goal>generateAsync</goal-->
+	              <!--goal>test</goal-->
+	              </goals>
+	          </execution>
+	        </executions>	        
+	        <!-- Plugin configuration. There are many available options, see gwt-maven-plugin documentation at codehaus.org --> 
+	        <configuration>
+	          <!-- URL that should be automatically opened in the GWT shell (gwt:run). -->
+	          <runTarget>MyGwtMavenSampleApp.html</runTarget>					 
+	          <!-- Location of the develop-mode web application structure (gwt:run). -->
+	          <!--hostedWebapp>target/www</hostedWebapp-->			  
+			  <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
+	          <!-- Ask GWT to create the Story of Your Compile (SOYC) (gwt:compile) -->
+	          <soyc>true</soyc>			  		 
+			
+	        </configuration>
+	      </plugin>
+	      
+	      <!-- Copy static web files before executing gwt:run 
+	           Este se ejecutara cuando se corra el comando mvn compile o mvn package o mvn install. Esto te permite agregar al www los recursos
+	           estaticos como ser css y html. -->
+	      <plugin>
+	        <artifactId>maven-resources-plugin</artifactId>
+	        <executions>
+	          <execution>
+	            <phase>compile</phase>
+	            <goals>
+	              <goal>copy-resources</goal>
+	            </goals>
+	            <configuration>
+	              <!--outputDirectory>target/www</outputDirectory-->
+				  <outputDirectory> ${project.build.directory}/${project.build.finalName}</outputDirectory>
+	              <resources>
+	                <resource>
+	                  <directory>src/main/webapp</directory>
+	                </resource>
+	              </resources>
+	            </configuration>
+	          </execution>
+	        </executions>
+	      </plugin>
+	      
+	       <!-- Mark the project for Google Plugin for Eclipse (GPE)
+	            The Eclipse Plugin is used to generate Eclipse IDE files (*.classpath, *.wtpmodules and the .settings folder) 
+	            for use with a project. -->
+		  <plugin>
+			<artifactId>maven-eclipse-plugin</artifactId>
+			<version>2.8</version>
+			<configuration>
+				<downloadSources>true</downloadSources>
+				<downloadJavadocs>true</downloadJavadocs>
+				<wtpversion>2.0</wtpversion>
+			</configuration>
+		  </plugin>	  
+		  
+		
+		  
+	      <!-- Add source folders to test classpath in order to run gwt-tests as normal junit-tests -->
+	      <!-- plugin>
+	        <artifactId>maven-surefire-plugin</artifactId>
+	        <configuration>
+	          <additionalClasspathElements>
+	            <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
+	            <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
+	          </additionalClasspathElements>
+	          <useManifestOnlyJar>false</useManifestOnlyJar>
+	          <forkMode>always</forkMode -->
+	
+	          <!-- Folder for generated testing stuff --> 
+	          <!-- systemProperties>
+	            <property>
+	              <name>gwt.args</name>
+	              <value>-out target/www</value>
+	            </property>
+	          </systemProperties>
+	        </configuration>
+	      </plugin -->
       
-      <!-- Copy static web files before executing gwt:run -->
-      <!-- plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>compile</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>target/www</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/main/webapp</directory>
-                </resource>
-              </resources>
-              
-              
-            </configuration>
-          </execution>
-        </executions>
-      </plugin-->
-	  
+ 	  
 	  <!-- Copia las librerias al WEB-INF/lib -->
 	  <!-- mvn dependency:copy-dependencies -->
 	  <!-- Esto viene a colacion de un error que lanzaba a la hora de desplegar la app 
@@ -392,23 +423,8 @@
 				<excludeScope>provided</excludeScope>
 			</configuration>
 	  </plugin-->
-
-      <!-- Delete gwt generated stuff -->
-      <!-- The Maven Clean Plugin, as the name implies, attempts to clean the files and directories generated by Maven during its build -->
-      <!-- The Clean Plugin can be called to execute in the command-line (mvn clean:clean) o (mvn clean) -->
-      <!-- If for some reason, adding clean to the command-line is not option, the Clean Plugin can be put into a project's pom.xml so that it gets executed everytime the project is built. -->
-      <!-- plugin>
-        <artifactId>maven-clean-plugin</artifactId>
-        <configuration>
-          <filesets>
-            <fileset><directory>src/main/webapp/mygwtmavensampleapp</directory></fileset>
-            <fileset><directory>src/main/webapp/WEB-INF/classes</directory></fileset>
-            <fileset><directory>tomcat</directory></fileset>
-            <fileset><directory>www-test</directory></fileset>
-            <fileset><directory>.gwt-tmp</directory></fileset>
-          </filesets>
-        </configuration>
-      </plugin-->
+	  
+    
       
     </plugins>
   </build>
