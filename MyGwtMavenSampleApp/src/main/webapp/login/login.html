@@ -20,9 +20,11 @@
 <!--			${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}-->
 <!--		</div>-->
 <!--	</c:if>-->
+
+<!--  Now put a login page in your web app root, which looks like as follows. Note that the form should be posted 
+      on /j_spring_security_check and the username name should be j_username and password should be j_password -->
  
-	<form name='f' action="<c:url value='j_spring_security_check' />"
-		method='POST'>
+	<form name="f" action="j_spring_security_check"	method="POST">
  
 		<table>
 			<tr>

@@ -9,12 +9,19 @@
  
     <!-- SPRING SECURITY -->
 	<http auto-config="true">
+		<!-- Esto me securiza la siguiente URL: http://127.0.0.1:8888/mygwtmavensampleapp/ donde recide el JS -->
+		<!-- Para ingresar a este sitio no solo tenemos q loguearnos sino q tambien tener el siguiente rol ROLE_USER -->
         <intercept-url pattern="/mygwtmavensampleapp/**" access="ROLE_USER"/>
-        <intercept-url pattern="/gwt/**" access="ROLE_USER"/>        
-        <intercept-url pattern="/**/*.html" access="ROLE_USER"/>
+        <!-- Esto me securiza la siguiente URL: http://127.0.0.1:8888/mygwtmavensampleapp/gwt donde recide los recursos (css, imagenes, etc) -->
+        <!-- Para ingresar a este sitio no solo tenemos q loguearnos sino q tambien tener el siguiente rol ROLE_USER -->
+        <intercept-url pattern="/gwt/**" access="ROLE_USER"/>
+        <!-- Esto me securiza la siguiente URL: http://127.0.0.1:8888/MyGwtMavenSampleApp.html que seria el entry point de la app -->
+        <!-- Para ingresar a este sitio no solo tenemos q loguearnos sino q tambien tener el siguiente rol ROLE_USER -->        
+        <intercept-url pattern="/*.html" access="ROLE_USER"/>
         <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <!-- form-login login-page="/login/login.html"/>    
-        <logout logout-success-url="/login/logout.html"/--> 
+        <!-- Aqui redefinimos el form de login -->
+        <form-login login-page="/login/login.html"/>    
+        <logout logout-success-url="/login/login.html"/> 
     </http>
     
     <beans:bean id="customAuthenticationProvider" class="au.com.uptick.gwt.maven.sample.server.auth.CustomAuthenticationProvider" />    
