@@ -7,7 +7,7 @@
                     http://www.springframework.org/schema/security 
                     http://www.springframework.org/schema/security/spring-security-3.0.xsd">
  
-    <!-- SPRING SECURITY -->
+ 	<!-- SPRING SECURITY -->
 	<http auto-config="true">
 		<!-- Esto me securiza la siguiente URL: http://127.0.0.1:8888/mygwtmavensampleapp/ donde recide el JS -->
 		<!-- Para ingresar a este sitio no solo tenemos q loguearnos sino q tambien tener el siguiente rol ROLE_USER -->
@@ -21,15 +21,20 @@
         <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <!-- Aqui redefinimos el form de login -->
         <form-login login-page="/login/login.html"/>    
-        <logout logout-success-url="/login/login.html"/> 
+        <logout logout-success-url="/login/login.html" invalidate-session="true"/> 
+        <!-- I want to redirect users to the login page when a session timeout occurs. This works out-of-the-box with spring security, 
+        	 but only on non-ajax calls. On an ajax-call you have to react on the session timeout by yourself. 
+         	 	Ver: http://stackoverflow.com/questions/6922211/spring-security-sesson-timeout-not-recognized-on-ajax-call
+        	 	Ver: http://stackoverflow.com/questions/9406029/gwt-spring-security-session-timeout 
+        	 	Ver: http://stackoverflow.com/questions/4964145/detect-session-timeout-in-ajax-request-in-spring-mvc 
+        	 	Ver: http://groups.google.com/group/google-web-toolkit/browse_thread/thread/7be4c1ef82addefc/233073a6bdf336a2?lnk=gst&q=invalid+session#233073a6bdf336a2-->
     </http>
     
-    <beans:bean id="customAuthenticationProvider" class="au.com.uptick.gwt.maven.sample.server.auth.CustomAuthenticationProvider" />    
+    <beans:bean id="customAuthenticationProvider" class="au.com.uptick.gwt.maven.sample.server.auth.CustomAuthenticationProvider" />  
     
     <authentication-manager alias="authenticationManager">
 	    <authentication-provider ref="customAuthenticationProvider"/>
 	</authentication-manager>
 	<!-- SPRING SECURITY -->
-	
     
 </beans:beans>  

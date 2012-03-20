@@ -62,7 +62,8 @@ public class CustomUserAuthentication implements Authentication {
 
 	public String getName() {
 		System.out.println("CustomUserAuthentication => getName() ");
-		return this.getClass().getSimpleName();
+		return authentication.getName();
+		//return this.getClass().getSimpleName();
 	}
 
 }

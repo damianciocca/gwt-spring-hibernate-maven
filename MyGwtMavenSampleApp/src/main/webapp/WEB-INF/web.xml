@@ -7,6 +7,7 @@
 
 	<display-name>Maven + GWT + Spring + Hibernate sample application</display-name>
 	
+	<!-- SPRING SECURITY & SPRING -->
 	<context-param>
 	   <param-name>contextConfigLocation</param-name>
 	   <param-value>
@@ -14,6 +15,7 @@
 	       /WEB-INF/applicationContext-security.xml
 	   </param-value>
 	</context-param>
+	<!-- SPRING SECURITY & SPRING -->
 	
 	<!-- SPRING SECURITY -->
 	<filter>
@@ -27,11 +29,24 @@
 	</filter-mapping>
 	<!-- SPRING SECURITY -->
 
+	<!-- SPRING -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<!-- SPRING -->
+	
+	<!-- SPRING SECURITY & SPRING -->
+	<!-- Adding the listener to web.xml causes an ApplicationEvent to be published to the Spring ApplicationContext every time 
+		 a HttpSession commences or terminates 
+		 Esto permite que la aplicacion escuche todos los eventos relacionados con la session del usuario (creacion y destruccion). 
+		 Estos eventos heredan de ApplicationEvent -->
+	<listener>
+	  <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+	<!-- SPRING SECURITY & SPRING  -->
+	
 
-	<!-- No usamos mas esto ya que no vamos a necesitar definirlos como servlets a cada service.
+	<!-- No vamos a definir cada servicio de GWT como un servlet como se hace en GWT puro.
 		 Para esto utilizareos el JAR spring4gwt que se encarga de manejar los servicios de spring -->
 	<!-- <servlet> -->
 	<!-- <servlet-name>greetServlet</servlet-name> -->
@@ -54,12 +69,20 @@
 		<url-pattern>/mygwtmavensampleapp/services/*</url-pattern>
 	</servlet-mapping>
 	<!-- SPRING4GWT -->
+	
+	<!--  Esto funciona a la perfeccion para llamadas que no son por AJAX. por ejemplo, para esta aplicacion, esto solo funcionara
+		  en caso que hagamos un refresh (F5) de la pagina. En caso que ejecutemos una accion, como por ejemplo, presionamos un boton
+		  esto funcionará a medias. Es decir, no redireccionara al login o no mostrara al usuario que es lo que paso, pero 
+		  tampoco llevara a cabo la accion, ya que se vencio la session del usuario. -->
+	<session-config>
+	    <session-timeout>1</session-timeout> <!-- in minutes -->
+	</session-config>
 
 	<!-- DEFAULT PAGE -->
 	<welcome-file-list>
 		<welcome-file>MyGwtMavenSampleApp.html</welcome-file>
 	</welcome-file-list>
 	<!-- DEFAULT PAGE -->
-
+	
 
 </web-app>
