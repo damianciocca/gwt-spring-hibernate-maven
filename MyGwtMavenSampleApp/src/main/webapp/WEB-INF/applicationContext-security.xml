@@ -20,14 +20,20 @@
         <intercept-url pattern="/*.html" access="ROLE_USER"/>
         <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <!-- Aqui redefinimos el form de login -->
-        <form-login login-page="/login/login.html"/>    
-        <logout logout-success-url="/login/login.html" invalidate-session="true"/> 
+        <form-login login-page="/login/login.jsp"        			
+        			authentication-failure-url="/login/login.jsp?login_error=1" />    
+        <logout logout-success-url="/login/login.jsp"/> 
         <!-- I want to redirect users to the login page when a session timeout occurs. This works out-of-the-box with spring security, 
         	 but only on non-ajax calls. On an ajax-call you have to react on the session timeout by yourself. 
          	 	Ver: http://stackoverflow.com/questions/6922211/spring-security-sesson-timeout-not-recognized-on-ajax-call
         	 	Ver: http://stackoverflow.com/questions/9406029/gwt-spring-security-session-timeout 
         	 	Ver: http://stackoverflow.com/questions/4964145/detect-session-timeout-in-ajax-request-in-spring-mvc 
-        	 	Ver: http://groups.google.com/group/google-web-toolkit/browse_thread/thread/7be4c1ef82addefc/233073a6bdf336a2?lnk=gst&q=invalid+session#233073a6bdf336a2-->
+        	 	Ver: http://groups.google.com/group/google-web-toolkit/browse_thread/thread/7be4c1ef82addefc/233073a6bdf336a2?lnk=gst&q=invalid+session#233073a6bdf336a2
+        	 	Ver: http://forum.springsource.org/showthread.php?84779-How-to-Inform-User-That-session-has-timed-out -->
+        <!-- Si bien no nos va a permitir loguear a mas de dos usuarios, tampoco nos llega el evento o podemos redireccionar a una pagina de error. -->	 	
+        <session-management>
+        	<concurrency-control max-sessions="2" error-if-maximum-exceeded="true" expired-url="/login/login.jsp" /> 
+        </session-management>	 	
     </http>
     
     <beans:bean id="customAuthenticationProvider" class="au.com.uptick.gwt.maven.sample.server.auth.CustomAuthenticationProvider" />  
