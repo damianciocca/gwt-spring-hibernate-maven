@@ -17,8 +17,6 @@ public class CustomAuthListener implements ApplicationListener<ApplicationEvent>
 
 	private static final Log logger = LogFactory.getLog(CustomAuthListener.class);
 	
-	private boolean sessionExpired = false;
-
 	public void onApplicationEvent(ApplicationEvent  event) {
 
 		System.out.println("************************************");
@@ -40,25 +38,15 @@ public class CustomAuthListener implements ApplicationListener<ApplicationEvent>
 			System.out.println("user name: " + authentication2.getName());
 			System.out.println("SecurityContextHolder context : " + authentication);
 			
-			if (sessionExpired){
-				System.out.println("************************************");
-				System.out.println("************************************");
-				System.out.println("Su sesion vencio, por favor vuelva a loguerase..");
-				System.out.println("************************************");
-				System.out.println("************************************");
-			}
-
 		} else if (event instanceof HttpSessionDestroyedEvent) {
 			HttpSessionDestroyedEvent destroyEvent = (HttpSessionDestroyedEvent)event;
 			CustomUserAuthentication authentication2 = (CustomUserAuthentication) SecurityContextHolder.getContext().getAuthentication();
 			SecurityContext securityContext = destroyEvent.getSecurityContext();
 			System.out.println("user name: session vencida");
 			System.out.println("SecurityContextHolder context : " + authentication2);
-			sessionExpired = true;
 		}
 
 	}
-
 
 }	 
 
