@@ -1,11 +1,10 @@
 package au.com.uptick.gwt.maven.sample.server.auth;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 
 public class CustomUserAuthentication implements Authentication {
 	
@@ -13,26 +12,24 @@ public class CustomUserAuthentication implements Authentication {
 	
 	private boolean authenticated;
 	
-	private GrantedAuthority grantedAuthority;
+	private List<GrantedAuthority> grantedAuthorities;
 	private Authentication authentication;
 	
 	/**
-	 * In the constructor, we pass the user's role and the original Authentication object. 
-	 * In the implemented methods, the most important one is the getAuthorities, which returns the authorities (roles) that the principal 
+	 * In the constructor, we pass the user's permissions and the original Authentication object. 
+	 * In the implemented methods, the most important one is the getAuthorities, which returns the authorities (permissions) that the principal 
 	 * has been granted. That information is provided inside a collection of GrantedAuthority objects.
 	 * @param role
 	 * @param authentication
 	 */
-	public CustomUserAuthentication(String role, Authentication authentication) {
-		this.grantedAuthority = new GrantedAuthorityImpl(role);
+	public CustomUserAuthentication(List<GrantedAuthority> permissions, Authentication authentication) {
+		this.grantedAuthorities = permissions;
 		this.authentication = authentication;
 	}
 
 	public Collection<GrantedAuthority> getAuthorities() {
 		System.out.println("CustomUserAuthentication => getAuthorities() ");
-		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(grantedAuthority);
-		return authorities;
+		return grantedAuthorities;
 	}
 
 	public Object getCredentials() {
@@ -63,7 +60,6 @@ public class CustomUserAuthentication implements Authentication {
 	public String getName() {
 		System.out.println("CustomUserAuthentication => getName() ");
 		return authentication.getName();
-		//return this.getClass().getSimpleName();
 	}
 
 }
