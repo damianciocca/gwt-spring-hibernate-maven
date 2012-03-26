@@ -16,12 +16,16 @@ public abstract class MyAsyncCallback<T> implements AsyncCallback<T>{
 
 		if (caught instanceof CustomAuthorizationException) {
 			// TODO armar un popup  
-			// WindowHelper.showUnExpectedErrorMessage("No se pudo acceder al servidor", "No se pudo acceder al servidor [" + caught.getMessage() + "]"); 
+			// WindowHelper.showUnExpectedErrorMessage("No se pudo acceder al servidor", "No se pudo acceder al servidor [" + caught.getMessage() + "]");
+			System.out.println("***********************************");
 			System.out.println("TODO lanzar un popup que maneje esta excepcion => CustomAuthorizationException");
+			System.out.println("***********************************");
 		} else if (caught instanceof InvocationException) {
 			// TODO armar un popup  
-			// WindowHelper.showUnExpectedErrorMessage("No se pudo acceder al servidor", "No se pudo acceder al servidor [" + caught.getMessage() + "]"); 
+			// WindowHelper.showUnExpectedErrorMessage("No se pudo acceder al servidor", "No se pudo acceder al servidor [" + caught.getMessage() + "]");
+			System.out.println("***********************************");
 			System.out.println("TODO lanzar un popup que maneje esta excepcion => InvocationException");
+			System.out.println("***********************************");
 		} else {
 			onError(caught, false);
 		}

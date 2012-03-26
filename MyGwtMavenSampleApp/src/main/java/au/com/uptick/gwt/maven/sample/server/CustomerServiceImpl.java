@@ -27,8 +27,18 @@ public class CustomerServiceImpl implements CustomerService{
 	public Customer saveCustomer(String name, String surname, String jobDescription) throws CustomAuthorizationException{
 
 		System.out.println("CustomerServiceImpl => saveCustomer()");
-		Customer customerPersisted1 = customerDao.persist(new Customer(name, surname, jobDescription));
-		System.out.println("CUSTOMER ID: " + customerPersisted1.getEmployeeId());
-		return customerPersisted1;
+		Customer customerPersisted = customerDao.persist(new Customer(name, surname, jobDescription));
+		System.out.println("CUSTOMER ID: " + customerPersisted.getEmployeeId());
+		return customerPersisted;
+	}
+
+	public void updateCustomer(String name, String surname,String jobDescription) throws CustomAuthorizationException {
+		
+		System.out.println("CustomerServiceImpl => updateCustomer()");
+	}
+
+	public void searchCustomer(String name, String surname,String jobDescription) throws CustomAuthorizationException {
+		
+		System.out.println("CustomerServiceImpl => searchCustomer()");
 	}
 }
