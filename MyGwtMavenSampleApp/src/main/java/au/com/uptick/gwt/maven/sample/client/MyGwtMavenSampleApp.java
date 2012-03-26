@@ -77,13 +77,7 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 				String textToServer = nameField.getText();
 				sendButton.setEnabled(false);
 
-				customerServiceAsync.helloWorld(textToServer, new AsyncCallback<String>() {
-
-					public void onFailure(Throwable caught) {
-						
-						System.out.println("onFailure..." + caught);
-						
-					}
+				customerServiceAsync.helloWorld(textToServer, new MyAsyncCallback<String>() {
 
 					public void onSuccess(String result) {
 
@@ -104,6 +98,12 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 								
 							}
 						});
+					}
+
+					@Override
+					public void onError(Throwable caught, boolean alreadyHandledError) {
+						
+						System.out.println("onFailure..." + caught);
 					}
 				});
 				

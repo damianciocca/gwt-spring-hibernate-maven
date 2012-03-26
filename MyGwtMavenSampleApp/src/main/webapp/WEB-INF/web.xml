@@ -73,9 +73,10 @@
 	<!--  Esto funciona a la perfeccion para llamadas que no son por AJAX. por ejemplo, para esta aplicacion, esto solo funcionara
 		  en caso que hagamos un refresh (F5) de la pagina. En caso que ejecutemos una accion, como por ejemplo, presionamos un boton
 		  esto funcionará a medias. Es decir, no redireccionara al login o no mostrara al usuario que es lo que paso, pero 
-		  tampoco llevara a cabo la accion, ya que se vencio la session del usuario. -->
+		  tampoco llevara a cabo la accion, ya que se vencio la session del usuario.		  
+	-->
 	<session-config>
-	    <session-timeout>1</session-timeout> <!-- in minutes -->
+	    <session-timeout>10</session-timeout> <!-- in minutes -->
 	</session-config>
 
 	<!-- DEFAULT PAGE -->

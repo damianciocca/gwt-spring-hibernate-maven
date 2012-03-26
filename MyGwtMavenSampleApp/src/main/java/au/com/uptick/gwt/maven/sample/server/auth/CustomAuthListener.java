@@ -19,12 +19,6 @@ public class CustomAuthListener implements ApplicationListener<ApplicationEvent>
 	
 	public void onApplicationEvent(ApplicationEvent  event) {
 
-		System.out.println("************************************");
-		System.out.println("************************************");
-		System.out.println("ApplicationEvent " + event.getClass().getName());
-		System.out.println("************************************");
-		System.out.println("************************************");
-
 		if (event instanceof AuthenticationSuccessEvent) {
 			AuthenticationSuccessEvent authenticationEvent = (AuthenticationSuccessEvent)event;
 			CustomUserAuthentication authentication2 = (CustomUserAuthentication) SecurityContextHolder.getContext().getAuthentication();

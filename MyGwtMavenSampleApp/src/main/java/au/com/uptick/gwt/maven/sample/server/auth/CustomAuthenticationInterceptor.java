@@ -4,9 +4,17 @@ import java.util.Arrays;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import au.com.uptick.gwt.maven.sample.client.auth.CustomAuthorizationException;
+
+/**
+ * Esta clase se encargara de interceptar las llamadas a cada metodo.
+ * @author dciocca
+ *
+ */
 public class CustomAuthenticationInterceptor implements MethodInterceptor {
 
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
@@ -15,13 +23,16 @@ public class CustomAuthenticationInterceptor implements MethodInterceptor {
 		System.out.println("CustomAuthenticationInterceptor Method arguments : " + Arrays.toString(methodInvocation.getArguments()));
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String name = auth.getName(); //get logged in username
-	    System.out.println("user logged: " + name);
+	    System.out.println("user logged: " + auth.getName());
  
 		try {
 			Object result = methodInvocation.proceed();
 			return result;
-		} catch (IllegalArgumentException e) {
+		} catch (Throwable e) {
+			if (e instanceof AccessDeniedException){
+				System.out.println("CustomAuthenticationInterceptor access denied exception");
+				throw new CustomAuthorizationException(e);
+			}
 			throw e;
 		}
 	}

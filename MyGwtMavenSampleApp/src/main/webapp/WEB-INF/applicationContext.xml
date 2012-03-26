@@ -25,14 +25,16 @@
 		 Ver: http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/transaction.html#transaction-declarative -->				
 	<tx:annotation-driven />
 	
-	<!-- AOP - para interceptar las llamadas a los metodos del servicio -->
+	<!-- AOP - para interceptar las llamadas a los metodos del servicio
+		 Esto es util para tratar las excepciones de acceso denegado cuando se invoque a un metodo que el usuario 
+		 logueado no tiene permiso. -->
+	<aop:aspectj-autoproxy/>
+		
 	<aop:config>
 		<!-- The execution of any method defined by the interface execution(* com.xyz.service.MyService.*(..))  -->
 		<!-- the execution of any method defined in the service package: execution(*com.xyz.service.*.*(..))  -->
 		<aop:advisor advice-ref="interfeceptServiceFacade" pointcut="execution(* au.com.uptick.gwt.maven.sample.client.CustomerService.*(..))"/>
 	</aop:config>
-
-	<aop:aspectj-autoproxy/>
 
 	<bean id="interfeceptServiceFacade" class="au.com.uptick.gwt.maven.sample.server.auth.CustomAuthenticationInterceptor" />
 		

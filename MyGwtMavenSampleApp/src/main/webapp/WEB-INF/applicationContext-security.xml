@@ -28,6 +28,17 @@
 			isFullyAuthenticated()	Returns true if the user is not an anonymous or a remember-me user		 
  	 -->
 	<http auto-config="true" use-expressions="true">
+		
+		<!-- Use method level security only, without URL filtering because you don't need it in GWT RPC.
+			 En este caso, solo vamos a securizar esta ruta, los recuros estaticos y el HTML MyGwtMavenSampleApp.html que seria el entry point 
+			 You can't use page-level security in this scenario (GWT), because your views are being changed at the client-side.
+			 The only way to implement a role-based security in such kind application is to use a method-level security in your server-side code.
+			 You may also restrict access to your MyGwtMavenSampleApp.html for non-authenticated users by you creating a spearate 
+			 non-GWT login page (say, Login.html).
+			 	Ver: http://stackoverflow.com/questions/2812676/gwt-2-0-integration-with-spring-security-3-0
+			 		 http://blog.maxmatveev.com/2011/06/gwt-and-spring-security-integration-as.html
+		-->
+		
 		<!-- Esto me securiza la siguiente URL: http://127.0.0.1:8888/mygwtmavensampleapp/ donde recide el JS -->
         <intercept-url pattern="/mygwtmavensampleapp/**" access="isAuthenticated()"/>
         <!-- Esto me securiza la siguiente URL: http://127.0.0.1:8888/mygwtmavensampleapp/gwt donde recide los recursos (css, imagenes, etc) -->
@@ -49,7 +60,8 @@
         <!-- No nos va a permitir loguear a mas de dos usuarios -->	 	
         <session-management>
         	<concurrency-control max-sessions="2" error-if-maximum-exceeded="true" expired-url="/login/login.jsp" /> 
-        </session-management>	 	
+        </session-management>
+        
     </http>
     
     <!-- 
@@ -78,6 +90,8 @@
 	</authentication-manager>
 	
 	<beans:bean id="customAuthenticationProvider" class="au.com.uptick.gwt.maven.sample.server.auth.CustomAuthenticationProvider" />
+	
+	
 	
 	<!-- SPRING SECURITY -->
     
