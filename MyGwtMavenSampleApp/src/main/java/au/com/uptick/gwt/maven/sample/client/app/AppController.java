@@ -34,6 +34,8 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
 	private void bind() {
 
+		// Adds a ValueChangeEvent handler to be informed of changes to the 
+		// browser's history stack.	
 		History.addValueChangeHandler(this);
 
 		// Agregamos al event bus el evento de add role
