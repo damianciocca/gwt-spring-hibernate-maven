@@ -32,7 +32,7 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 		
 	    HandlerManager eventBus = new HandlerManager(null);
 	    AppController appViewer = new AppController(eventBus);
-	    appViewer.go(RootPanel.get());
+	    appViewer.go(RootPanel.get("home"));
 		
 		
 		/*
