@@ -7,6 +7,7 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
   
  	    <class>au.com.uptick.gwt.maven.sample.shared.Customer</class>
+ 	    <class>au.com.uptick.gwt.maven.sample.shared.auth.model.Role</class>
     	        
     	<!-- 
     		 drop user hibernate_tutorial cascade

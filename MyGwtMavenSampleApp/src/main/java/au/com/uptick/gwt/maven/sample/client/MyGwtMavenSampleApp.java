@@ -1,11 +1,13 @@
 package au.com.uptick.gwt.maven.sample.client;
 
+import au.com.uptick.gwt.maven.sample.client.app.AppController;
 import au.com.uptick.gwt.maven.sample.shared.Customer;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -27,7 +29,13 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 
 		GWT.log("onModuleLoading...... INICIO");
 		System.out.println("onModuleLoading...... INICIO");
-
+		
+	    HandlerManager eventBus = new HandlerManager(null);
+	    AppController appViewer = new AppController(eventBus);
+	    appViewer.go(RootPanel.get());
+		
+		
+		/*
 		final Button saveButton = new Button("SAVE - PERM_CREATE_USERS");
 		final Button searchButton = new Button("EDIT - PERM_REMOVE_USERS");
 		final Button updateButton = new Button("UPDATE - PERM_UPDATE_USERS");
@@ -138,7 +146,8 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 			}
 		});
 
-
+		*/
+		
 		GWT.log("onModuleLoading...... FIN");
 		System.out.println("onModuleLoading...... FIN");
 	}

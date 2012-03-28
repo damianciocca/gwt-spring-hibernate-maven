@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import au.com.uptick.gwt.maven.sample.client.CustomerService;
-import au.com.uptick.gwt.maven.sample.client.auth.CustomAuthorizationException;
+import au.com.uptick.gwt.maven.sample.client.auth.exceptions.CustomAuthorizationException;
 import au.com.uptick.gwt.maven.sample.server.dao.CustomerDao;
 import au.com.uptick.gwt.maven.sample.shared.Customer;
 

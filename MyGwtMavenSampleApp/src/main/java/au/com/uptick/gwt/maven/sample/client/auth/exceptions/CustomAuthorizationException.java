@@ -1,4 +1,4 @@
-package au.com.uptick.gwt.maven.sample.client.auth;
+package au.com.uptick.gwt.maven.sample.client.auth.exceptions;
 
 import java.io.Serializable;
 

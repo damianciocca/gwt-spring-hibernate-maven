@@ -8,7 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import au.com.uptick.gwt.maven.sample.client.auth.CustomAuthorizationException;
+import au.com.uptick.gwt.maven.sample.client.auth.exceptions.CustomAuthorizationException;
 
 /**
  * Esta clase se encargara de interceptar las llamadas a cada metodo.

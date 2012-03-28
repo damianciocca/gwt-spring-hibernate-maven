@@ -1,6 +1,6 @@
-package au.com.uptick.gwt.maven.sample.client;
+package au.com.uptick.gwt.maven.sample.client.app;
 
-import au.com.uptick.gwt.maven.sample.client.auth.CustomAuthorizationException;
+import au.com.uptick.gwt.maven.sample.client.auth.exceptions.CustomAuthorizationException;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.InvocationException;

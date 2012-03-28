@@ -2,7 +2,7 @@ package au.com.uptick.gwt.maven.sample.client;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import au.com.uptick.gwt.maven.sample.client.auth.CustomAuthorizationException;
+import au.com.uptick.gwt.maven.sample.client.auth.exceptions.CustomAuthorizationException;
 import au.com.uptick.gwt.maven.sample.shared.Customer;
 
 import com.google.gwt.user.client.rpc.RemoteService;
