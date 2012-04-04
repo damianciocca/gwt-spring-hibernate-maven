@@ -27,8 +27,9 @@ public class Role implements java.io.Serializable{
 		super();
 	}
 
-	public Role(String roleName, String roleDescription) {
+	public Role(long roleId, String roleName, String roleDescription) {
 		super();
+		this.roleId = roleId;
 		this.roleName = roleName;
 		this.roleDescription = roleDescription;
 	}

@@ -2,7 +2,9 @@ package au.com.uptick.gwt.maven.sample.client.app;
 
 import au.com.uptick.gwt.maven.sample.client.auth.event.AddRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.AddRoleEventHandler;
-import au.com.uptick.gwt.maven.sample.client.auth.presenter.RolePresenter;
+import au.com.uptick.gwt.maven.sample.client.auth.event.EditRoleEvent;
+import au.com.uptick.gwt.maven.sample.client.auth.event.EditRoleEventHandler;
+import au.com.uptick.gwt.maven.sample.client.auth.presenter.RoleListPresenter;
 import au.com.uptick.gwt.maven.sample.client.auth.view.RoleView;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -21,6 +23,9 @@ import com.google.gwt.user.client.ui.HasWidgets;
  */
 public class AppController implements Presenter, ValueChangeHandler<String> {
 
+	private static final String AUTH_ROLES_LIST = "auth_roles_list";
+	private static final String AUTH_ROLES_EDIT = "auth_roles_edit";
+	private static final String AUTH_ROLES_ADD = "auth_roles_add";
 	private HandlerManager eventBus;
 	private HasWidgets container;
 
@@ -33,47 +38,44 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	}
 
 	private void bind() {
+		
+		History.addValueChangeHandler(this); // Adds a ValueChangeEvent handler to be informed of changes to the browser's history stack.	
 
-		// Adds a ValueChangeEvent handler to be informed of changes to the 
-		// browser's history stack.	
-		History.addValueChangeHandler(this);
-
-		// Agregamos al event bus el evento de add role
 		eventBus.addHandler(AddRoleEvent.TYPE, new AddRoleEventHandler() {
 			public void onAddRole(AddRoleEvent event) {
-				System.out.println("onAddRole....");
-				History.newItem("add");
+				History.newItem(AUTH_ROLES_ADD);
+			}
+		});
+		
+		eventBus.addHandler(EditRoleEvent.TYPE, new EditRoleEventHandler() {
+			public void onEditRole(EditRoleEvent event) {
+				History.newItem(AUTH_ROLES_EDIT);
 			}
 		});
 	}
 
 	public void onValueChange(ValueChangeEvent<String> event) {
 
-		System.out.println("onValueChange...");
+		System.out.println("AppController => onValueChange [INICIO]");
 		String token = event.getValue();
-
+		
 		if (token != null) {
 			Presenter presenter = null;
 
-			if (token.equals("list_role")) {
-				presenter = new RolePresenter(eventBus, new RoleView());
-				System.out.println("ir al listaod de roles..");
-			} else if (token.equals("add_role")) {
-				System.out.println("ir al formulario de alta de rol..");
-				// presenter = new EditContactPresenter(rpcService, eventBus,
-				// new EditContactView());
-			}  else if (token.equals("edit_role")) {
-				System.out.println("ir al formulario de edicion del rol..");
-				// presenter = new EditContactPresenter(rpcService, eventBus,
-				// new EditContactView());
-			}
-
-			if (presenter != null) {
+			if (token.equals(AUTH_ROLES_LIST)) {
+				presenter = new RoleListPresenter(eventBus, new RoleView());
 				presenter.go(container);
+			} else if (token.equals(AUTH_ROLES_ADD)) {
+				// presenter = new EditContactPresenter(rpcService, eventBus,
+				// new EditContactView());
+			}  else if (token.equals(AUTH_ROLES_EDIT)) {
+				// presenter = new EditContactPresenter(rpcService, eventBus,
+				// new EditContactView());
 			} else {
 				System.out.println("No se obtuvo el presenter para el token: " + token);
 			}
 		}
+		System.out.println("AppController => onValueChange [FIN]");
 	}
 
 	/**
@@ -82,9 +84,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	 */
 	public void go(HasWidgets container) {
 
-		System.out.println("go...");
 		this.container = container;
-
 		if ("".equals(History.getToken())) {
 			/*
 			 * History class: This class allows you to interact with the browser's history
@@ -95,8 +95,8 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			 * to move back or forward
 			 */
 			// TODO aqui tendremos que agregar el token que nos llevara al HOME de la app.
-			History.newItem("list_role"); // Añadiendo esto al browser, causa que se dispare ValueChangeHandler.onValueChange
-										
+			// Añadiendo esto al browser, causa que se dispare ValueChangeHandler.onValueChange
+			History.newItem(AUTH_ROLES_LIST); 
 		} else {			
 			History.fireCurrentHistoryState(); // Causa que se dispare ValueChangeHandler.onValueChange
 		}
