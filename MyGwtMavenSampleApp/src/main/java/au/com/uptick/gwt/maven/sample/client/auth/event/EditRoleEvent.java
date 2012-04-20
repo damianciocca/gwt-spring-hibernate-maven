@@ -1,14 +1,16 @@
 package au.com.uptick.gwt.maven.sample.client.auth.event;
 
+import au.com.uptick.gwt.maven.sample.shared.auth.model.dto.RoleDto;
+
 import com.google.gwt.event.shared.GwtEvent;
 
 public class EditRoleEvent extends GwtEvent<EditRoleEventHandler> {
 
 	public static Type<EditRoleEventHandler> TYPE = new Type<EditRoleEventHandler>();
-	private long roleID;
-	
-	public EditRoleEvent(long roleID) {
-		this.roleID = roleID;
+	private RoleDto role;
+
+	public EditRoleEvent(RoleDto role) {
+		this.role = role;
 	}
 
 	@Override
@@ -21,8 +23,8 @@ public class EditRoleEvent extends GwtEvent<EditRoleEventHandler> {
 		handler.onEditRole(this);
 	}
 
-	public long getRoleID() {
-		return roleID;
+	public RoleDto getRole() {
+		return role;
 	}
 
 }
