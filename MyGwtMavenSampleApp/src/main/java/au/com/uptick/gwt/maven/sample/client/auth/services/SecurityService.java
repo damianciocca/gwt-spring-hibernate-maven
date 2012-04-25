@@ -13,4 +13,7 @@ public interface SecurityService extends RemoteService {
 	@PreAuthorize("hasRole('PERM_CREATE_ROLES')")
 	public RoleDto saveRole(RoleDto role);
 
+	@PreAuthorize("hasRole('PERM_UPDATE_ROLES')")
+	RoleDto upateRole(RoleDto role);
+
 }

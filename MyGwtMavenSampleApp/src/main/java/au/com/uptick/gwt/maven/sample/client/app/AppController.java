@@ -68,6 +68,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		
 		eventBus.addHandler(UpdatedRoleEvent.TYPE, new UpdatedRoleEventHandler() {
 			public void onUpdatedRole(UpdatedRoleEvent event) {
+				System.out.println("Updated role => " + event.getRole());
 				History.newItem(AUTH_ROLES_LIST);
 			}
 		});
@@ -80,6 +81,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		
 		eventBus.addHandler(AddedRoleEvent.TYPE, new AddedRoleEventHandler() {
 			public void onAddedRole(AddedRoleEvent event) {
+				System.out.println("Added role => " + event.getRole());
 				History.newItem(AUTH_ROLES_LIST);
 			}
 		});

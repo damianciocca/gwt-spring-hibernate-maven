@@ -111,24 +111,33 @@ public class RoleFormPresenter implements Presenter {
 			public void onSuccess(RoleDto result) {
 				
 				System.out.println("onSuccess...");
-				eventBus.fireEvent(new AddedRoleEvent(role));
+				eventBus.fireEvent(new AddedRoleEvent(result));
 			}
 
 			@Override
 			public void onError(Throwable caught, boolean alreadyHandledError) {
 				
 				System.out.println("onError...");
-			}});
-		
-		 
+			}}
+		);
 	}
 	
 	public void doUpdate() {
-		// TODO ir a la BD!
 		
-		// Luego lanzamos el evento que se actualizo satisfactoriamente..
-		// Le tenemos que pasar por parametro el role actualizado
-		 eventBus.fireEvent(new UpdatedRoleEvent(role));
+		securityService.upateRole(role, new MyAsyncCallback<RoleDto>() {
+
+			public void onSuccess(RoleDto result) {
+				
+				System.out.println("onSuccess...");
+				eventBus.fireEvent(new UpdatedRoleEvent(result));
+			}
+
+			@Override
+			public void onError(Throwable caught, boolean alreadyHandledError) {
+				
+				System.out.println("onError...");
+			}
+		});
 	}
 
 }

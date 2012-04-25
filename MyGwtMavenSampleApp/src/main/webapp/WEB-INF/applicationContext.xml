@@ -16,7 +16,9 @@
 		 Spring provides the capability of automatically detecting 'stereotyped' classes and registering corresponding BeanDefinitions with the ApplicationContext		  
 		 By default, classes annotated with @Component, @Repository, @Service, or @Controller (or classes annotated with a custom annotation 
 		 that itself is annotated with @Component) are the only detected candidate component
-		 To autodetect these classes and register the corresponding beans requires the inclusion of the following element in XML where 'basePackage' -->
+		 To autodetect these classes and register the corresponding beans requires the inclusion of the following element in XML where 'basePackage'
+		 
+		 Para inyectar dependencias, ver esta URL: http://aows.wordpress.com/2009/11/03/inyeccion-dependecias-spring-autowired-qualifier-resource/ -->	 
 	<context:component-scan base-package="au.com.uptick.gwt.maven.sample" />
 	
 	<!-- TX - enable the configuration of transactional behavior based on annotations

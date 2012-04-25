@@ -7,5 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface SecurityServiceAsync {
 
 	void saveRole(RoleDto role, AsyncCallback<RoleDto> callback);
+	
+	void upateRole(RoleDto role, AsyncCallback<RoleDto> callback);
 
 }
