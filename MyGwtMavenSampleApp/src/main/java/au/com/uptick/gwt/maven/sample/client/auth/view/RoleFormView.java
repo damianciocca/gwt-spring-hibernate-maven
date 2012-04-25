@@ -1,6 +1,6 @@
 package au.com.uptick.gwt.maven.sample.client.auth.view;
 
-import au.com.uptick.gwt.maven.sample.client.auth.presenter.RoleEditPresenter;
+import au.com.uptick.gwt.maven.sample.client.auth.presenter.RoleFormPresenter;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
@@ -13,14 +13,14 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class RoleEditView extends Composite implements RoleEditPresenter.Display {
+public class RoleFormView extends Composite implements RoleFormPresenter.Display {
 
 	private final TextBox nameTextBox;
 	private final TextBox descriptionTextBox;
 	private final Button saveButton;
 	private final Button cancelButton;
 
-	public RoleEditView() {
+	public RoleFormView() {
 
 		DecoratorPanel mainPanel = new DecoratorPanel();
 		mainPanel.setWidth("18em");

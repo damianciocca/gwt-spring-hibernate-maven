@@ -1,11 +1,17 @@
 package au.com.uptick.gwt.maven.sample.shared.auth.model.dto;
 
-public class RoleDto {
+import java.io.Serializable;
+
+public class RoleDto implements Serializable{
 	
 	private long id;
 	private String name;
 	private String description;
 		
+	public RoleDto() {
+		super();
+	}
+
 	public RoleDto(long id, String name, String description) {
 		super();
 		this.id = id;
@@ -32,4 +38,12 @@ public class RoleDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+	public String toString() {
+		return "RoleDto [id=" + id + ", name=" + name + ", description="
+				+ description + "]";
+	}
+	
+	
 }

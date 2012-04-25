@@ -1,6 +1,8 @@
 package au.com.uptick.gwt.maven.sample.client;
 
 import au.com.uptick.gwt.maven.sample.client.app.AppController;
+import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityService;
+import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
 import au.com.uptick.gwt.maven.sample.shared.Customer;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -20,6 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class MyGwtMavenSampleApp implements EntryPoint {
 
 	private final CustomerServiceAsync customerServiceAsync = GWT.create(CustomerService.class);
+	private final SecurityServiceAsync securityService = GWT.create(SecurityService.class);
 
 	/**
 	 * This is the entry point method.
@@ -31,7 +34,7 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 		System.out.println("onModuleLoading...... INICIO");
 		
 	    HandlerManager eventBus = new HandlerManager(null);
-	    AppController appViewer = new AppController(eventBus);
+	    AppController appViewer = new AppController(eventBus, securityService);
 	    appViewer.go(RootPanel.get("home"));
 		
 		

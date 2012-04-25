@@ -5,7 +5,7 @@ import java.util.List;
 
 import au.com.uptick.gwt.maven.sample.client.app.Presenter;
 import au.com.uptick.gwt.maven.sample.client.auth.event.AddRoleEvent;
-import au.com.uptick.gwt.maven.sample.client.auth.event.EditRoleEvent;
+import au.com.uptick.gwt.maven.sample.client.auth.event.UpdateRoleEvent;
 import au.com.uptick.gwt.maven.sample.shared.auth.model.Role;
 import au.com.uptick.gwt.maven.sample.shared.auth.model.dto.RoleDto;
 
@@ -90,7 +90,7 @@ public class RoleListPresenter implements Presenter {
 				System.out.println("eventBus => EditRoleEvent");
 				List<RoleDto> selectedRows = display.getSelectedRows();
 				if (selectedRows.size() == 1){
-					eventBus.fireEvent(new EditRoleEvent(selectedRows.get(0)));
+					eventBus.fireEvent(new UpdateRoleEvent(selectedRows.get(0)));
 				} else {
 					System.out.println("Debe seleccionar solo un elemento");
 				}

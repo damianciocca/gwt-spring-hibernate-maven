@@ -84,6 +84,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new GrantedAuthorityImpl("PERM_VIEW_REPORTS"));
 		authorities.add(new GrantedAuthorityImpl("PERM_CREATE_USERS"));
+		authorities.add(new GrantedAuthorityImpl("PERM_CREATE_ROLES"));
 		authorities.add(new GrantedAuthorityImpl("PERM_EDIT_USERS"));
 		authorities.add(new GrantedAuthorityImpl("PERM_REMOVE_USERS"));
 		authorities.add(new GrantedAuthorityImpl("PERM_READ_USERS"));
