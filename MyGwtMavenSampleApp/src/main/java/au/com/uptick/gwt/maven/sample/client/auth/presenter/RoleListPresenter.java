@@ -1,11 +1,12 @@
 package au.com.uptick.gwt.maven.sample.client.auth.presenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
 import au.com.uptick.gwt.maven.sample.client.app.Presenter;
 import au.com.uptick.gwt.maven.sample.client.auth.event.AddRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.UpdateRoleEvent;
+import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
 import au.com.uptick.gwt.maven.sample.shared.auth.model.Role;
 import au.com.uptick.gwt.maven.sample.shared.auth.model.dto.RoleDto;
 
@@ -32,6 +33,7 @@ public class RoleListPresenter implements Presenter {
 	private final HandlerManager eventBus;
 	private final Display display;
 	private List<Role> roleList;
+	private final SecurityServiceAsync securityService;
 	
 	/**
 	 * Interafce que debera implementar la vista (RoleView) 	
@@ -57,18 +59,18 @@ public class RoleListPresenter implements Presenter {
 		bind();
 		container.clear();
 		container.add(display.asWidget());
-		// TODO aqui deberemos ir con el servicio a la BD y obtenerlos de esa manera.
-		List<RoleDto> roles = retriveRoles();
-		display.setData(roles);
+		retriveRoles();
+		
 	}
 
 	// TODO cuando se arme el servicio, tmb debe ir como parametro de entrada en
 	// el constructor.
-	public RoleListPresenter(HandlerManager eventBus, Display display) {
+	public RoleListPresenter(SecurityServiceAsync securityService, HandlerManager eventBus, Display display) {
 		
-		super();
+		this.securityService = securityService;
 		this.eventBus = eventBus;
 		this.display = display;
+		
 	}
 
 	/**
@@ -105,25 +107,39 @@ public class RoleListPresenter implements Presenter {
 		});
 	}
 
-	private List<RoleDto> retriveRoles() {
+	private void retriveRoles() {
 
-		// OJO no llevar las entities de JPA clientside
 		/*
-		 * Lazy properties issue : when trying to send a partially loaded Hibernate POJO to the client-side 
-		 * of GWT (Javascript), the GWT compiler throws a Serialization exception because it the CGLIB generated proxy 
-		 * does not belong to the JRE emulation.
+		 * NO llevar las entities de JPA clientside:
 		 * 
-		 * Type issue : Hibernate replaces some basic Java types with various subclassed implementation (such as java.sql.Timestamp 
-		 * instead of java.util.Date or PersistentList for List collections). 
-		 * Javascript serialization of these classes will fail, since they do not belong to the JRE emulation 
-		 * supported by GWT 1.4 (note : the Java SQL dates are now supported by GWT 1.5)
+		 * Lazy properties issue : when trying to send a partially loaded
+		 * Hibernate POJO to the client-side of GWT (Javascript), the GWT
+		 * compiler throws a Serialization exception because it the CGLIB
+		 * generated proxy does not belong to the JRE emulation.
 		 * 
+		 * Type issue : Hibernate replaces some basic Java types with various
+		 * subclassed implementation (such as java.sql.Timestamp instead of
+		 * java.util.Date or PersistentList for List collections).
+		 * 
+		 * Javascript serialization of these classes will fail, since they do
+		 * not belong to the JRE emulation supported by GWT 1.4 (note : the Java
+		 * SQL dates are now supported by GWT 1.5)
 		 */
-		
-		List<RoleDto> data = new ArrayList<RoleDto>();
-		data.add(new RoleDto(1, "ADMINISTRADOR1", ""));
-		data.add(new RoleDto(2, "ADMINISTRADOR2", ""));
-		data.add(new RoleDto(3, "ADMINISTRADOR3", ""));
-		return data;
+		securityService.retriveRoles(new RoleDto(), new MyAsyncCallback<List<RoleDto>>() {
+
+					public void onSuccess(List<RoleDto> roles) {
+
+						System.out.println("onSuccess...");
+						display.setData(roles);
+					}
+
+					@Override
+					public void onError(Throwable caught, boolean alreadyHandledError) {
+
+						System.out.println("onError...");
+
+					}
+				}
+		);
 	}
 }

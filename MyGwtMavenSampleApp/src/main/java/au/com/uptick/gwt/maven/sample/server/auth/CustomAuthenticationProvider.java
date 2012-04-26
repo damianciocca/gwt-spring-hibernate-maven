@@ -88,6 +88,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		authorities.add(new GrantedAuthorityImpl("PERM_EDIT_USERS"));
 		authorities.add(new GrantedAuthorityImpl("PERM_REMOVE_USERS"));
 		authorities.add(new GrantedAuthorityImpl("PERM_READ_USERS"));
+		authorities.add(new GrantedAuthorityImpl("PERM_LIST_ROLES"));
 		Authentication customAuthentication = new CustomUserAuthentication(authorities, authentication);
 		
 		/*

@@ -2,6 +2,12 @@ package au.com.uptick.gwt.maven.sample.client.auth.exceptions;
 
 import java.io.Serializable;
 
+/**
+ * Al extender de RuntimException automaticamente hace ROOLBACK sin se tiene que
+ * utilizar la anotacion @transaction rollbackFor=
+ * 
+ * @author dciocca
+ */
 public class CustomAuthorizationException extends RuntimeException implements Serializable {
 
 	public CustomAuthorizationException() {

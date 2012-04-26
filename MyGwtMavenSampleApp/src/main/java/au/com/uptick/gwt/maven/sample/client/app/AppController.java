@@ -97,7 +97,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			Presenter presenter = null;
 
 			if (token.equals(AUTH_ROLES_LIST)) {
-				presenter = new RoleListPresenter(eventBus, new RoleListView());
+				presenter = new RoleListPresenter(securityService, eventBus, new RoleListView());
 				presenter.go(container);
 			} else if (token.equals(AUTH_ROLES_ADD)) {
 				presenter = new RoleFormPresenter(securityService, eventBus, new RoleFormView());

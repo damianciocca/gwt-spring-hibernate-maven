@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
+import org.springframework.orm.jpa.JpaCallback;
 
 public class JpaDao<PK, E>{
 
@@ -51,14 +55,9 @@ public class JpaDao<PK, E>{
 
 	@SuppressWarnings("unchecked")
 	public List<E> findAll() {
-//		Object res = entityManager.execute(new JpaCallback() {
-//			public Object doInJpa(EntityManager em) throws PersistenceException {
-//				Query q = em.createQuery("SELECT h FROM " + entityClass.getName() + " h");
-//				return q.getResultList();
-//			}
-//		});
-//		return (List<E>) res;
-		return new ArrayList<E>();
+		
+		Query query = entityManager.createQuery("SELECT h FROM " + entityClass.getName() + " h");
+		return query.getResultList();
 	}
 
 }
