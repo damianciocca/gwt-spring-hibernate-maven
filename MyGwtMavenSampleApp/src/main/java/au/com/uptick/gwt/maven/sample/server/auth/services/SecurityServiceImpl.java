@@ -33,8 +33,10 @@ public class SecurityServiceImpl implements SecurityService{
 	public RoleDto upateRole(RoleDto role) throws SecurityException {
 
 		System.out.println("SecurityServiceImpl => upateRole [INICIO]");
+		Role roleUpdated = roleDao.merge(bindFrom(role));
+		RoleDto result = bindFrom(roleUpdated);
 		System.out.println("SecurityServiceImpl => upateRole [FIN]");
-		return null;
+		return result;
 	}
 	
 	public List<RoleDto> retriveRoles(RoleDto role) {
@@ -53,6 +55,7 @@ public class SecurityServiceImpl implements SecurityService{
 	private Role bindFrom(RoleDto dto){
 		
 		Role role = new Role();		
+		role.setRoleId(dto.getId());
 		role.setRoleName(dto.getName());
 		role.setRoleDescription(dto.getDescription());
 		return role;

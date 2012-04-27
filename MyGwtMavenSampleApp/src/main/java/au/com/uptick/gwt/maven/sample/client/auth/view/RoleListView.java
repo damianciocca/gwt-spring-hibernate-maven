@@ -153,6 +153,8 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 			}
 		});
 		
+		// seteando el nuevo modelo, se invara a los listeners que tenga asociado 
+		// dicho tablemodel (simpleModel)
 		simpleModel.setModel((ArrayList<RoleDto>) roles);
 
 		return simpleModel;

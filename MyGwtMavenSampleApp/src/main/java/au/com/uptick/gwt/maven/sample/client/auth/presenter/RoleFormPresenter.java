@@ -124,6 +124,8 @@ public class RoleFormPresenter implements Presenter {
 	
 	public void doUpdate() {
 		
+		role.setName(display.getNameTxt().getValue());
+		role.setDescription(display.getDescriptionTxt().getValue());
 		securityService.upateRole(role, new MyAsyncCallback<RoleDto>() {
 
 			public void onSuccess(RoleDto result) {

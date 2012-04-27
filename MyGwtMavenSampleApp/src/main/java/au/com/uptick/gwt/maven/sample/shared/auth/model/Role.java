@@ -38,6 +38,10 @@ public class Role implements java.io.Serializable{
 		return roleId;
 	}
 
+	public void setRoleId(long roleId) {
+		this.roleId = roleId;
+	}
+
 	public String getRoleName() {
 		return roleName;
 	}
