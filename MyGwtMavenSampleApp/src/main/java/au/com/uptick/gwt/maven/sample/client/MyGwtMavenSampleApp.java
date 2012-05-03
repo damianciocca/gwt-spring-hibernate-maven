@@ -3,25 +3,17 @@ package au.com.uptick.gwt.maven.sample.client;
 import au.com.uptick.gwt.maven.sample.client.app.AppController;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityService;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
-import au.com.uptick.gwt.maven.sample.shared.Customer;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class MyGwtMavenSampleApp implements EntryPoint {
 
-	private final CustomerServiceAsync customerServiceAsync = GWT.create(CustomerService.class);
 	private final SecurityServiceAsync securityService = GWT.create(SecurityService.class);
 
 	/**

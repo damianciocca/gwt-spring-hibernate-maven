@@ -36,8 +36,7 @@
 	
 	<aop:config>
 		<!-- The execution of any method defined by the interface execution(* com.xyz.service.MyService.*(..))  -->
-		<!-- the execution of any method defined in the service package: execution(*com.xyz.service.*.*(..))  -->
-		<aop:advisor advice-ref="customAuthenticationInterceptor" pointcut="execution(* au.com.uptick.gwt.maven.sample.client.CustomerService.*(..))"/>
+		<!-- the execution of any method defined in the service package: execution(*com.xyz.service.*.*(..))  -->		
 		<aop:advisor advice-ref="customAuthenticationInterceptor" pointcut="execution(* au.com.uptick.gwt.maven.sample.client.auth.services.SecurityService.*(..))"/>
 	</aop:config>
 		
