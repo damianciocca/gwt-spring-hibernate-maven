@@ -5,10 +5,12 @@ import java.util.List;
 import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
 import au.com.uptick.gwt.maven.sample.client.app.Presenter;
 import au.com.uptick.gwt.maven.sample.client.auth.event.AddRoleEvent;
+import au.com.uptick.gwt.maven.sample.client.auth.event.RemovedRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.UpdateRoleEvent;
+import au.com.uptick.gwt.maven.sample.client.auth.event.UpdatedRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
+import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 import au.com.uptick.gwt.maven.sample.shared.auth.model.Role;
-import au.com.uptick.gwt.maven.sample.shared.auth.model.dto.RoleDto;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -63,8 +65,6 @@ public class RoleListPresenter implements Presenter {
 		
 	}
 
-	// TODO cuando se arme el servicio, tmb debe ir como parametro de entrada en
-	// el constructor.
 	public RoleListPresenter(SecurityServiceAsync securityService, HandlerManager eventBus, Display display) {
 		
 		this.securityService = securityService;
@@ -82,6 +82,7 @@ public class RoleListPresenter implements Presenter {
 
 		display.getAddButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				
 				System.out.println("eventBus => AddRoleEvent");
 				eventBus.fireEvent(new AddRoleEvent());
 			}
@@ -89,6 +90,7 @@ public class RoleListPresenter implements Presenter {
 		
 		display.getEditButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				
 				System.out.println("eventBus => EditRoleEvent");
 				List<RoleDto> selectedRows = display.getSelectedRows();
 				if (selectedRows.size() == 1){
@@ -102,9 +104,33 @@ public class RoleListPresenter implements Presenter {
 		display.getDeleteButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-				// Aqui no invocamos al eventBus. 
+				if (!display.getSelectedRows().isEmpty()){
+					doRemove(display.getSelectedRows());
+				} else {
+					System.out.println("Debe seleccionar al menos un elemento");
+				}
 			}
 		});
+	}
+
+	protected void doRemove(List<RoleDto> roles) {
+
+		securityService.deleteRoles(roles, new MyAsyncCallback<List<RoleDto>>() {
+
+			public void onSuccess(List<RoleDto> result) {
+				
+				System.out.println("onSuccess...");
+				eventBus.fireEvent(new RemovedRoleEvent(result));
+			}
+
+			@Override
+			public void onError(Throwable caught, boolean alreadyHandledError) {
+				
+				System.out.println("onError...");
+			}
+			
+		});
+		
 	}
 
 	private void retriveRoles() {

@@ -4,6 +4,8 @@ import au.com.uptick.gwt.maven.sample.client.auth.event.AddRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.AddRoleEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.AddedRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.AddedRoleEventHandler;
+import au.com.uptick.gwt.maven.sample.client.auth.event.RemovedRoleEvent;
+import au.com.uptick.gwt.maven.sample.client.auth.event.RemovedRoleEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.UpdateRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.UpdateRoleEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.CancelledUpdateOrAddRoleEvent;
@@ -36,6 +38,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private static final String AUTH_ROLES_LIST = "auth_roles_list";
 	private static final String AUTH_ROLES_EDIT = "auth_roles_edit";
 	private static final String AUTH_ROLES_ADD = "auth_roles_add";
+	private static final String AUTH_ROLES_REMOVE = "auth_roles_remove";
 	private HandlerManager eventBus;
 	private HasWidgets container;
 	private final SecurityServiceAsync securityService;
@@ -86,6 +89,15 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			}
 		});
 		
+		eventBus.addHandler(RemovedRoleEvent.TYPE, new RemovedRoleEventHandler() {
+			public void onRemovedRole(RemovedRoleEvent event) {
+				System.out.println("Removed role => " + event.toString());				
+				// Como el token es el mismo, no se va a ejecutar el onValueChange mediante History.newItem(AUTH_ROLES_LIST);				
+				// Por ende, forzamos que se ejecute.
+				History.fireCurrentHistoryState();
+			}
+		});
+		
 	}
 
 	public void onValueChange(ValueChangeEvent<String> event) {
@@ -103,9 +115,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 				presenter = new RoleFormPresenter(securityService, eventBus, new RoleFormView());
 				presenter.go(container);
 			}  else if (token.equals(AUTH_ROLES_EDIT)) {
-				// Esto funcion para el caso que el usuario quiera volver para atras al formulario 
-				// Para esto se debera mantener el estado.
 				presenter = new RoleFormPresenter(securityService, eventBus, new RoleFormView());
+				presenter.go(container);
+			}  else if (token.equals(AUTH_ROLES_REMOVE)) {
+				presenter = new RoleListPresenter(securityService, eventBus, new RoleListView());
 				presenter.go(container);
 			} else {
 				System.out.println("No se obtuvo el presenter para el token: " + token);

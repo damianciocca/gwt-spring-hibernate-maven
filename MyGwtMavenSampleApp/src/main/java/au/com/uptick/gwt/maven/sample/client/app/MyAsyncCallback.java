@@ -1,9 +1,8 @@
 package au.com.uptick.gwt.maven.sample.client.app;
 
-import au.com.uptick.gwt.maven.sample.client.auth.exceptions.CustomAuthorizationException;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.InvocationException;
+import au.com.uptick.gwt.maven.sample.client.auth.exceptions.SecurityException;
 
 /**
  * Custom AsyncCallbak para el manejo de las excepciones conocidas y actue en consecuencia
@@ -14,11 +13,11 @@ public abstract class MyAsyncCallback<T> implements AsyncCallback<T>{
 
 	public void onFailure(Throwable caught) {
 
-		if (caught instanceof CustomAuthorizationException) {
+		if (caught instanceof SecurityException) {
 			// TODO armar un popup  
 			// WindowHelper.showUnExpectedErrorMessage("No se pudo acceder al servidor", "No se pudo acceder al servidor [" + caught.getMessage() + "]");
 			System.out.println("***********************************");
-			System.out.println("TODO lanzar un popup que maneje esta excepcion => CustomAuthorizationException");
+			System.out.println("TODO lanzar un popup que maneje esta excepcion => SecurityException");
 			System.out.println("***********************************");
 		} else if (caught instanceof InvocationException) {
 			// TODO armar un popup  

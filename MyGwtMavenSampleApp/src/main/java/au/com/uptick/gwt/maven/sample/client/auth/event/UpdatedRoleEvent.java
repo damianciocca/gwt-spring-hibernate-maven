@@ -1,6 +1,6 @@
 package au.com.uptick.gwt.maven.sample.client.auth.event;
 
-import au.com.uptick.gwt.maven.sample.shared.auth.model.dto.RoleDto;
+import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 
 import com.google.gwt.event.shared.GwtEvent;
 

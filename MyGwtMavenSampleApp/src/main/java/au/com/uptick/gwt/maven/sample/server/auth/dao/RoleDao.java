@@ -1,4 +1,4 @@
-package au.com.uptick.gwt.maven.sample.server.dao.auth;
+package au.com.uptick.gwt.maven.sample.server.auth.dao;
 
 import org.springframework.stereotype.Repository;
 

@@ -31,7 +31,7 @@ public class CustomAuthenticationInterceptor implements MethodInterceptor {
 		} catch (Throwable e) {
 			if (e instanceof AccessDeniedException){
 				System.out.println("CustomAuthenticationInterceptor access denied exception");
-				throw new CustomAuthorizationException(e);
+				throw new SecurityException(e);
 			}
 			throw e;
 		}

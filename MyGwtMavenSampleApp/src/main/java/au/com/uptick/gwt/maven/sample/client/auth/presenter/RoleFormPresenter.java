@@ -7,7 +7,7 @@ import au.com.uptick.gwt.maven.sample.client.auth.event.AddedRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.CancelledUpdateOrAddRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.UpdatedRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
-import au.com.uptick.gwt.maven.sample.shared.auth.model.dto.RoleDto;
+import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

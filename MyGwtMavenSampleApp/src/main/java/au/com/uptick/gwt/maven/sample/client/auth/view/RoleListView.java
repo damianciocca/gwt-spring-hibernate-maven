@@ -8,7 +8,7 @@ import au.com.uptick.gwt.maven.sample.client.app.utils.SimpleListModel;
 import au.com.uptick.gwt.maven.sample.client.app.utils.SimpleModelEvent;
 import au.com.uptick.gwt.maven.sample.client.app.utils.SimpleModelListener;
 import au.com.uptick.gwt.maven.sample.client.auth.presenter.RoleListPresenter;
-import au.com.uptick.gwt.maven.sample.shared.auth.model.dto.RoleDto;
+import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
