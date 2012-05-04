@@ -16,4 +16,6 @@ public interface SecurityServiceAsync {
 
 	void deleteRoles(List<RoleDto> roles, AsyncCallback<List<RoleDto>> callback);
 
+	void getUserLogged(AsyncCallback<String> callback);
+
 }

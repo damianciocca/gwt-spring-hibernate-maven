@@ -93,7 +93,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		authorities.add(new GrantedAuthorityImpl("PERM_LIST_ROLES"));
 		authorities.add(new GrantedAuthorityImpl("PERM_REMOVE_ROLES"));
 		
-		Authentication customAuthentication = new CustomUserAuthentication(authorities, authentication);
+		Authentication customAuthentication = new CustomUserAuthentication(authorities, 
+																		   authentication, 
+																		   "Damian", 
+																		   "Ciocca", 
+																		   "damianciocca@gmail.com");
 		
 		/*
 		 * In addition, the setAuthenticated method has to be invoked (with true as argument) in order to indicate to the rest 

@@ -24,5 +24,7 @@ public interface SecurityService extends RemoteService {
 	
 	@PreAuthorize("hasRole('PERM_REMOVE_ROLES')")
 	List<RoleDto> deleteRoles(List<RoleDto> roles) throws SecurityException;
+	
+	String getUserLogged();
 
 }

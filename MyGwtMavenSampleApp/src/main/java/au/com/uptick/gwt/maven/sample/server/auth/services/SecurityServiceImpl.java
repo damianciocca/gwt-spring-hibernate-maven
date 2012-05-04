@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityService;
+import au.com.uptick.gwt.maven.sample.server.auth.CustomUserAuthentication;
 import au.com.uptick.gwt.maven.sample.server.auth.dao.RoleDao;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 import au.com.uptick.gwt.maven.sample.shared.auth.model.Role;
@@ -71,6 +74,17 @@ public class SecurityServiceImpl implements SecurityService{
 		return result;
 	}
 	
+	public String getUserLogged() {
+		
+		/**
+		 * By default the SecurityContextHolder uses a ThreadLocal to store these details, 
+		 * which means that the security context is always available to methods in the same thread of execution.
+		 */
+		CustomUserAuthentication user = (CustomUserAuthentication) SecurityContextHolder.getContext().getAuthentication();
+		return user.getName() + " " + user.getSurname();
+	}
+
+	
 	private Role bindFrom(RoleDto dto){
 		
 		Role role = new Role();		
@@ -89,6 +103,7 @@ public class SecurityServiceImpl implements SecurityService{
 		return dto;
 	}
 
+	
 	
 
 
