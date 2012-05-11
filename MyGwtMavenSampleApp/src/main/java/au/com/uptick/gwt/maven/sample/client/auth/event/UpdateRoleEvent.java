@@ -4,9 +4,9 @@ import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class UpdateRoleEvent extends GwtEvent<UpdateRoleEventHandler> {
+public class UpdateRoleEvent extends GwtEvent<IUpdateRoleEventHandler> {
 
-	public static Type<UpdateRoleEventHandler> TYPE = new Type<UpdateRoleEventHandler>();
+	public static Type<IUpdateRoleEventHandler> TYPE = new Type<IUpdateRoleEventHandler>();
 	private RoleDto role;
 
 	public UpdateRoleEvent(RoleDto role) {
@@ -14,12 +14,12 @@ public class UpdateRoleEvent extends GwtEvent<UpdateRoleEventHandler> {
 	}
 
 	@Override
-	public Type<UpdateRoleEventHandler> getAssociatedType() {
+	public Type<IUpdateRoleEventHandler> getAssociatedType() {
 		return TYPE;
 	}
 
 	@Override
-	protected void dispatch(UpdateRoleEventHandler handler) {
+	protected void dispatch(IUpdateRoleEventHandler handler) {
 		handler.onUpdateRole(this);
 	}
 

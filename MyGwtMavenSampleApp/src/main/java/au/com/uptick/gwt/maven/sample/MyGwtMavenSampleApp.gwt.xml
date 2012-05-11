@@ -9,11 +9,20 @@
   <inherits name='com.google.gwt.user.theme.standard.Standard'/>
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
-
+  
   <!-- Other module inherits                                      -->
+  <inherits name="com.google.gwt.activity.Activity"/>
+  <inherits name="com.google.gwt.place.Place"/>
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='au.com.uptick.gwt.maven.sample.client.MyGwtMavenSampleApp'/>
+  
+  
+  <!--  TODO ESTO LO PODEMOS QUITAR Y PASAR EN TODOS LOS METODOS EL PlaceController y nada mas -->
+  <replace-with class="au.com.uptick.gwt.maven.sample.client.app.ClientFactoryImpl">
+	 <when-type-is class="au.com.uptick.gwt.maven.sample.client.app.ClientFactory"/>
+  </replace-with>
+  
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

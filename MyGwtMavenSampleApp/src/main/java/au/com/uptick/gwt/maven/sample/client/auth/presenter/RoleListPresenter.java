@@ -2,21 +2,25 @@ package au.com.uptick.gwt.maven.sample.client.auth.presenter;
 
 import java.util.List;
 
+import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
 import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
-import au.com.uptick.gwt.maven.sample.client.app.Presenter;
-import au.com.uptick.gwt.maven.sample.client.auth.event.AddRoleEvent;
+import au.com.uptick.gwt.maven.sample.client.auth.event.IRemoveRoleEventHandler;
+import au.com.uptick.gwt.maven.sample.client.auth.event.ISearchRoleEventHandler;
+import au.com.uptick.gwt.maven.sample.client.auth.event.RemoveRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.RemovedRoleEvent;
-import au.com.uptick.gwt.maven.sample.client.auth.event.UpdateRoleEvent;
-import au.com.uptick.gwt.maven.sample.client.auth.event.UpdatedRoleEvent;
+import au.com.uptick.gwt.maven.sample.client.auth.event.SearchRoleEvent;
+import au.com.uptick.gwt.maven.sample.client.auth.place.RoleFormPlace;
+import au.com.uptick.gwt.maven.sample.client.auth.place.RoleListPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
-import au.com.uptick.gwt.maven.sample.shared.auth.model.Role;
 
+import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.ResettableEventBus;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -29,13 +33,13 @@ import com.google.gwt.user.client.ui.Widget;
  * @author dciocca
  * 
  */
-public class RoleListPresenter implements Presenter {
+public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEventHandler, ISearchRoleEventHandler{
 
-	// private final RoleService rpcService;
-	private final HandlerManager eventBus;
 	private final Display display;
-	private List<Role> roleList;
 	private final SecurityServiceAsync securityService;
+	private final ClientFactory clientFactory;
+	private final RoleListPlace place;
+	private EventBus eventBus;
 	
 	/**
 	 * Interafce que debera implementar la vista (RoleView) 	
@@ -52,25 +56,36 @@ public class RoleListPresenter implements Presenter {
 		void setData(List<RoleDto> data);
 		Widget asWidget();
 	}
-	
-	/**
-	 * Permite mostrar el widget (la vista) en el root panel
-	 */
-	public void go(HasWidgets container) {
 
+	public RoleListPresenter(RoleListPlace place, 
+							 ClientFactory clientFactory, 
+							 SecurityServiceAsync securityService, 
+							 Display display) {
+		
+		this.place = place;
+		this.securityService = securityService;
+		this.clientFactory = clientFactory;
+		this.display = display;
 		bind();
-		container.clear();
-		container.add(display.asWidget());
-		retriveRoles();
 		
 	}
-
-	public RoleListPresenter(SecurityServiceAsync securityService, HandlerManager eventBus, Display display) {
+	
+	/**
+	 * Este metodo sera invocado mediante el ActivityManager para empezar con la actividad	
+	 */
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		
-		this.securityService = securityService;
-		this.eventBus = eventBus;
-		this.display = display;
+		// TODO aca mediante el place, podemos recuperar el estado anterior de la grilla..
 		
+		//Cuando para la actividad los eventos registrados se quitan evitando problemas de memory leak!
+		this.eventBus = new ResettableEventBus(eventBus);
+		this.eventBus.addHandler(RemoveRoleEvent.TYPE, this);
+		this.eventBus.addHandler(SearchRoleEvent.TYPE, this);
+		System.out.println("Fires the event and handler receive events of this type: SearchRoleEvent");
+		panel.setWidget(display.asWidget());
+		// No anda desde este metodo el fire del eventBus
+		//this.eventBus.fireEvent(new SearchRoleEvent());
+		onSearchRole(new SearchRoleEvent());
 	}
 
 	/**
@@ -83,18 +98,19 @@ public class RoleListPresenter implements Presenter {
 		display.getAddButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-				System.out.println("eventBus => AddRoleEvent");
-				eventBus.fireEvent(new AddRoleEvent());
+				System.out.println("Request a change to a new place: RoleFormPlace");				
+				clientFactory.getPlaceController().goTo(new RoleFormPlace(null));
 			}
 		});
 		
 		display.getEditButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-				System.out.println("eventBus => EditRoleEvent");
+				System.out.println("Request a change to a new place: RoleFormPlace");
 				List<RoleDto> selectedRows = display.getSelectedRows();
 				if (selectedRows.size() == 1){
-					eventBus.fireEvent(new UpdateRoleEvent(selectedRows.get(0)));
+					RoleDto role = selectedRows.get(0);					
+					clientFactory.getPlaceController().goTo(new RoleFormPlace(role.getId()));
 				} else {
 					System.out.println("Debe seleccionar solo un elemento");
 				}
@@ -105,7 +121,10 @@ public class RoleListPresenter implements Presenter {
 			public void onClick(ClickEvent event) {
 				
 				if (!display.getSelectedRows().isEmpty()){
-					doRemove(display.getSelectedRows());
+					List<RoleDto> selectedRows = display.getSelectedRows();
+					System.out.println("Fires the event and handler receive events of this type: RemoveRoleEvent");
+					eventBus.fireEvent(new RemoveRoleEvent(selectedRows));
+					clientFactory.getPlaceController().goTo(new RoleListPlace());
 				} else {
 					System.out.println("Debe seleccionar al menos un elemento");
 				}
@@ -113,14 +132,14 @@ public class RoleListPresenter implements Presenter {
 		});
 	}
 
-	protected void doRemove(List<RoleDto> roles) {
-
-		securityService.deleteRoles(roles, new MyAsyncCallback<List<RoleDto>>() {
+	public void onRemoveRole(RemoveRoleEvent event) {
+	
+		securityService.deleteRoles(event.getRoles(), new MyAsyncCallback<List<RoleDto>>() {
 
 			public void onSuccess(List<RoleDto> result) {
 				
 				System.out.println("onSuccess...");
-				eventBus.fireEvent(new RemovedRoleEvent(result));
+				clientFactory.getEventBus().fireEvent(new RemovedRoleEvent(result));
 			}
 
 			@Override
@@ -128,12 +147,10 @@ public class RoleListPresenter implements Presenter {
 				
 				System.out.println("onError...");
 			}
-			
 		});
-		
 	}
 
-	private void retriveRoles() {
+	public void onSearchRole(SearchRoleEvent event) {
 
 		/*
 		 * NO llevar las entities de JPA clientside:
@@ -151,21 +168,23 @@ public class RoleListPresenter implements Presenter {
 		 * not belong to the JRE emulation supported by GWT 1.4 (note : the Java
 		 * SQL dates are now supported by GWT 1.5)
 		 */
-		securityService.retriveRoles(new RoleDto(), new MyAsyncCallback<List<RoleDto>>() {
+		securityService.retriveRoles(event.getFilter(), new MyAsyncCallback<List<RoleDto>>() {
 
-					public void onSuccess(List<RoleDto> roles) {
+			public void onSuccess(List<RoleDto> roles) {
 
-						System.out.println("onSuccess...");
-						display.setData(roles);
-					}
+				System.out.println("onSuccess...");
+				display.setData(roles);
+			}
 
-					@Override
-					public void onError(Throwable caught, boolean alreadyHandledError) {
+			@Override
+			public void onError(Throwable caught, boolean alreadyHandledError) {
 
-						System.out.println("onError...");
+				System.out.println("onError...");
 
-					}
-				}
-		);
+			}
+		});
+		
 	}
+
+	
 }
