@@ -1,6 +1,7 @@
 package au.com.uptick.gwt.maven.sample.client.auth.presenter;
 
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
+import au.com.uptick.gwt.maven.sample.client.app.utils.FormTypeEnum;
 import au.com.uptick.gwt.maven.sample.client.auth.place.MainPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.place.RoleFormPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.place.RoleListPlace;
@@ -49,9 +50,9 @@ public class AppActivityMapper implements ActivityMapper {
 		} else if (place instanceof RoleFormPlace){
 			RoleFormPlace roleFormPlace = (RoleFormPlace)place;
 			if (roleFormPlace.getRoleId() != null){
-				return new RoleFormPresenter((RoleFormPlace)place, clientFactory, securityService, new RoleFormView(), roleFormPlace.getRoleId());
+				return new RoleFormPresenter((RoleFormPlace)place, clientFactory, securityService, new RoleFormView(), FormTypeEnum.EDIT_FORM);
 			} else {
-				return new RoleFormPresenter((RoleFormPlace)place, clientFactory, securityService, new RoleFormView()); 
+				return new RoleFormPresenter((RoleFormPlace)place, clientFactory, securityService, new RoleFormView(), FormTypeEnum.ADD_FORM); 
 			}
 		}
 		

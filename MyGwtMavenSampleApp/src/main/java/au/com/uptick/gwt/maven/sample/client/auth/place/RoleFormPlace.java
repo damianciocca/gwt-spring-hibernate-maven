@@ -8,7 +8,7 @@ public class RoleFormPlace extends Place {
 	private Long roleId;
 	
 	public RoleFormPlace(Long id) {
-		
+		this.roleId = id;
 	}
 	
 	public static class Tokenizer implements PlaceTokenizer<RoleFormPlace> {

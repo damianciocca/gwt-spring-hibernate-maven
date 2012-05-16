@@ -13,6 +13,8 @@ public interface SecurityServiceAsync {
 	void upateRole(RoleDto role, AsyncCallback<RoleDto> callback);
 
 	void retriveRoles(RoleDto role, AsyncCallback<List<RoleDto>> callback);
+	
+	void retriveRoleById(Long id, AsyncCallback<RoleDto> callback);
 
 	void deleteRoles(List<RoleDto> roles, AsyncCallback<List<RoleDto>> callback);
 

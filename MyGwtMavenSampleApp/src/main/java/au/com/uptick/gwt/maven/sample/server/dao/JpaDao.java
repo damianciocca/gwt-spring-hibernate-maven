@@ -14,7 +14,7 @@ import org.springframework.orm.jpa.JpaCallback;
 public class JpaDao<PK, E>{
 
 	@PersistenceContext        
-	private EntityManager entityManager;
+	protected EntityManager entityManager;
 	
 	protected Class<E> entityClass;
 	

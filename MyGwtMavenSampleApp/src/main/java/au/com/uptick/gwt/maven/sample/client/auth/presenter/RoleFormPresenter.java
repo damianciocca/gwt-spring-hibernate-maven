@@ -1,7 +1,5 @@
 package au.com.uptick.gwt.maven.sample.client.auth.presenter;
 
-import java.util.List;
-
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
 import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
 import au.com.uptick.gwt.maven.sample.client.app.utils.FormTypeEnum;
@@ -17,6 +15,8 @@ import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -34,7 +34,6 @@ public class RoleFormPresenter extends AbstractActivity implements ISaveRoleEven
 	private final SecurityServiceAsync securityService;
 	private final RoleFormPlace place;
 	private final ClientFactory clientFactory;
-	private Long roleId = null;
 	
 	public interface Display {
 
@@ -46,32 +45,23 @@ public class RoleFormPresenter extends AbstractActivity implements ISaveRoleEven
 	}
 	
 	/**
-	 * Constructor que arma el formulario vacio. 
-	 * Para ejecutar un alta.
+	 * Constructor que arma el formulario vacio para el alta o un formulario con un rol para la edicion. 
 	 * 
 	 */
-	public RoleFormPresenter(RoleFormPlace place, ClientFactory clientFactory, SecurityServiceAsync securityService, Display display) {
+	public RoleFormPresenter(RoleFormPlace place, 
+							 ClientFactory clientFactory, 
+							 SecurityServiceAsync securityService, 
+							 Display display, 
+							 FormTypeEnum formType) {
 		
 		this.place = place;
 		this.clientFactory = clientFactory;
 		this.securityService = securityService;
 		this.display = display;
 		bind();	
-		this.formType = FormTypeEnum.ADD_FORM;
+		this.formType = formType;
 	}	
 	
-
-	/**
-	 * Constructor que arma el formulario con datos. 
-	 * Para ejecutar una modificacion.
-	 * 
-	 */
-	public RoleFormPresenter(RoleFormPlace place, ClientFactory clientFactory, SecurityServiceAsync securityService, Display display, Long roleId) {
-		
-		this(place, clientFactory, securityService, display);
-		this.roleId = roleId;				
-		this.formType = FormTypeEnum.EDIT_FORM;		
-	}
 
 	/**
 	 * adding your handlers to the bus passed to the start method would have the same effect re. your handlers, 
@@ -82,19 +72,30 @@ public class RoleFormPresenter extends AbstractActivity implements ISaveRoleEven
 	 * 
 	 * Don't inject the bus! use the one from start()!
 	 */
-	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		
-		// TODO aca mediante el place, podemos recuperar el estado anterior del form..
+	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		
 		//Cuando para la actividad los eventos registrados se quitan evitando problemas de memory leak!
 		this.eventBus = eventBus;
 		this.eventBus.addHandler(SaveRoleEvent.TYPE, this);
 		this.eventBus.addHandler(UpdateRoleEvent.TYPE, this);
-		if (roleId != null){
-			RoleDto filter = new RoleDto();
-			filter.setId(roleId);
-			//this.eventBus.fireEvent(new SearchRoleEvent(filter));
-			onSearchRole(new SearchRoleEvent(filter));
+		this.eventBus.addHandler(SearchRoleEvent.TYPE, this);
+
+		if (FormTypeEnum.EDIT_FORM.equals(formType)){			
+			if (place.getRoleId() != null){
+				final RoleDto filter = new RoleDto();
+				filter.setId(place.getRoleId());
+				// If you fire an event inside a start(), the event will be dispatched before the remaining activities are started. 
+				// So there is a good chance that the activity handling that event has not been started yet (the registration was not done).
+				// Scheduler is a utility class provided by GWT. ScheduleDeferred will execute the command after the current browser event loop returns.
+				Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+				    public void execute(){
+				    	eventBus.fireEvent(new SearchRoleEvent(filter));
+				    }
+				});
+			} else {
+				// TODO lanzar una ventana de error.
+				System.out.println("no deberia pasar que no venga un ID de role para editar...");
+			}
 		}
 		panel.setWidget(display.asWidget());
 	}
@@ -177,12 +178,11 @@ public class RoleFormPresenter extends AbstractActivity implements ISaveRoleEven
 
 	public void onSearchRole(SearchRoleEvent event) {
 
-		securityService.retriveRoles(event.getFilter(), new MyAsyncCallback<List<RoleDto>>() {
+		securityService.retriveRoleById(event.getFilter().getId(), new MyAsyncCallback<RoleDto>() {
 
-			public void onSuccess(List<RoleDto> roles) {
+			public void onSuccess(RoleDto roleDto) {
 				
-				// TODO mejorar esto!
-				RoleDto roleDto = roles.get(0);
+				role = roleDto;
 				display.getNameTxt().setValue(roleDto.getName());
 				display.getDescriptionTxt().setValue(roleDto.getDescription());
 				System.out.println("onSuccess...");

@@ -20,11 +20,16 @@ public interface SecurityService extends RemoteService {
 	RoleDto upateRole(RoleDto role) throws SecurityException;
 	
 	@PreAuthorize("hasRole('PERM_LIST_ROLES')")
-	List<RoleDto> retriveRoles(RoleDto role) throws SecurityException;
+	List<RoleDto> retriveRoles(RoleDto filter) throws SecurityException;
 	
 	@PreAuthorize("hasRole('PERM_REMOVE_ROLES')")
 	List<RoleDto> deleteRoles(List<RoleDto> roles) throws SecurityException;
 	
+	@PreAuthorize("hasRole('PERM_LIST_ROLES')")
+	RoleDto retriveRoleById(Long id) throws SecurityException;
+	
 	String getUserLogged();
+
+	
 
 }

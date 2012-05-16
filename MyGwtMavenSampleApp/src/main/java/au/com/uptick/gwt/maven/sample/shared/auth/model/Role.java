@@ -15,7 +15,7 @@ public class Role implements java.io.Serializable{
 	@SequenceGenerator(name="ROLE_SEQUENCE_GENERATOR",sequenceName="ROLE_SEQ")
 	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ROLE_SEQUENCE_GENERATOR")
 	@Column(name="id")
-    private long roleId;
+    private Long roleId;
    
     @Column(name="name", nullable = false, length=50)
     private String roleName;
@@ -27,18 +27,18 @@ public class Role implements java.io.Serializable{
 		super();
 	}
 
-	public Role(long roleId, String roleName, String roleDescription) {
+	public Role(Long roleId, String roleName, String roleDescription) {
 		super();
 		this.roleId = roleId;
 		this.roleName = roleName;
 		this.roleDescription = roleDescription;
 	}
 
-	public long getRoleId() {
+	public Long getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(long roleId) {
+	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
 

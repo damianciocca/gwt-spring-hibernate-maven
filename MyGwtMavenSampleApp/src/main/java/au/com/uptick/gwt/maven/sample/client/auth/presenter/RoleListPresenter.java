@@ -15,6 +15,8 @@ import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -73,7 +75,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	/**
 	 * Este metodo sera invocado mediante el ActivityManager para empezar con la actividad	
 	 */
-	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		
 		// TODO aca mediante el place, podemos recuperar el estado anterior de la grilla..
 		
@@ -83,9 +85,14 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 		this.eventBus.addHandler(SearchRoleEvent.TYPE, this);
 		System.out.println("Fires the event and handler receive events of this type: SearchRoleEvent");
 		panel.setWidget(display.asWidget());
-		// No anda desde este metodo el fire del eventBus
-		//this.eventBus.fireEvent(new SearchRoleEvent());
-		onSearchRole(new SearchRoleEvent());
+		// If you fire an event inside a start(), the event will be dispatched before the remaining activities are started. 
+		// So there is a good chance that the activity handling that event has not been started yet (the registration was not done).
+		// Scheduler is a utility class provided by GWT. ScheduleDeferred will execute the command after the current browser event loop returns.
+		Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+		    public void execute(){
+		    	eventBus.fireEvent(new SearchRoleEvent());
+		    }
+		});
 	}
 
 	/**

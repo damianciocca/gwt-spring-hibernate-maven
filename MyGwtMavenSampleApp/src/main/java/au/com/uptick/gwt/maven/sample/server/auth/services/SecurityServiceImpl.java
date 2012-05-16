@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import au.com.uptick.gwt.maven.sample.client.auth.exceptions.SecurityException;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityService;
 import au.com.uptick.gwt.maven.sample.server.auth.CustomUserAuthentication;
 import au.com.uptick.gwt.maven.sample.server.auth.dao.RoleDao;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 import au.com.uptick.gwt.maven.sample.shared.auth.model.Role;
-
-import au.com.uptick.gwt.maven.sample.client.auth.exceptions.SecurityException;
 
 @Service("securityService")
 public class SecurityServiceImpl implements SecurityService{
@@ -44,11 +42,10 @@ public class SecurityServiceImpl implements SecurityService{
 		return result;
 	}
 	
-	public List<RoleDto> retriveRoles(RoleDto role) throws SecurityException{
+	public List<RoleDto> retriveRoles(RoleDto filter) throws SecurityException{
 		
-		// TODO el parametro lo utilizaremos como filtro
 		System.out.println("SecurityServiceImpl => retriveRoles [INICIO]");
-		List<Role> roles = roleDao.findAll();
+		List<Role> roles = roleDao.retriveRoles(filter);
 		List<RoleDto> result = new ArrayList<RoleDto>();
 		for (Role r : roles) {
 			result.add(bindFrom(r));
@@ -56,6 +53,16 @@ public class SecurityServiceImpl implements SecurityService{
 		System.out.println("SecurityServiceImpl => retriveRoles [FIN]");
 		return result;
 	}
+	
+	public RoleDto retriveRoleById(Long id) throws SecurityException {
+		
+		System.out.println("SecurityServiceImpl => retriveRoleById [INICIO]");
+		Role role = roleDao.findById(id);
+		RoleDto result = bindFrom(role);
+		System.out.println("SecurityServiceImpl => retriveRoleById [FIN]");
+		return result;
+	}
+
 	
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=SecurityException.class)
 	public List<RoleDto> deleteRoles(List<RoleDto> roles) throws SecurityException {
@@ -103,6 +110,7 @@ public class SecurityServiceImpl implements SecurityService{
 		return dto;
 	}
 
+	
 	
 	
 
