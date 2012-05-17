@@ -7,7 +7,6 @@ import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
 import au.com.uptick.gwt.maven.sample.client.auth.event.IRemoveRoleEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.ISearchRoleEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.RemoveRoleEvent;
-import au.com.uptick.gwt.maven.sample.client.auth.event.RemovedRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.SearchRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.place.RoleFormPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.place.RoleListPlace;
@@ -146,7 +145,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 			public void onSuccess(List<RoleDto> result) {
 				
 				System.out.println("onSuccess...");
-				clientFactory.getEventBus().fireEvent(new RemovedRoleEvent(result));
+				clientFactory.getEventBus().fireEvent(new SearchRoleEvent());
 			}
 
 			@Override
