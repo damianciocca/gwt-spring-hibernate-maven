@@ -4,6 +4,7 @@ import java.util.List;
 
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
 import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
+import au.com.uptick.gwt.maven.sample.client.app.utils.HasSelectedValue;
 import au.com.uptick.gwt.maven.sample.client.auth.event.IRemoveRoleEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.ISearchRoleEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.RemoveRoleEvent;
@@ -52,9 +53,13 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 		HasClickHandlers getAddButton();
 		HasClickHandlers getDeleteButton();
 		HasClickHandlers getEditButton();
+		HasClickHandlers getSearchButton();
+		// List roles TODO esto tendriamos que mejorarlo para que solo tengamos el List
 		HasClickHandlers getList();
-		List<RoleDto> getSelectedRows();
-		void setData(List<RoleDto> data);
+		List<RoleDto> getListSelectedRows();
+		void setListRows(List<RoleDto> data);
+		// Combo roles
+		HasSelectedValue<RoleDto> getRoleFilter();
 		Widget asWidget();
 	}
 
@@ -92,7 +97,11 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 		    	eventBus.fireEvent(new SearchRoleEvent());
 		    }
 		});
+		// TODO hacer esto mediante el eventbus....
+		retriveAllRoles();
 	}
+
+	
 
 	/**
 	 * Realiza el binding de cada uno de los componentes de la interface con el evento
@@ -113,7 +122,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 			public void onClick(ClickEvent event) {
 				
 				System.out.println("Request a change to a new place: RoleFormPlace");
-				List<RoleDto> selectedRows = display.getSelectedRows();
+				List<RoleDto> selectedRows = display.getListSelectedRows();
 				if (selectedRows.size() == 1){
 					RoleDto role = selectedRows.get(0);					
 					clientFactory.getPlaceController().goTo(new RoleFormPlace(role.getId()));
@@ -126,14 +135,27 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 		display.getDeleteButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-				if (!display.getSelectedRows().isEmpty()){
-					List<RoleDto> selectedRows = display.getSelectedRows();
+				if (!display.getListSelectedRows().isEmpty()){
+					List<RoleDto> selectedRows = display.getListSelectedRows();
 					System.out.println("Fires the event and handler receive events of this type: RemoveRoleEvent");
 					eventBus.fireEvent(new RemoveRoleEvent(selectedRows));
 					clientFactory.getPlaceController().goTo(new RoleListPlace());
 				} else {
 					System.out.println("Debe seleccionar al menos un elemento");
 				}
+			}
+		});
+		
+		display.getSearchButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				System.out.println("Fires the event and handler receive events of this type: SearchRoleEvent");
+				RoleDto filter = new RoleDto();
+				RoleDto roleSelected = display.getRoleFilter().getSelectedValue();
+				if (roleSelected != null){
+					filter.setName(roleSelected.getName());
+				}
+				eventBus.fireEvent(new SearchRoleEvent(filter));	
 			}
 		});
 	}
@@ -179,7 +201,26 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 			public void onSuccess(List<RoleDto> roles) {
 
 				System.out.println("onSuccess...");
-				display.setData(roles);
+				display.setListRows(roles);			
+			}
+
+			@Override
+			public void onError(Throwable caught, boolean alreadyHandledError) {
+
+				System.out.println("onError...");
+
+			}
+		});		
+	}
+	
+	public void retriveAllRoles() {
+		// TODO hacer esto mediante el eventbus....
+		securityService.retriveRoles(null, new MyAsyncCallback<List<RoleDto>>() {
+
+			public void onSuccess(List<RoleDto> roles) {
+
+				System.out.println("onSuccess...");
+				display.getRoleFilter().setValues(roles);			
 			}
 
 			@Override
@@ -189,7 +230,6 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 
 			}
 		});
-		
 	}
 
 	

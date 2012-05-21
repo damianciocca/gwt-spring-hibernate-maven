@@ -1,12 +1,14 @@
 package au.com.uptick.gwt.maven.sample.client.auth.view;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import au.com.uptick.gwt.maven.sample.client.app.utils.HasSelectedValue;
 import au.com.uptick.gwt.maven.sample.client.app.utils.SimpleListModel;
 import au.com.uptick.gwt.maven.sample.client.app.utils.SimpleModelEvent;
 import au.com.uptick.gwt.maven.sample.client.app.utils.SimpleModelListener;
+import au.com.uptick.gwt.maven.sample.client.app.utils.widgets.SimpleListBox;
+import au.com.uptick.gwt.maven.sample.client.app.utils.widgets.SimpleListBox.OptionFormatter;
 import au.com.uptick.gwt.maven.sample.client.auth.presenter.RoleListPresenter;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 
@@ -19,6 +21,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -37,9 +40,11 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class RoleListView extends Composite implements RoleListPresenter.Display {
 
+	private SimpleListBox roleLbox;
 	private final Button addButton = new Button("Add");
 	private final Button deleteButton = new Button("Remove");;
 	private final Button editButton = new Button("Edit");;
+	private final Button searchButton = new Button("Buscar");
 	private FlexTable table = new FlexTable();
 	CheckBox roleCheckBox = new CheckBox();
 	SimpleListModel<RoleDto> tableModel;
@@ -47,8 +52,22 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 	public RoleListView() {
 
 		DecoratorPanel mainPanel = new DecoratorPanel(); 
+		HorizontalPanel filterPanel = new HorizontalPanel();
 		VerticalPanel tablePanel = new VerticalPanel();
 		HorizontalPanel buttonPanel = new HorizontalPanel();
+		
+		Label roleLbl = new Label();
+		roleLbl.setText("Roles");
+		roleLbox = new SimpleListBox<RoleDto>(new OptionFormatter<RoleDto>() {
+
+			public String getLabel(RoleDto option) {
+				return option.getName();
+			}
+
+			public String getValue(RoleDto option) {
+				return option.getId().toString();
+			}
+		});
 
 		// Agregamos el header a la tabla.
 		table.setText(0, 0, "ID");
@@ -78,9 +97,18 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 		buttonPanel.add(addButton);
 		buttonPanel.add(deleteButton);
 		buttonPanel.add(editButton);
+		buttonPanel.add(searchButton);
+		buttonPanel.setSpacing(10);
 		
+		filterPanel.add(roleLbl);
+		filterPanel.setSpacing(10);
+		filterPanel.add(roleLbox);		
+		
+		tablePanel.add(filterPanel);
 		tablePanel.add(table);
+		tablePanel.setSpacing(10);
 		tablePanel.add(buttonPanel);
+		
 		mainPanel.add(tablePanel);
 		
 		initWidget(mainPanel);
@@ -97,12 +125,22 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 	public HasClickHandlers getEditButton() {
 		return editButton;
 	}
+	
+
+	public HasClickHandlers getSearchButton() {
+		return searchButton;
+	}
 
 	public HasClickHandlers getList() {
 		return table;
 	}
+	
+	public HasSelectedValue<RoleDto> getRoleFilter() {
+		return roleLbox;
+	}
+	
 
-	public List<RoleDto> getSelectedRows() {
+	public List<RoleDto> getListSelectedRows() {
 
 		ArrayList<RoleDto> result = new ArrayList<RoleDto>();
 		int rowCount = table.getRowCount();
@@ -115,13 +153,14 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 		return result;
 	}
 
-	public void setData(List<RoleDto> data) {
+	public void setListRows(List<RoleDto> data) {
 
 		System.out.println("RoleView => setData [INICIO]");
 		tableModel = bindTableModel(table, data);
 		System.out.println("RoleView => setData [FIN]");
 	}
 
+	//TODO esto tendriamos que mejorarlo ya que deberiamos crear un componente que haga todo esto internamente...	
 	private SimpleListModel<RoleDto> bindTableModel(final FlexTable table,
 											   		final List<RoleDto> roles) {
 
@@ -159,4 +198,6 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 
 		return simpleModel;
 	}
+
+
 }

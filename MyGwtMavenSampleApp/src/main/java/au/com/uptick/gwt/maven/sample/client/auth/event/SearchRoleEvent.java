@@ -6,8 +6,7 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public class SearchRoleEvent extends GwtEvent<ISearchRoleEventHandler> {
 
-	RoleDto filter = new RoleDto();
-	
+	private RoleDto filter = new RoleDto();
 	public static Type<ISearchRoleEventHandler> TYPE = new Type<ISearchRoleEventHandler>();
 	
 	public SearchRoleEvent(RoleDto filter) {
