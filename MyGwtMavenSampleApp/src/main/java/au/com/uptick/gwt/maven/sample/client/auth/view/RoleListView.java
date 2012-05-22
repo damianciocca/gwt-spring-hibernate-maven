@@ -67,7 +67,7 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 			public String getValue(RoleDto option) {
 				return option.getId().toString();
 			}
-		});
+		}, true);
 
 		// Agregamos el header a la tabla.
 		table.setText(0, 0, "ID");

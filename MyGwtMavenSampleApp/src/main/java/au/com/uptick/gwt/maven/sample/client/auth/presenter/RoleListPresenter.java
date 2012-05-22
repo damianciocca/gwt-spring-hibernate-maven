@@ -213,7 +213,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 
 				System.out.println("onSuccess...");
 				display.setListRows(formData.getListRoles());
-				display.getRoleFilter().setValues(formData.getListRoles());
+				display.getRoleFilter().setValues(formData.getListRoles(), true);
 							
 			}
 

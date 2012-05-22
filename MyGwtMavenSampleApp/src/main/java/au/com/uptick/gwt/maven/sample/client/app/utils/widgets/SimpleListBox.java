@@ -38,20 +38,20 @@ public class SimpleListBox<T> extends ListBox implements HasSelectedValue<T> {
 	 * @param values
 	 * @param formatter
 	 */
-	public SimpleListBox(Collection<T> values, OptionFormatter<T> formatter) {
+	public SimpleListBox(Collection<T> values, OptionFormatter<T> formatter, boolean allowNull) {
 
-		setValues(values);
+		setValues(values, allowNull);
 		setFormatter(formatter);
-	}
+	}	
 	
 	/**
 	 * 
 	 * @param values
 	 * @param formatter
 	 */
-	public SimpleListBox(OptionFormatter<T> formatter) {
+	public SimpleListBox(OptionFormatter<T> formatter, boolean allowNull) {
 
-		this(new ArrayList<T>(), formatter);
+		this(new ArrayList<T>(), formatter, allowNull);
 	}
 
 	public void setFormatter(OptionFormatter<T> formatter) {
@@ -94,7 +94,7 @@ public class SimpleListBox<T> extends ListBox implements HasSelectedValue<T> {
 
 	}
 
-	public void setValues(Collection<T> values) {
+	public void setValues(Collection<T> values, boolean allowNull) {
 
 		// Remove prior options
 		if (options != null) {
@@ -104,6 +104,22 @@ public class SimpleListBox<T> extends ListBox implements HasSelectedValue<T> {
 				this.removeItem(firstOption);
 		}
 		options = (T[]) values.toArray();
+		// Permite null
+		if (allowNull) {
+			// verificamos si ya existe NULL como opcion, para no agregarlo dos veces.
+			boolean nullFound = false;
+			for (int i = 0; i < this.getItemCount(); i++) {
+				if ("".equals(this.getItemText(i))){
+					// ok, null ya esta como opcion.
+					nullFound = true;
+					break;
+				}
+			}
+			if(!nullFound){
+				this.addItem("", null);
+			}
+		}
+		// Se agregan los items al combo
 		for (T option : options) {
 			String optionLabel = formatter.getLabel(option);
 			String optionValue = formatter.getValue(option);

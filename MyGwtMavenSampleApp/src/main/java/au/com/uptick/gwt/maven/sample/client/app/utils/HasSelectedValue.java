@@ -28,7 +28,7 @@ import com.google.gwt.user.client.ui.HasValue;
  */
 public interface HasSelectedValue<T> extends HasValue<T>{
 
-	void setValues(Collection<T> values);
+	void setValues(Collection<T> values, boolean allowNull);
  
     void setSelectedValue(T selected);
      
