@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ * Extencion de la clase ListBox para menejar datos tipados (mediante un modelo)
  * @author dciocca
  *
  * @param <I>

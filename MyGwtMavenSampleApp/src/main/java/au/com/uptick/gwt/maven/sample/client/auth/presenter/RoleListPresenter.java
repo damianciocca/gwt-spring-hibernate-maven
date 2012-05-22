@@ -5,14 +5,17 @@ import java.util.List;
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
 import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
 import au.com.uptick.gwt.maven.sample.client.app.utils.HasSelectedValue;
+import au.com.uptick.gwt.maven.sample.client.auth.event.IPopulateRoleListPageEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.IRemoveRoleEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.ISearchRoleEventHandler;
+import au.com.uptick.gwt.maven.sample.client.auth.event.PopulateRoleListPageEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.RemoveRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.event.SearchRoleEvent;
 import au.com.uptick.gwt.maven.sample.client.auth.place.RoleFormPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.place.RoleListPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
+import au.com.uptick.gwt.maven.sample.shared.auth.rpc.response.RoleFormData;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.Scheduler;
@@ -35,7 +38,9 @@ import com.google.gwt.user.client.ui.Widget;
  * @author dciocca
  * 
  */
-public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEventHandler, ISearchRoleEventHandler{
+public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEventHandler, 
+																   ISearchRoleEventHandler, 
+																   IPopulateRoleListPageEventHandler{
 
 	private final Display display;
 	private final SecurityServiceAsync securityService;
@@ -81,24 +86,26 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	 */
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		
-		// TODO aca mediante el place, podemos recuperar el estado anterior de la grilla..
-		
 		//Cuando para la actividad los eventos registrados se quitan evitando problemas de memory leak!
 		this.eventBus = new ResettableEventBus(eventBus);
 		this.eventBus.addHandler(RemoveRoleEvent.TYPE, this);
 		this.eventBus.addHandler(SearchRoleEvent.TYPE, this);
-		System.out.println("Fires the event and handler receive events of this type: SearchRoleEvent");
+		this.eventBus.addHandler(PopulateRoleListPageEvent.TYPE, this);
+		
 		panel.setWidget(display.asWidget());
 		// If you fire an event inside a start(), the event will be dispatched before the remaining activities are started. 
 		// So there is a good chance that the activity handling that event has not been started yet (the registration was not done).
 		// Scheduler is a utility class provided by GWT. ScheduleDeferred will execute the command after the current browser event loop returns.
 		Scheduler.get().scheduleDeferred(new ScheduledCommand(){
 		    public void execute(){
-		    	eventBus.fireEvent(new SearchRoleEvent());
+		    	System.out.println("Fires the event and handler receive events of this type: PopulateRoleListPageEvent");
+		    	
+		    	// TODO aca mediante el place, podemos recuperar el estado anterior de la grilla..
+		    	// Esto queda pendiente ya que no nos cierra como obtener esos datos...
+				
+		    	eventBus.fireEvent(new PopulateRoleListPageEvent());
 		    }
 		});
-		// TODO hacer esto mediante el eventbus....
-		retriveAllRoles();
 	}
 
 	
@@ -180,22 +187,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 
 	public void onSearchRole(SearchRoleEvent event) {
 
-		/*
-		 * NO llevar las entities de JPA clientside:
-		 * 
-		 * Lazy properties issue : when trying to send a partially loaded
-		 * Hibernate POJO to the client-side of GWT (Javascript), the GWT
-		 * compiler throws a Serialization exception because it the CGLIB
-		 * generated proxy does not belong to the JRE emulation.
-		 * 
-		 * Type issue : Hibernate replaces some basic Java types with various
-		 * subclassed implementation (such as java.sql.Timestamp instead of
-		 * java.util.Date or PersistentList for List collections).
-		 * 
-		 * Javascript serialization of these classes will fail, since they do
-		 * not belong to the JRE emulation supported by GWT 1.4 (note : the Java
-		 * SQL dates are now supported by GWT 1.5)
-		 */
+		
 		securityService.retriveRoles(event.getFilter(), new MyAsyncCallback<List<RoleDto>>() {
 
 			public void onSuccess(List<RoleDto> roles) {
@@ -212,15 +204,17 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 			}
 		});		
 	}
-	
-	public void retriveAllRoles() {
-		// TODO hacer esto mediante el eventbus....
-		securityService.retriveRoles(null, new MyAsyncCallback<List<RoleDto>>() {
 
-			public void onSuccess(List<RoleDto> roles) {
+	public void onPopulateRoleListPage(PopulateRoleListPageEvent event) {
+
+		securityService.retriveRoleFormData(event.getFilterRole(), new MyAsyncCallback<RoleFormData>() {
+
+			public void onSuccess(RoleFormData formData) {
 
 				System.out.println("onSuccess...");
-				display.getRoleFilter().setValues(roles);			
+				display.setListRows(formData.getListRoles());
+				display.getRoleFilter().setValues(formData.getListRoles());
+							
 			}
 
 			@Override
@@ -230,6 +224,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 
 			}
 		});
+		
 	}
 
 	

@@ -15,6 +15,7 @@ import au.com.uptick.gwt.maven.sample.server.auth.CustomUserAuthentication;
 import au.com.uptick.gwt.maven.sample.server.auth.dao.RoleDao;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 import au.com.uptick.gwt.maven.sample.shared.auth.model.Role;
+import au.com.uptick.gwt.maven.sample.shared.auth.rpc.response.RoleFormData;
 
 @Service("securityService")
 public class SecurityServiceImpl implements SecurityService{
@@ -81,6 +82,19 @@ public class SecurityServiceImpl implements SecurityService{
 		return result;
 	}
 	
+	public RoleFormData retriveRoleFormData(RoleDto filter) throws SecurityException {
+		
+		RoleFormData formData = new RoleFormData();
+		
+		List<RoleDto> rolesForFilter = retriveRoles(null);
+		List<RoleDto> rolesForList = retriveRoles(filter);
+		
+		formData.setFilterRoles(rolesForFilter);
+		formData.setListRoles(rolesForList);
+
+		return formData;
+	}
+	
 	public String getUserLogged() {
 		
 		/**
@@ -90,7 +104,6 @@ public class SecurityServiceImpl implements SecurityService{
 		CustomUserAuthentication user = (CustomUserAuthentication) SecurityContextHolder.getContext().getAuthentication();
 		return user.getName() + " " + user.getSurname();
 	}
-
 	
 	private Role bindFrom(RoleDto dto){
 		
@@ -109,10 +122,5 @@ public class SecurityServiceImpl implements SecurityService{
 		dto.setDescription(role.getRoleDescription());
 		return dto;
 	}
-
-	
-	
-	
-
 
 }

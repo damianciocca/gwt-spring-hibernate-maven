@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import au.com.uptick.gwt.maven.sample.client.auth.exceptions.SecurityException;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
+import au.com.uptick.gwt.maven.sample.shared.auth.rpc.response.RoleFormData;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import au.com.uptick.gwt.maven.sample.client.auth.exceptions.SecurityException;
 
 @RemoteServiceRelativePath("services/securityService")
 public interface SecurityService extends RemoteService {
@@ -27,6 +28,8 @@ public interface SecurityService extends RemoteService {
 	
 	@PreAuthorize("hasRole('PERM_LIST_ROLES')")
 	RoleDto retriveRoleById(Long id) throws SecurityException;
+	
+	RoleFormData retriveRoleFormData(RoleDto filter) throws SecurityException;
 	
 	String getUserLogged();
 
