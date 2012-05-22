@@ -1,4 +1,4 @@
-package au.com.uptick.gwt.maven.sample.client.app.utils;
+package au.com.uptick.gwt.maven.sample.client.app.utils.handlers;
 
 import java.util.Collection;
 

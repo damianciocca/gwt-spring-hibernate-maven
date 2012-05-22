@@ -4,7 +4,7 @@ import java.util.List;
 
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
 import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
-import au.com.uptick.gwt.maven.sample.client.app.utils.HasSelectedValue;
+import au.com.uptick.gwt.maven.sample.client.app.utils.handlers.HasSelectedValue;
 import au.com.uptick.gwt.maven.sample.client.auth.event.IPopulateRoleListPageEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.IRemoveRoleEventHandler;
 import au.com.uptick.gwt.maven.sample.client.auth.event.ISearchRoleEventHandler;

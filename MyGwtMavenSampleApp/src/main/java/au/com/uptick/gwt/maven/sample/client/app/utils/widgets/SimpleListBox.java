@@ -3,7 +3,7 @@ package au.com.uptick.gwt.maven.sample.client.app.utils.widgets;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import au.com.uptick.gwt.maven.sample.client.app.utils.HasSelectedValue;
+import au.com.uptick.gwt.maven.sample.client.app.utils.handlers.HasSelectedValue;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -55,6 +55,7 @@ public class SimpleListBox<T> extends ListBox implements HasSelectedValue<T> {
 	}
 
 	public void setFormatter(OptionFormatter<T> formatter) {
+		
 		this.formatter = formatter;
 	}
 

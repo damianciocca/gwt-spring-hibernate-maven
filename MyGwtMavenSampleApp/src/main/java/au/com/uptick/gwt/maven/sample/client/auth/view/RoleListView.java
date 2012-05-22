@@ -3,10 +3,10 @@ package au.com.uptick.gwt.maven.sample.client.auth.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import au.com.uptick.gwt.maven.sample.client.app.utils.HasSelectedValue;
 import au.com.uptick.gwt.maven.sample.client.app.utils.SimpleListModel;
 import au.com.uptick.gwt.maven.sample.client.app.utils.SimpleModelEvent;
 import au.com.uptick.gwt.maven.sample.client.app.utils.SimpleModelListener;
+import au.com.uptick.gwt.maven.sample.client.app.utils.handlers.HasSelectedValue;
 import au.com.uptick.gwt.maven.sample.client.app.utils.widgets.SimpleListBox;
 import au.com.uptick.gwt.maven.sample.client.app.utils.widgets.SimpleListBox.OptionFormatter;
 import au.com.uptick.gwt.maven.sample.client.auth.presenter.RoleListPresenter;

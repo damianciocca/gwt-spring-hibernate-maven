@@ -4,9 +4,11 @@ import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
 import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
 import au.com.uptick.gwt.maven.sample.client.auth.place.AppPlaceHistoryMapper;
 import au.com.uptick.gwt.maven.sample.client.auth.place.MainPlace;
+import au.com.uptick.gwt.maven.sample.client.auth.place.RoleListPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.presenter.AppActivityMapper;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityService;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
+import au.com.uptick.gwt.maven.sample.client.auth.view.MainView;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
@@ -59,11 +61,6 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 			}
 		});
 
-//		HandlerManager eventBus = new HandlerManager(null);
-//		AppController appViewer = new AppController(eventBus, securityService);
-//		appViewer.go(RootPanel.get(HOME_DIV));
-		
-		
 		// Create ClientFactory using deferred binding so we can replace with different impls in gwt.xml
 		ClientFactory clientFactory = GWT.create(ClientFactory.class);
 		EventBus eventBus = clientFactory.getEventBus();

@@ -1,41 +1,48 @@
 package au.com.uptick.gwt.maven.sample.client.auth.view;
 
+import au.com.uptick.gwt.maven.sample.client.app.utils.handlers.HasCommandHandler;
+import au.com.uptick.gwt.maven.sample.client.app.utils.widgets.SimpleMenuItem;
 import au.com.uptick.gwt.maven.sample.client.auth.presenter.MainPresenter;
 
-import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DecoratorPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.MenuBar;
 
 public class MainView extends Composite implements MainPresenter.Display {
 	
-	private final Label titleLbl;
-	private final Button listRoleBtn;
+	SimpleMenuItem userItem;
+	SimpleMenuItem roleItem;
+	SimpleMenuItem permissionItem;
 
 	public MainView() {
-
-		DecoratorPanel mainPanel = new DecoratorPanel();
-		mainPanel.setWidth("18em");
-
-		VerticalPanel vPanel = new VerticalPanel();
-		vPanel.setWidth("100%");
-
-		titleLbl = new Label();
-		listRoleBtn = new Button("Roles");
-
-		vPanel.add(titleLbl);
-		vPanel.add(listRoleBtn);
-
-		mainPanel.add(vPanel);
-
-		initWidget(mainPanel);
+			
+	    MenuBar adminMenu = new MenuBar(true);
+	    userItem = new SimpleMenuItem("Gestion de Usuarios");
+	    roleItem = new SimpleMenuItem("Gestion de Roles");
+	    permissionItem = new SimpleMenuItem("Gestion de Permisos");
+	    adminMenu.addItem(userItem);
+	    adminMenu.addItem(roleItem);
+	    adminMenu.addItem(permissionItem);
+	    
+	    MenuBar menu = new MenuBar(false);
+	    menu.addItem("Administracion", adminMenu);
+	    menu.addItem("Compras", adminMenu);
+	    menu.addItem("Ventas", adminMenu);
+	    
+	    initWidget(menu);
 	}
 
-	public HasClickHandlers getRoleButton() {
+	public HasCommandHandler getMenuAdminUser() {
 		
-		return listRoleBtn;
+		return userItem;
 	}
 
+	public HasCommandHandler getMenuAdminRole() {
+		
+		return roleItem;
+	}
+
+	public HasCommandHandler getMenuAdminPermission() {
+		
+		return permissionItem;
+	}
 }
