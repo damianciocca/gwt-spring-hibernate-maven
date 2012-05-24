@@ -31,10 +31,10 @@ public class StringUtils {
 		//E) Dado una palabra, verificar si la misma empieza con la letra A
 		empiezaCon("ABRACADABRA" , "A");
 		
-		// Contar letras
+		//F) Contar letras
 		contarPalabras("ÜIOUIOPU");
 		
-		// Eliminar la K-esima palabra de una cadena
+		//G) Eliminar la K-esima palabra de una cadena
 		eliminarFrase("RAULNEIRA", "NE");
 		
 	}
