@@ -27,6 +27,46 @@ public class StringUtils {
 		//D) dado una palabra larga y otra una palabra mas corta, verificar si se encuentra dicha palabra corta en la palabra mas larga
 		//   Por ejemplo, la palabra raul se encuentra en la cadea "ASDRERAULGFGFGF"
 		pertenece("pepe", "raulpepegomez");
+		
+		//E) Dado una palabra, verificar si la misma empieza con la letra A
+		empiezaCon("ABRACADABRA" , "A");
+		
+		// Contar letras
+		contarPalabras("ÜIOUIOPU");
+		
+		// Eliminar la K-esima palabra de una cadena
+		eliminarFrase("RAULNEIRA", "NE");
+		
+	}
+	
+	private static void eliminarFrase(String cadena, String palabra){
+		
+		CharSequence frase = palabra;
+		if (cadena.contains(frase)){
+			String resultado = cadena.replaceAll(palabra, "");
+			System.out.println(resultado);
+		} else {
+			System.out.println("No se puede eliminar ya que no existe la palabra en al cadena");
+		}
+		
+	}
+	
+	private static void contarPalabras(String palabra){
+		
+		char[] letras =  palabra.toCharArray();
+		System.out.println(letras.length);
+		
+	}
+	
+	private static void empiezaCon(String palabra, String letra){
+		
+		char letraInicial = palabra.charAt(0);
+		if(letra.equals(String.valueOf(letraInicial))){
+			System.out.println("Empieza con la letra " + letra );
+		} else {
+			System.out.println("NO empieza con la letra " + letra );
+		}
+		
 	}
 	
 	private static void pertenece(String palabra1, String palabra2){
