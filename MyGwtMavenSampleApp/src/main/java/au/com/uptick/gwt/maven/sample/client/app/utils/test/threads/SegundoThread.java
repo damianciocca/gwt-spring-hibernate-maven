@@ -28,6 +28,7 @@ public class SegundoThread implements Runnable{
 		synchronized(lista){
 			System.out.println("BEFORE ADDING...");
 			lista.add(s);
+			System.out.println("AFTER ADDING...");
 			lista.notify();
 		}
 	}
