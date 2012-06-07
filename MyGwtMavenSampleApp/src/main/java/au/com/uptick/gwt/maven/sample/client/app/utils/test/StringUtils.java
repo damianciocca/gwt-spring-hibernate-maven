@@ -1,5 +1,6 @@
 package au.com.uptick.gwt.maven.sample.client.app.utils.test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +38,38 @@ public class StringUtils {
 		//G) Eliminar la K-esima palabra de una cadena
 		eliminarFrase("RAULNEIRA", "NE");
 		
+		//f) Fibonacci
+		fibonacci(20);
+		
+		int[] enteros = new int[10];
+		
+		for(int i = 0; i <= enteros.length - 1; i++){
+			
+			
+		}
+		
 	}
+	
+	private static List<Long> fibonacci(int num){
+		
+		List<Long> result = new ArrayList<Long>();
+		for (int i = 0; i <= num; i++){
+			result.add(fib(i));
+		}
+		
+		for(int i = 0; i < result.size(); i++ ){
+			System.out.println(result.get(i));
+		}
+		
+		return result;
+	} 
+	
+	private static long fib(int n) {
+        if (n <= 1) 
+			return n;
+		else 
+			return fib(n-1) + fib(n-2);
+    }
 	
 	private static void eliminarFrase(String cadena, String palabra){
 		
