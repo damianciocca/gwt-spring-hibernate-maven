@@ -24,6 +24,13 @@ public class SpringAnnotationsTest {
 		System.out.println("COMPONENT 10: " + c10);
 		System.out.println("COMPONENT 20: " + c10.getC1());
 		System.out.println("COMPONENT 20: " + c10.getC2());
+		
+		IComp comp_cb = (IComp)context.getBean("CB");
+		IComp comp_cc = (IComp)context.getBean("CC");
+		System.out.println("COMPONENT CB: " + comp_cb);
+		System.out.println("COMPONENT CC: " + comp_cc);
+		
+		
 	}
 
 }

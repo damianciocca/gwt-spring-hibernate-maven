@@ -13,7 +13,7 @@ public class CompA {
 	 */
 	@Autowired
 	@Qualifier("CB")
-	ICompB compB;
+	IComp compB;
 	
 	/**
 	 * Inyeccion por metodo
@@ -27,11 +27,11 @@ public class CompA {
 		this.componenete = componenete;
 	}
 
-	public ICompB getCompB() {
+	public IComp getCompB() {
 		return compB;
 	}
 
-	public void setCompB(ICompB compB) {
+	public void setCompB(IComp compB) {
 		this.compB = compB;
 	}
 
