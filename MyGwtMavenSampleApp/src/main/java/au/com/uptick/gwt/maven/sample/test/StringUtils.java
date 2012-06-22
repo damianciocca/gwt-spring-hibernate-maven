@@ -1,4 +1,4 @@
-package au.com.uptick.gwt.maven.sample.client.app.utils.test;
+package au.com.uptick.gwt.maven.sample.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;

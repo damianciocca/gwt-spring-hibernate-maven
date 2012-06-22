@@ -1,4 +1,4 @@
-package au.com.uptick.gwt.maven.sample.client.app.utils.test.spring;
+package au.com.uptick.gwt.maven.sample.test.spring;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

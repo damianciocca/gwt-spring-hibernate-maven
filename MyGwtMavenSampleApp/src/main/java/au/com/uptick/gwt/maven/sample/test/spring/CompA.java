@@ -1,4 +1,4 @@
-package au.com.uptick.gwt.maven.sample.client.app.utils.test.spring;
+package au.com.uptick.gwt.maven.sample.test.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
