@@ -8,16 +8,16 @@ import com.google.gwt.place.shared.PlaceTokenizer;
  * @author dciocca
  *
  */
-public class MainPlace extends Place {
+public class MenuPlace extends Place {
 
-	public static class Tokenizer implements PlaceTokenizer<MainPlace> {
+	public static class Tokenizer implements PlaceTokenizer<MenuPlace> {
 
-		public String getToken(MainPlace place) {
+		public String getToken(MenuPlace place) {
 			return "";
 		}
 
-		public MainPlace getPlace(String token) {
-			return new MainPlace();
+		public MenuPlace getPlace(String token) {
+			return new MenuPlace();
 		}
 	}
 

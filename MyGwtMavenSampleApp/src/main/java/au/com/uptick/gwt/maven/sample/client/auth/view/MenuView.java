@@ -2,18 +2,18 @@ package au.com.uptick.gwt.maven.sample.client.auth.view;
 
 import au.com.uptick.gwt.maven.sample.client.app.utils.handlers.HasCommandHandler;
 import au.com.uptick.gwt.maven.sample.client.app.utils.widgets.SimpleMenuItem;
-import au.com.uptick.gwt.maven.sample.client.auth.presenter.MainPresenter;
+import au.com.uptick.gwt.maven.sample.client.auth.presenter.MenuPresenter;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.MenuBar;
 
-public class MainView extends Composite implements MainPresenter.Display {
+public class MenuView extends Composite implements MenuPresenter.Display {
 	
 	SimpleMenuItem userItem;
 	SimpleMenuItem roleItem;
 	SimpleMenuItem permissionItem;
 
-	public MainView() {
+	public MenuView() {
 			
 	    MenuBar adminMenu = new MenuBar(true);
 	    userItem = new SimpleMenuItem("Gestion de Usuarios");

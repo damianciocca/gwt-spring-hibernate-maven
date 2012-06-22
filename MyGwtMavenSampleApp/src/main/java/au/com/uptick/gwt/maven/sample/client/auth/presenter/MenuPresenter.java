@@ -2,7 +2,7 @@ package au.com.uptick.gwt.maven.sample.client.auth.presenter;
 
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
 import au.com.uptick.gwt.maven.sample.client.app.utils.handlers.HasCommandHandler;
-import au.com.uptick.gwt.maven.sample.client.auth.place.MainPlace;
+import au.com.uptick.gwt.maven.sample.client.auth.place.MenuPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.place.RoleListPlace;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -13,11 +13,11 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 
 /**
- * Presenter/activity asociado a un place: {@link MainPlace}.
+ * Presenter/activity asociado a un place: {@link MenuPlace}.
  * 
  * @author dciocca
  */
-public class MainPresenter extends AbstractActivity  {
+public class MenuPresenter extends AbstractActivity  {
 
 	private final Display display;
 	private final ClientFactory clientFactory;
@@ -30,7 +30,7 @@ public class MainPresenter extends AbstractActivity  {
 		
 	}
 
-	public MainPresenter(Display display, ClientFactory clientFactory) {
+	public MenuPresenter(Display display, ClientFactory clientFactory) {
 		
 		this.display=display;
 		this.clientFactory = clientFactory;

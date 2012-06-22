@@ -24,7 +24,7 @@ public class CompA {
 	@Autowired
 	@Qualifier("CB")
 	public void init(CompB componenete){
-		this.componenete = componenete;
+		this.componenete = componenete;		
 	}
 
 	public IComp getCompB() {

@@ -3,12 +3,12 @@ package au.com.uptick.gwt.maven.sample.client;
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
 import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
 import au.com.uptick.gwt.maven.sample.client.auth.place.AppPlaceHistoryMapper;
-import au.com.uptick.gwt.maven.sample.client.auth.place.MainPlace;
-import au.com.uptick.gwt.maven.sample.client.auth.place.RoleListPlace;
+import au.com.uptick.gwt.maven.sample.client.auth.place.HomePlace;
 import au.com.uptick.gwt.maven.sample.client.auth.presenter.AppActivityMapper;
+import au.com.uptick.gwt.maven.sample.client.auth.presenter.MenuPresenter;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityService;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
-import au.com.uptick.gwt.maven.sample.client.auth.view.MainView;
+import au.com.uptick.gwt.maven.sample.client.auth.view.MenuView;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
@@ -28,10 +28,11 @@ import com.google.gwt.user.client.ui.SimplePanel;
 public class MyGwtMavenSampleApp implements EntryPoint {
 
 	private static final String USER_DIV = "user";
+	private static final String MENU_DIV = "menu";
 	private static final String HOME_DIV = "home";
 	private final SecurityServiceAsync securityService = GWT.create(SecurityService.class);
 	
-	private Place defaultPlace = new MainPlace();
+	private Place defaultPlace = new HomePlace();
 	private SimplePanel appWidget = new SimplePanel();
 
 	/**
@@ -52,6 +53,7 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 				userLoggedLbl.setText(result);
 				panel.add(userLoggedLbl);
 				RootPanel.get(USER_DIV).add(panel);
+								
 			}
 
 			@Override
@@ -76,13 +78,17 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 		PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
 		historyHandler.register(placeController, eventBus, defaultPlace);
 
+		// Armamos el menu
+		MenuView mainView = new MenuView();
+		RootPanel.get(MENU_DIV).add(mainView);
+		MenuPresenter mp = new MenuPresenter(mainView, clientFactory);
+		
+		// Armamos el body
 		RootPanel.get(HOME_DIV).add(appWidget);
 		
 		// Goes to place represented on URL or default place
 		historyHandler.handleCurrentHistory();
 		
-		
-
 		GWT.log("onModuleLoading...... FIN");
 		System.out.println("onModuleLoading...... FIN");
 	}
