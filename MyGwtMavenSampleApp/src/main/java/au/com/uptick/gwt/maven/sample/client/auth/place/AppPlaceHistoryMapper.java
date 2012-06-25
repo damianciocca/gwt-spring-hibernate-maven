@@ -7,8 +7,7 @@ import com.google.gwt.place.shared.WithTokenizers;
  * Mapper donde se definen los PlaceTokenizer de la aplicaci&oacute;n.
  * @author dciocca
  */
-@WithTokenizers({ MenuPlace.Tokenizer.class,
-				  HomePlace.Tokenizer.class,
+@WithTokenizers({ HomePlace.Tokenizer.class,
 				  RoleListPlace.Tokenizer.class,
 				  RoleFormPlace.Tokenizer.class
 			    })

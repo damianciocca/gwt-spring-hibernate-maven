@@ -44,24 +44,8 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 		GWT.log("onModuleLoading...... INICIO");
 		System.out.println("onModuleLoading...... INICIO");
 
-		securityService.getUserLogged(new MyAsyncCallback<String>() {
-
-			public void onSuccess(String result) {
-				
-				SimplePanel panel = new SimplePanel();
-				Label userLoggedLbl = new Label();
-				userLoggedLbl.setText(result);
-				panel.add(userLoggedLbl);
-				RootPanel.get(USER_DIV).add(panel);
-								
-			}
-
-			@Override
-			public void onError(Throwable caught, boolean alreadyHandledError) {
-
-				System.out.println("error..");
-			}
-		});
+		// Registramos el usuario logueado en el HOME
+		setUserLogged();
 
 		// Create ClientFactory using deferred binding so we can replace with different impls in gwt.xml
 		ClientFactory clientFactory = GWT.create(ClientFactory.class);
@@ -80,8 +64,8 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 
 		// Armamos el menu
 		MenuView mainView = new MenuView();
-		RootPanel.get(MENU_DIV).add(mainView);
 		MenuPresenter mp = new MenuPresenter(mainView, clientFactory);
+		RootPanel.get(MENU_DIV).add(mainView);
 		
 		// Armamos el body
 		RootPanel.get(HOME_DIV).add(appWidget);
@@ -91,5 +75,26 @@ public class MyGwtMavenSampleApp implements EntryPoint {
 		
 		GWT.log("onModuleLoading...... FIN");
 		System.out.println("onModuleLoading...... FIN");
+	}
+
+	public void setUserLogged() {
+		securityService.getUserLogged(new MyAsyncCallback<String>() {
+
+			public void onSuccess(String result) {
+				
+				SimplePanel panel = new SimplePanel();
+				Label userLoggedLbl = new Label();
+				userLoggedLbl.setText(result);
+				panel.add(userLoggedLbl);
+				RootPanel.get(USER_DIV).add(panel);
+								
+			}
+
+			@Override
+			public void onError(Throwable caught, boolean alreadyHandledError) {
+
+				System.out.println("error..");
+			}
+		});
 	}
 }

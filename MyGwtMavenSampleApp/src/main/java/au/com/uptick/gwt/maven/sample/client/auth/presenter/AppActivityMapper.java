@@ -3,13 +3,11 @@ package au.com.uptick.gwt.maven.sample.client.auth.presenter;
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
 import au.com.uptick.gwt.maven.sample.client.app.utils.FormTypeEnum;
 import au.com.uptick.gwt.maven.sample.client.auth.place.HomePlace;
-import au.com.uptick.gwt.maven.sample.client.auth.place.MenuPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.place.RoleFormPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.place.RoleListPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityService;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
 import au.com.uptick.gwt.maven.sample.client.auth.view.HomeView;
-import au.com.uptick.gwt.maven.sample.client.auth.view.MenuView;
 import au.com.uptick.gwt.maven.sample.client.auth.view.RoleFormView;
 import au.com.uptick.gwt.maven.sample.client.auth.view.RoleListView;
 
@@ -44,10 +42,7 @@ public class AppActivityMapper implements ActivityMapper {
 	public Activity getActivity(Place place) {
 		
 		
-		if (place instanceof MenuPlace){
-			return new MenuPresenter(new MenuView(), clientFactory);
-			
-		} else if (place instanceof HomePlace){
+		if (place instanceof HomePlace){
 			return new HomePresenter(new HomeView(), clientFactory);
 			
 		} else if (place instanceof RoleListPlace){
