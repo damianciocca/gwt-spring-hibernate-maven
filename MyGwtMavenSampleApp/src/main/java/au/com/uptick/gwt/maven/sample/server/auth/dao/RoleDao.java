@@ -34,6 +34,11 @@ public class RoleDao extends JpaDao<Long, Role>{
 			query.setParameter("name", filter.getName());		
 		}
 		
+		if (filter != null){
+			System.out.println("START " + filter.getStartIndex());
+			System.out.println("END: " + filter.getEndIndex());
+		}
+
 		return query.getResultList();
 	}
 

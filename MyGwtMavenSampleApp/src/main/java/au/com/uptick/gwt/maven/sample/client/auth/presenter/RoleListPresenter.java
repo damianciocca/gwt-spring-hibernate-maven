@@ -1,5 +1,6 @@
 package au.com.uptick.gwt.maven.sample.client.auth.presenter;
 
+import java.util.Arrays;
 import java.util.List;
 
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
@@ -26,7 +27,9 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.ResettableEventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.HasData;
 
 /**
  * The presenter is going to need to:
@@ -48,24 +51,35 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	private final RoleListPlace place;
 	private EventBus eventBus;
 	
+	private static final List<RoleDto> CONTACTS = Arrays.asList(
+    new RoleDto(1l, "John", "123 Abc Avenue"), 
+    new RoleDto(2l, "John", "123 Abc Avenue"), 
+    new RoleDto(3l, "John", "123 Abc Avenue"), 
+    new RoleDto(4l, "John", "123 Abc Avenue"), 
+    new RoleDto(5l, "John", "123 Abc Avenue"), 
+    new RoleDto(6l, "John", "123 Abc Avenue"), 
+    new RoleDto(7l, "John", "123 Abc Avenue"));
+	
 	/**
 	 * Interafce que debera implementar la vista (RoleView) 	
 	 * @author dciocca
 	 *
 	 */
-	public interface Display {
+	public interface Display extends IsWidget {
 
 		HasClickHandlers getAddButton();
 		HasClickHandlers getDeleteButton();
 		HasClickHandlers getEditButton();
 		HasClickHandlers getSearchButton();
-		// List roles TODO esto tendriamos que mejorarlo para que solo tengamos el List
-		HasClickHandlers getList();
-		List<RoleDto> getListSelectedRows();
-		void setListRows(List<RoleDto> data);
-		// Combo roles
 		HasSelectedValue<RoleDto> getRoleFilter();
-		Widget asWidget();
+		HasData<RoleDto> getCellTable();
+		
+		// List roles TODO esto tendriamos que mejorarlo para que solo tengamos el List
+//		HasClickHandlers getList();
+//		List<RoleDto> getListSelectedRows();
+//		void setListRows(List<RoleDto> data);
+		// Combo roles
+		
 	}
 
 	public RoleListPresenter(RoleListPlace place, 
@@ -128,28 +142,28 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 		display.getEditButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-				System.out.println("Request a change to a new place: RoleFormPlace");
-				List<RoleDto> selectedRows = display.getListSelectedRows();
-				if (selectedRows.size() == 1){
-					RoleDto role = selectedRows.get(0);					
-					clientFactory.getPlaceController().goTo(new RoleFormPlace(role.getId()));
-				} else {
-					System.out.println("Debe seleccionar solo un elemento");
-				}
+//				System.out.println("Request a change to a new place: RoleFormPlace");
+//				List<RoleDto> selectedRows = display.getListSelectedRows();
+//				if (selectedRows.size() == 1){
+//					RoleDto role = selectedRows.get(0);					
+//					clientFactory.getPlaceController().goTo(new RoleFormPlace(role.getId()));
+//				} else {
+//					System.out.println("Debe seleccionar solo un elemento");
+//				}
 			}
 		});
 		
 		display.getDeleteButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-				if (!display.getListSelectedRows().isEmpty()){
-					List<RoleDto> selectedRows = display.getListSelectedRows();
-					System.out.println("Fires the event and handler receive events of this type: RemoveRoleEvent");
-					eventBus.fireEvent(new RemoveRoleEvent(selectedRows));
-					clientFactory.getPlaceController().goTo(new RoleListPlace());
-				} else {
-					System.out.println("Debe seleccionar al menos un elemento");
-				}
+//				
+//				if (!display.getListSelectedRows().isEmpty()){
+//					List<RoleDto> selectedRows = display.getListSelectedRows();
+//					System.out.println("Fires the event and handler receive events of this type: RemoveRoleEvent");
+//					eventBus.fireEvent(new RemoveRoleEvent(selectedRows));
+//					clientFactory.getPlaceController().goTo(new RoleListPlace());
+//				} else {
+//					System.out.println("Debe seleccionar al menos un elemento");
+//				}
 			}
 		});
 		
@@ -164,7 +178,50 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 				}
 				eventBus.fireEvent(new SearchRoleEvent(filter));	
 			}
-		});
+		});	
+		
+	}
+	
+	public void onPopulateRoleListPage(PopulateRoleListPageEvent event) {
+
+		final RoleDto filterRole = event.getFilterRole();
+		
+		AsyncDataProvider<RoleDto> provider = new AsyncDataProvider<RoleDto>() {
+
+			@Override
+			protected void onRangeChanged(HasData<RoleDto> display) {
+
+				final int start = display.getVisibleRange().getStart();
+				final int end = display.getVisibleRange().getLength();
+				filterRole.setStartIndex(start);
+				filterRole.setEndIndex(end);
+				
+				securityService.retriveRoleFormData(filterRole, new MyAsyncCallback<RoleFormData>() {
+
+					public void onSuccess(RoleFormData formData) {
+
+						System.out.println("onSuccess...");
+						updateRowData(start, formData.getListRoles());
+						
+						
+						
+//						display.setListRows(formData.getListRoles());
+//						display.getRoleFilter().setValues(formData.getListRoles(), true);
+									
+					}
+
+					@Override
+					public void onError(Throwable caught, boolean alreadyHandledError) {
+
+						System.out.println("onError...");
+
+					}
+				});
+			}
+		};
+		
+		provider.addDataDisplay(display.getCellTable());
+	    provider.updateRowCount(4, true);
 	}
 
 	public void onRemoveRole(RemoveRoleEvent event) {
@@ -188,44 +245,24 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	public void onSearchRole(SearchRoleEvent event) {
 
 		
-		securityService.retriveRoles(event.getFilter(), new MyAsyncCallback<List<RoleDto>>() {
-
-			public void onSuccess(List<RoleDto> roles) {
-
-				System.out.println("onSuccess...");
-				display.setListRows(roles);			
-			}
-
-			@Override
-			public void onError(Throwable caught, boolean alreadyHandledError) {
-
-				System.out.println("onError...");
-
-			}
-		});		
+//		securityService.retriveRoles(event.getFilter(), new MyAsyncCallback<List<RoleDto>>() {
+//
+//			public void onSuccess(List<RoleDto> roles) {
+//
+//				System.out.println("onSuccess...");
+//				display.setListRows(roles);			
+//			}
+//
+//			@Override
+//			public void onError(Throwable caught, boolean alreadyHandledError) {
+//
+//				System.out.println("onError...");
+//
+//			}
+//		});		
 	}
 
-	public void onPopulateRoleListPage(PopulateRoleListPageEvent event) {
-
-		securityService.retriveRoleFormData(event.getFilterRole(), new MyAsyncCallback<RoleFormData>() {
-
-			public void onSuccess(RoleFormData formData) {
-
-				System.out.println("onSuccess...");
-				display.setListRows(formData.getListRoles());
-				display.getRoleFilter().setValues(formData.getListRoles(), true);
-							
-			}
-
-			@Override
-			public void onError(Throwable caught, boolean alreadyHandledError) {
-
-				System.out.println("onError...");
-
-			}
-		});
-		
-	}
+	
 
 	
 }
