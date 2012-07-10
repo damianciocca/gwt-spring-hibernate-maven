@@ -88,9 +88,11 @@ public class SecurityServiceImpl implements SecurityService{
 		
 		List<RoleDto> rolesForFilter = retriveRoles(null);
 		List<RoleDto> rolesForList = retriveRoles(filter);
+		Long roleCount = roleDao.retriveRolesCount();
 		
 		formData.setFilterRoles(rolesForFilter);
 		formData.setListRoles(rolesForList);
+		formData.setListRolesSize(roleCount.intValue());
 
 		return formData;
 	}

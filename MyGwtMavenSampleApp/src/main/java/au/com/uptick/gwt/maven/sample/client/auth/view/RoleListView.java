@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.HasData;
+import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
@@ -167,7 +168,64 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 
 		// Create a Pager to control the table.
 		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-		SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+		SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0,
+                true) {
+            private int pageSize = 3;
+
+            @Override
+            public int getPageSize() {
+                return pageSize;
+            }
+
+            @Override
+            public void previousPage() {
+                if (getDisplay() != null) {
+                    Range range = getDisplay().getVisibleRange();
+                    setPageStart(range.getStart() - getPageSize());
+                }
+            }
+
+            @Override
+            public void setPageStart(int index) {
+                if (getDisplay() != null) {
+                    Range range = getDisplay().getVisibleRange();
+                    int displayPageSize = getPageSize();
+                    if (isRangeLimited() && getDisplay().isRowCountExact()) {
+                        displayPageSize = Math.min(getPageSize(), getDisplay()
+                                .getRowCount() - index);
+                    }
+                    index = Math.max(0, index);
+                    if (index != range.getStart()) {
+                        getDisplay().setVisibleRange(index, displayPageSize);
+                    }
+                }
+            }
+
+            @Override
+            public void nextPage() {
+               
+            	if (getDisplay() != null) {
+                    Range range = getDisplay().getVisibleRange();
+                    setPageStart(range.getStart() + getPageSize());
+                }
+            }
+
+			@Override
+			public boolean hasNextPage() {
+				
+				if(this.getPage()<(this.getPageCount()-1)) { 
+					return true; 
+				} 
+				return false; 
+			}
+            
+			
+            
+        };
+
+        pager.setRangeLimited(true);
+		
+		
 		pager.setDisplay(table);
 
 		VerticalPanel vp = new VerticalPanel();

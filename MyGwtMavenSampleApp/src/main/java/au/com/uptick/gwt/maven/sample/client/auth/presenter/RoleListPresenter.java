@@ -201,9 +201,10 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 					public void onSuccess(RoleFormData formData) {
 
 						System.out.println("onSuccess...");
+						
+						
 						updateRowData(start, formData.getListRoles());
-						
-						
+						updateRowCount(formData.getListRolesSize(), true);
 						
 //						display.setListRows(formData.getListRoles());
 //						display.getRoleFilter().setValues(formData.getListRoles(), true);
@@ -217,11 +218,13 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 
 					}
 				});
+				
+			
 			}
 		};
 		
 		provider.addDataDisplay(display.getCellTable());
-	    provider.updateRowCount(4, true);
+	   
 	}
 
 	public void onRemoveRole(RemoveRoleEvent event) {

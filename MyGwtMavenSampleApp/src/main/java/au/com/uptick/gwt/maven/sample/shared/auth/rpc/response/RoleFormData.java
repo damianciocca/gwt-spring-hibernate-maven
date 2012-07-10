@@ -18,6 +18,7 @@ public class RoleFormData implements Serializable {
 	
 	List<RoleDto> filterRoles = new ArrayList<RoleDto>();
 	List<RoleDto> listRoles = new ArrayList<RoleDto>();
+	int listRolesSize = 0;
 	
 	public RoleFormData() {
 
@@ -44,4 +45,13 @@ public class RoleFormData implements Serializable {
 	public void setListRoles(List<RoleDto> listRoles) {
 		this.listRoles = listRoles;
 	}
+
+	public int getListRolesSize() {
+		return listRolesSize;
+	}
+
+	public void setListRolesSize(int listRolesSize) {
+		this.listRolesSize = listRolesSize;
+	}
+
 }
