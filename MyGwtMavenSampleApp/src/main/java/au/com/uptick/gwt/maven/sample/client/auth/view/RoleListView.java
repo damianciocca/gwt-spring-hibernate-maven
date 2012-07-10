@@ -168,8 +168,12 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 
 		// Create a Pager to control the table.
 		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+		
+		// TODO armar un SimplePager CUSTOM con estos metodos sobreescritos.
+		// Esto soluciona un BUG que al paginar nos repite un valor en la ultima pagina!
 		SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0,
                 true) {
+			
             private int pageSize = 3;
 
             @Override
@@ -179,6 +183,7 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 
             @Override
             public void previousPage() {
+            	
                 if (getDisplay() != null) {
                     Range range = getDisplay().getVisibleRange();
                     setPageStart(range.getStart() - getPageSize());
@@ -187,6 +192,7 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 
             @Override
             public void setPageStart(int index) {
+            	
                 if (getDisplay() != null) {
                     Range range = getDisplay().getVisibleRange();
                     int displayPageSize = getPageSize();
@@ -218,9 +224,6 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
 				} 
 				return false; 
 			}
-            
-			
-            
         };
 
         pager.setRangeLimited(true);

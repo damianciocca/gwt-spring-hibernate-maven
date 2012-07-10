@@ -35,8 +35,8 @@ public class RoleDao extends JpaDao<Long, Role>{
 		}
 		
 		if (filter != null){
-			int startPosition = (filter.getStartIndex() * filter.getEndIndex());
-			int endPosition = (filter.getStartIndex() * filter.getEndIndex()) + filter.getEndIndex();
+			int startPosition = filter.getStartIndex() ;
+			int endPosition = filter.getStartIndex() + filter.getEndIndex();
 			System.out.println("STARTTT " + startPosition);
 			System.out.println("ENDDD: " + endPosition );
 			query.setFirstResult(startPosition);
