@@ -59,6 +59,10 @@ public class JpaDao<PK, E>{
 		Query query = entityManager.createQuery("SELECT h FROM " + entityClass.getName() + " h");
 		return query.getResultList();
 	}
+
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
 	
 //	public Long getRealCount(String hql) {
 //		int fromPosition = hql.indexOf("from ");
@@ -69,5 +73,7 @@ public class JpaDao<PK, E>{
 //		}
 //		return (Long)countQuery.getSingleResult();
 //	}
+	
+	
 
 }

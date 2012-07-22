@@ -1,4 +1,4 @@
-package au.com.uptick.gwt.maven.sample.shared.auth.dto;
+package au.com.uptick.gwt.maven.sample.shared.common;
 
 import java.io.Serializable;
 

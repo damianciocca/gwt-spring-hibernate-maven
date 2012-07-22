@@ -6,6 +6,8 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import au.com.uptick.gwt.maven.sample.server.common.JpaQueryBuilder;
+import au.com.uptick.gwt.maven.sample.server.common.QueryList;
 import au.com.uptick.gwt.maven.sample.server.dao.JpaDao;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 import au.com.uptick.gwt.maven.sample.shared.auth.model.Role;
@@ -15,35 +17,20 @@ public class RoleDao extends JpaDao<Long, Role>{
 	
 	public List<Role> retriveRoles(RoleDto filter){
 		
-		StringBuffer q = new StringBuffer();
-		q.append("SELECT r FROM Role r WHERE 1=1 ");
-		
-		if (filter != null && filter.getId() != null){
-			q.append(" AND r.roleId = :id");			
-		}
-		if (filter != null && filter.getName() != null){
-			q.append(" AND r.roleName = :name");			
-		}
-		
-		Query query = entityManager.createQuery(q.toString());
-		
-		if (filter != null && filter.getId() != null){
-			query.setParameter("id", filter.getId());
-		}
-		if (filter != null && filter.getName() != null){
-			query.setParameter("name", filter.getName());		
-		}
+		JpaQueryBuilder<Role> qb = new JpaQueryBuilder<Role>(getEntityManager());
+		qb.addInitialClause("SELECT r FROM Role r WHERE 1=1");
 		
 		if (filter != null){
-			int startPosition = filter.getStartIndex() ;
-			int endPosition = filter.getStartIndex() + filter.getEndIndex();
-			System.out.println("START " + startPosition);
-			System.out.println("END: " + endPosition );
-			query.setFirstResult(startPosition);
-			query.setMaxResults(endPosition);
+			qb.addAndClause("r.roleId = :id", "id", filter.getId());
+			qb.addAndClause("r.roleName = :name", "name", filter.getName());
+			QueryList<Role> result  = qb.executeQuery(filter.getStartIndex(), filter.getEndIndex());
+			return result.getList();
+			
+		} else {
+			
+			QueryList<Role> result = qb.executeQuery(null, null);
+			return result.getList();
 		}
-
-		return query.getResultList();
 	}
 	
 	// TODO armar algo que en un solo metodo me devuelva tanto el listado como el 

@@ -2,6 +2,8 @@ package au.com.uptick.gwt.maven.sample.shared.auth.dto;
 
 import java.io.Serializable;
 
+import au.com.uptick.gwt.maven.sample.shared.common.PaginableDto;
+
 public class RoleDto extends PaginableDto implements Serializable{
 	
 	private Long id;
