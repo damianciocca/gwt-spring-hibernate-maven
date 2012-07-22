@@ -51,7 +51,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	private final ClientFactory clientFactory;
 	private final RoleListPlace place;
 	private EventBus eventBus;
-	RoleDto roleDtoFilter;
+	private RoleDto roleDtoPaginableFilter;
 	
 	/**
 	 * Interafce que debera implementar la vista (RoleView) 	
@@ -177,7 +177,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	
 	public void onPopulateRoleListPage(PopulateRoleListPageEvent event) {
 
-		this.roleDtoFilter = event.getFilterRole();
+		this.roleDtoPaginableFilter = event.getFilterRole();
 		
 		doSearchRoleGrid();
 		doSearchRolePage();
@@ -185,13 +185,14 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	
 	public void onSearchRole(SearchRoleEvent event) {
 
-		this.roleDtoFilter = event.getFilterRole();
+		this.roleDtoPaginableFilter = event.getFilterRole();
 		
 		// De esta forma, limpiamos el contenido de la grilla. Resetamos la grilla.
 		// Al pasarle FALSE, nos muestra la animacion del LOADING, si le pasamos TRUE o no le pasamos nada, 
 		// no muestra la animacion. 
 		display.getCellTable().setRowCount(0, false);
-		// Y reseteamos el rango de paginacion y relanzamos la busqueda (gracias al TRUE).
+		// Y reseteamos el rango de paginacion y relanzamos la busqueda (gracias al TRUE, relanza el metodo 
+		// onRangeChanged del AsyncDataProvider).
 		display.getCellTable().setVisibleRangeAndClearData(new Range(0, 3), true);
 	}	
 	
@@ -223,11 +224,11 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 
 				final int start = display.getVisibleRange().getStart();
 				final int end = display.getVisibleRange().getLength();
-				roleDtoFilter.setStartIndex(start);
-				roleDtoFilter.setEndIndex(end);
+				roleDtoPaginableFilter.setStartIndex(start);
+				roleDtoPaginableFilter.setEndIndex(end);
 				
 				// Solo buscamos los datos de la grilla de roles.
-				securityService.retriveRoleList(roleDtoFilter, new MyAsyncCallback<RoleListData>() {
+				securityService.retriveRoleList(roleDtoPaginableFilter, new MyAsyncCallback<RoleListData>() {
 
 					public void onSuccess(RoleListData roleListData) {
 
@@ -253,7 +254,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	private void doSearchRolePage() {
 		
 		// Aca buscamos todos los datos restantes de la pantalla del listado de roles.
-		securityService.retriveRoleListPage(roleDtoFilter, new MyAsyncCallback<RoleListPageData>() {
+		securityService.retriveRoleListPage(roleDtoPaginableFilter, new MyAsyncCallback<RoleListPageData>() {
 
 			public void onSuccess(RoleListPageData roleListPageData) {
 
