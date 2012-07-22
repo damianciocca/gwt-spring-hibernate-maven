@@ -1,6 +1,6 @@
 package au.com.uptick.gwt.maven.sample.client.auth.presenter;
 
-import java.util.List;
+import java.util.Set;
 
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
 import au.com.uptick.gwt.maven.sample.client.app.MyAsyncCallback;
@@ -26,6 +26,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.ResettableEventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.view.client.AsyncDataProvider;
@@ -66,13 +67,8 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 		HasClickHandlers getSearchButton();
 		HasSelectedValue<RoleDto> getRoleFilter();
 		HasData<RoleDto> getCellTable();
-		
-		// List roles TODO esto tendriamos que mejorarlo para que solo tengamos el List
-//		HasClickHandlers getList();
-//		List<RoleDto> getListSelectedRows();
-//		void setListRows(List<RoleDto> data);
-		// Combo roles
-		
+		Set<RoleDto> getSelectedRows();
+
 	}
 
 	public RoleListPresenter(RoleListPlace place, 
@@ -135,28 +131,28 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 		display.getEditButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-//				System.out.println("Request a change to a new place: RoleFormPlace");
-//				List<RoleDto> selectedRows = display.getListSelectedRows();
-//				if (selectedRows.size() == 1){
-//					RoleDto role = selectedRows.get(0);					
-//					clientFactory.getPlaceController().goTo(new RoleFormPlace(role.getId()));
-//				} else {
-//					System.out.println("Debe seleccionar solo un elemento");
-//				}
+				System.out.println("Request a change to a new place: RoleFormPlace");
+				Set<RoleDto> selectedRows = display.getSelectedRows();
+				if (selectedRows.size() == 1){
+					RoleDto role = selectedRows.iterator().next();					
+					clientFactory.getPlaceController().goTo(new RoleFormPlace(role.getId()));
+				} else {
+					Window.alert("Debe seleccionar solo un elemento");
+				}
 			}
 		});
 		
 		display.getDeleteButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-//				
-//				if (!display.getListSelectedRows().isEmpty()){
-//					List<RoleDto> selectedRows = display.getListSelectedRows();
-//					System.out.println("Fires the event and handler receive events of this type: RemoveRoleEvent");
-//					eventBus.fireEvent(new RemoveRoleEvent(selectedRows));
-//					clientFactory.getPlaceController().goTo(new RoleListPlace());
-//				} else {
-//					System.out.println("Debe seleccionar al menos un elemento");
-//				}
+				
+				if (!display.getSelectedRows().isEmpty()){
+					Set<RoleDto> selectedRows = display.getSelectedRows();
+					System.out.println("Fires the event and handler receive events of this type: RemoveRoleEvent");
+					eventBus.fireEvent(new RemoveRoleEvent(selectedRows));
+					clientFactory.getPlaceController().goTo(new RoleListPlace());
+				} else {
+					System.out.println("Debe seleccionar al menos un elemento");
+				}
 			}
 		});
 		
@@ -199,9 +195,9 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	
 	public void onRemoveRole(RemoveRoleEvent event) {
 	
-		securityService.deleteRoles(event.getRoles(), new MyAsyncCallback<List<RoleDto>>() {
+		securityService.deleteRoles(event.getRoles(), new MyAsyncCallback<Set<RoleDto>>() {
 
-			public void onSuccess(List<RoleDto> result) {
+			public void onSuccess(Set<RoleDto> result) {
 				
 				System.out.println("onSuccess...");
 				clientFactory.getEventBus().fireEvent(new SearchRoleEvent());

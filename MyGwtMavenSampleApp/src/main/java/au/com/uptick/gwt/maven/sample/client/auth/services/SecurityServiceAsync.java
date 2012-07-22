@@ -1,6 +1,7 @@
 package au.com.uptick.gwt.maven.sample.client.auth.services;
 
 import java.util.List;
+import java.util.Set;
 
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 import au.com.uptick.gwt.maven.sample.shared.auth.rpc.response.RoleListData;
@@ -14,7 +15,7 @@ public interface SecurityServiceAsync {
 	
 	void upateRole(RoleDto role, AsyncCallback<RoleDto> callback);
 
-	void deleteRoles(List<RoleDto> roles, AsyncCallback<List<RoleDto>> callback);
+	void deleteRoles(Set<RoleDto> roles, AsyncCallback<Set<RoleDto>> callback);
 
 	void getUserLogged(AsyncCallback<String> callback);
 	

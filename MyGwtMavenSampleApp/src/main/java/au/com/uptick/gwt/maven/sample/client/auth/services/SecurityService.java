@@ -1,6 +1,6 @@
 package au.com.uptick.gwt.maven.sample.client.auth.services;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -22,7 +22,7 @@ public interface SecurityService extends RemoteService {
 	RoleDto upateRole(RoleDto role) throws SecurityException;
 	
 	@PreAuthorize("hasRole('PERM_REMOVE_ROLES')")
-	List<RoleDto> deleteRoles(List<RoleDto> roles) throws SecurityException;
+	Set<RoleDto> deleteRoles(Set<RoleDto> roles) throws SecurityException;
 	
 	@PreAuthorize("hasRole('PERM_LIST_ROLES')")
 	RoleDto retriveRoleById(Long id) throws SecurityException;

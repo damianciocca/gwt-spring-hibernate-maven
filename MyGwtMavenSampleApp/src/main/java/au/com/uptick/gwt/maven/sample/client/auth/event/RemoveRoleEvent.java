@@ -1,7 +1,7 @@
 package au.com.uptick.gwt.maven.sample.client.auth.event;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 
@@ -9,11 +9,11 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public class RemoveRoleEvent extends GwtEvent<IRemoveRoleEventHandler> {
 
-	List<RoleDto> roles = new ArrayList<RoleDto>();
+	Set<RoleDto> roles = new TreeSet<RoleDto>();
 	
 	public static Type<IRemoveRoleEventHandler> TYPE = new Type<IRemoveRoleEventHandler>();
 	
-	public RemoveRoleEvent(List<RoleDto> roles) {
+	public RemoveRoleEvent(Set<RoleDto> roles) {
 		super();
 		this.roles = roles;
 	}
@@ -28,11 +28,11 @@ public class RemoveRoleEvent extends GwtEvent<IRemoveRoleEventHandler> {
 		handler.onRemoveRole(this);
 	}
 
-	public List<RoleDto> getRoles() {
+	public Set<RoleDto> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<RoleDto> roles) {
+	public void setRoles(Set<RoleDto> roles) {
 		this.roles = roles;
 	}
 

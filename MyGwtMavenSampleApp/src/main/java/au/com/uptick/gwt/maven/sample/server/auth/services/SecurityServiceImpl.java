@@ -1,7 +1,9 @@
 package au.com.uptick.gwt.maven.sample.server.auth.services;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,10 +47,10 @@ public class SecurityServiceImpl implements SecurityService{
 	}			
 	
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=SecurityException.class)
-	public List<RoleDto> deleteRoles(List<RoleDto> roles) throws SecurityException {
+	public Set<RoleDto> deleteRoles(Set<RoleDto> roles) throws SecurityException {
 		
 		System.out.println("SecurityServiceImpl => deleteRoles [INICIO]");
-		List<RoleDto> result = new ArrayList<RoleDto>();
+		Set<RoleDto> result = new HashSet<RoleDto>();
 		for (RoleDto dto : roles) {
 			Role roleLoaded = roleDao.findById(dto.getId());
 			if (roleLoaded == null){
