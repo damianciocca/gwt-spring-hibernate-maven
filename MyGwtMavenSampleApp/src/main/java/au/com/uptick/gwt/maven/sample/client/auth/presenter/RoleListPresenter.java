@@ -137,7 +137,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 					RoleDto role = selectedRows.iterator().next();					
 					clientFactory.getPlaceController().goTo(new RoleFormPlace(role.getId()));
 				} else {
-					Window.alert("Debe seleccionar solo un elemento");
+					Window.alert("Debe seleccionar solo un elemento. Ha seleccionado " + selectedRows.size() + " elementos");
 				}
 			}
 		});
@@ -151,7 +151,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 					eventBus.fireEvent(new RemoveRoleEvent(selectedRows));
 					clientFactory.getPlaceController().goTo(new RoleListPlace());
 				} else {
-					System.out.println("Debe seleccionar al menos un elemento");
+					Window.alert("Debe seleccionar al menos un elemento");
 				}
 			}
 		});
