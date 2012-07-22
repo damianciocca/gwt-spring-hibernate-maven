@@ -37,8 +37,8 @@ public class RoleDao extends JpaDao<Long, Role>{
 		if (filter != null){
 			int startPosition = filter.getStartIndex() ;
 			int endPosition = filter.getStartIndex() + filter.getEndIndex();
-			System.out.println("STARTTT " + startPosition);
-			System.out.println("ENDDD: " + endPosition );
+			System.out.println("START " + startPosition);
+			System.out.println("END: " + endPosition );
 			query.setFirstResult(startPosition);
 			query.setMaxResults(endPosition);
 		}
@@ -49,14 +49,29 @@ public class RoleDao extends JpaDao<Long, Role>{
 	// TODO armar algo que en un solo metodo me devuelva tanto el listado como el 
 	// count del mismo. Para esto armar una clase que sea como un wrapper por 
 	// ejemplo QueryBuilder
-	public Long retriveRolesCount(){
+	public Long retriveRolesCount(RoleDto filter){
 		
 		StringBuffer q = new StringBuffer();
-		q.append("SELECT count(r) FROM Role r ");
+		q.append("SELECT  count(r) FROM Role r WHERE 1=1 ");
+		
+		if (filter != null && filter.getId() != null){
+			q.append(" AND r.roleId = :id");			
+		}
+		if (filter != null && filter.getName() != null){
+			q.append(" AND r.roleName = :name");			
+		}
 		
 		Query query = entityManager.createQuery(q.toString());
+		
+		if (filter != null && filter.getId() != null){
+			query.setParameter("id", filter.getId());
+		}
+		if (filter != null && filter.getName() != null){
+			query.setParameter("name", filter.getName());		
+		}
 
 		return (Long)query.getSingleResult();
+		
 	}
 
 }

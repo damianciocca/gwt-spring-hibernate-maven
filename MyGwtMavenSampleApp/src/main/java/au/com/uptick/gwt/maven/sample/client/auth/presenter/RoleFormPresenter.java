@@ -178,7 +178,7 @@ public class RoleFormPresenter extends AbstractActivity implements ISaveRoleEven
 
 	public void onSearchRole(SearchRoleEvent event) {
 
-		securityService.retriveRoleById(event.getFilter().getId(), new MyAsyncCallback<RoleDto>() {
+		securityService.retriveRoleById(event.getFilterRole().getId(), new MyAsyncCallback<RoleDto>() {
 
 			public void onSuccess(RoleDto roleDto) {
 				

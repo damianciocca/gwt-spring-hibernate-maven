@@ -1,6 +1,5 @@
 package au.com.uptick.gwt.maven.sample.client.auth.presenter;
 
-import java.util.Arrays;
 import java.util.List;
 
 import au.com.uptick.gwt.maven.sample.client.app.ClientFactory;
@@ -16,7 +15,8 @@ import au.com.uptick.gwt.maven.sample.client.auth.place.RoleFormPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.place.RoleListPlace;
 import au.com.uptick.gwt.maven.sample.client.auth.services.SecurityServiceAsync;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
-import au.com.uptick.gwt.maven.sample.shared.auth.rpc.response.RoleFormData;
+import au.com.uptick.gwt.maven.sample.shared.auth.rpc.response.RoleListData;
+import au.com.uptick.gwt.maven.sample.shared.auth.rpc.response.RoleListPageData;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.Scheduler;
@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
+import com.google.gwt.view.client.Range;
 
 /**
  * The presenter is going to need to:
@@ -50,15 +51,7 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	private final ClientFactory clientFactory;
 	private final RoleListPlace place;
 	private EventBus eventBus;
-	
-	private static final List<RoleDto> CONTACTS = Arrays.asList(
-    new RoleDto(1l, "John", "123 Abc Avenue"), 
-    new RoleDto(2l, "John", "123 Abc Avenue"), 
-    new RoleDto(3l, "John", "123 Abc Avenue"), 
-    new RoleDto(4l, "John", "123 Abc Avenue"), 
-    new RoleDto(5l, "John", "123 Abc Avenue"), 
-    new RoleDto(6l, "John", "123 Abc Avenue"), 
-    new RoleDto(7l, "John", "123 Abc Avenue"));
+	RoleDto roleDtoFilter;
 	
 	/**
 	 * Interafce que debera implementar la vista (RoleView) 	
@@ -184,49 +177,25 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 	
 	public void onPopulateRoleListPage(PopulateRoleListPageEvent event) {
 
-		final RoleDto filterRole = event.getFilterRole();
+		this.roleDtoFilter = event.getFilterRole();
 		
-		AsyncDataProvider<RoleDto> provider = new AsyncDataProvider<RoleDto>() {
-
-			@Override
-			protected void onRangeChanged(HasData<RoleDto> display) {
-
-				final int start = display.getVisibleRange().getStart();
-				final int end = display.getVisibleRange().getLength();
-				filterRole.setStartIndex(start);
-				filterRole.setEndIndex(end);
-				
-				securityService.retriveRoleFormData(filterRole, new MyAsyncCallback<RoleFormData>() {
-
-					public void onSuccess(RoleFormData formData) {
-
-						System.out.println("onSuccess...");
-						
-						
-						updateRowData(start, formData.getListRoles());
-						updateRowCount(formData.getListRolesSize(), true);
-						
-//						display.setListRows(formData.getListRoles());
-//						display.getRoleFilter().setValues(formData.getListRoles(), true);
-									
-					}
-
-					@Override
-					public void onError(Throwable caught, boolean alreadyHandledError) {
-
-						System.out.println("onError...");
-
-					}
-				});
-				
-			
-			}
-		};
-		
-		provider.addDataDisplay(display.getCellTable());
-	   
+		doSearchRoleGrid();
+		doSearchRolePage();
 	}
+	
+	public void onSearchRole(SearchRoleEvent event) {
 
+		this.roleDtoFilter = event.getFilterRole();
+		
+		// De esta forma, limpiamos el contenido de la grilla. Resetamos la grilla.
+		// Al pasarle FALSE, nos muestra la animacion del LOADING, si le pasamos TRUE o no le pasamos nada, 
+		// no muestra la animacion. 
+		display.getCellTable().setRowCount(0, false);
+		// Y reseteamos el rango de paginacion y relanzamos la busqueda (gracias al TRUE).
+		display.getCellTable().setVisibleRangeAndClearData(new Range(0, 3), true);
+	}	
+	
+	
 	public void onRemoveRole(RemoveRoleEvent event) {
 	
 		securityService.deleteRoles(event.getRoles(), new MyAsyncCallback<List<RoleDto>>() {
@@ -243,29 +212,61 @@ public class RoleListPresenter extends AbstractActivity implements IRemoveRoleEv
 				System.out.println("onError...");
 			}
 		});
-	}
+	}	
 
-	public void onSearchRole(SearchRoleEvent event) {
-
+	private void doSearchRoleGrid() {		
 		
-//		securityService.retriveRoles(event.getFilter(), new MyAsyncCallback<List<RoleDto>>() {
-//
-//			public void onSuccess(List<RoleDto> roles) {
-//
-//				System.out.println("onSuccess...");
-//				display.setListRows(roles);			
-//			}
-//
-//			@Override
-//			public void onError(Throwable caught, boolean alreadyHandledError) {
-//
-//				System.out.println("onError...");
-//
-//			}
-//		});		
-	}
+		AsyncDataProvider<RoleDto> provider = new AsyncDataProvider<RoleDto>() {
 
+			@Override
+			protected void onRangeChanged(HasData<RoleDto> display) {
+
+				final int start = display.getVisibleRange().getStart();
+				final int end = display.getVisibleRange().getLength();
+				roleDtoFilter.setStartIndex(start);
+				roleDtoFilter.setEndIndex(end);
+				
+				// Solo buscamos los datos de la grilla de roles.
+				securityService.retriveRoleList(roleDtoFilter, new MyAsyncCallback<RoleListData>() {
+
+					public void onSuccess(RoleListData roleListData) {
+
+						System.out.println("onSuccess...");
+						updateRowData(start, roleListData.getListRoles());
+						updateRowCount(roleListData.getListRolesSize(), true);
+									
+					}
+
+					@Override
+					public void onError(Throwable caught, boolean alreadyHandledError) {
+
+						System.out.println("onError...");
+
+					}
+				});
+			}			
+		};				
 	
+		provider.addDataDisplay(display.getCellTable());
+	}
+	
+	private void doSearchRolePage() {
+		
+		// Aca buscamos todos los datos restantes de la pantalla del listado de roles.
+		securityService.retriveRoleListPage(roleDtoFilter, new MyAsyncCallback<RoleListPageData>() {
 
+			public void onSuccess(RoleListPageData roleListPageData) {
+
+				System.out.println("onSuccess...");
+				display.getRoleFilter().setValues(roleListPageData.getListRoles(), true);
+			}
+
+			@Override
+			public void onError(Throwable caught, boolean alreadyHandledError) {
+
+				System.out.println("onError...");
+			}
+		});
+	}
 	
 }

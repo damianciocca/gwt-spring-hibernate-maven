@@ -29,7 +29,7 @@ public class SearchRoleEvent extends GwtEvent<ISearchRoleEventHandler> {
 		handler.onSearchRole(this);
 	}
 
-	public RoleDto getFilter() {
+	public RoleDto getFilterRole() {
 		return filter;
 	}
 

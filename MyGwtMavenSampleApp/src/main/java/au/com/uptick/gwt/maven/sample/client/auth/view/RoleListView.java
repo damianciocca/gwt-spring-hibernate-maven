@@ -227,8 +227,7 @@ public class RoleListView extends Composite implements RoleListPresenter.Display
         };
 
         pager.setRangeLimited(true);
-		
-		
+				
 		pager.setDisplay(table);
 
 		VerticalPanel vp = new VerticalPanel();

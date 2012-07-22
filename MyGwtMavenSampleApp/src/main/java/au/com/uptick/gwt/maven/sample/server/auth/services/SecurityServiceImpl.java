@@ -15,7 +15,8 @@ import au.com.uptick.gwt.maven.sample.server.auth.CustomUserAuthentication;
 import au.com.uptick.gwt.maven.sample.server.auth.dao.RoleDao;
 import au.com.uptick.gwt.maven.sample.shared.auth.dto.RoleDto;
 import au.com.uptick.gwt.maven.sample.shared.auth.model.Role;
-import au.com.uptick.gwt.maven.sample.shared.auth.rpc.response.RoleFormData;
+import au.com.uptick.gwt.maven.sample.shared.auth.rpc.response.RoleListData;
+import au.com.uptick.gwt.maven.sample.shared.auth.rpc.response.RoleListPageData;
 
 @Service("securityService")
 public class SecurityServiceImpl implements SecurityService{
@@ -41,29 +42,7 @@ public class SecurityServiceImpl implements SecurityService{
 		RoleDto result = bindFrom(roleUpdated);
 		System.out.println("SecurityServiceImpl => upateRole [FIN]");
 		return result;
-	}
-	
-	public List<RoleDto> retriveRoles(RoleDto filter) throws SecurityException{
-		
-		System.out.println("SecurityServiceImpl => retriveRoles [INICIO]");
-		List<Role> roles = roleDao.retriveRoles(filter);
-		List<RoleDto> result = new ArrayList<RoleDto>();
-		for (Role r : roles) {
-			result.add(bindFrom(r));
-		}
-		System.out.println("SecurityServiceImpl => retriveRoles [FIN]");
-		return result;
-	}
-	
-	public RoleDto retriveRoleById(Long id) throws SecurityException {
-		
-		System.out.println("SecurityServiceImpl => retriveRoleById [INICIO]");
-		Role role = roleDao.findById(id);
-		RoleDto result = bindFrom(role);
-		System.out.println("SecurityServiceImpl => retriveRoleById [FIN]");
-		return result;
-	}
-
+	}			
 	
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=SecurityException.class)
 	public List<RoleDto> deleteRoles(List<RoleDto> roles) throws SecurityException {
@@ -82,20 +61,37 @@ public class SecurityServiceImpl implements SecurityService{
 		return result;
 	}
 	
-	public RoleFormData retriveRoleFormData(RoleDto filter) throws SecurityException {
+	public RoleDto retriveRoleById(Long id) throws SecurityException {
 		
-		RoleFormData formData = new RoleFormData();
+		System.out.println("SecurityServiceImpl => retriveRoleById [INICIO]");
+		Role role = roleDao.findById(id);
+		RoleDto result = bindFrom(role);
+		System.out.println("SecurityServiceImpl => retriveRoleById [FIN]");
+		return result;
+	}
+
+	
+	public RoleListPageData retriveRoleListPage(RoleDto filter) throws SecurityException {
+		
+		RoleListPageData result = new RoleListPageData();
 		
 		List<RoleDto> rolesForFilter = retriveRoles(null);
-		List<RoleDto> rolesForList = retriveRoles(filter);
-		Long roleCount = roleDao.retriveRolesCount();
-		
-		formData.setFilterRoles(rolesForFilter);
-		formData.setListRoles(rolesForList);
-		formData.setListRolesSize(roleCount.intValue());
+		result.setListRoles(rolesForFilter);
 
-		return formData;
+		return result;
 	}
+	
+	public RoleListData retriveRoleList(RoleDto filter) throws SecurityException {
+		
+		RoleListData result = new RoleListData();
+		
+		List<RoleDto> rolesForGrid = retriveRoles(filter);
+		Long roleCount = roleDao.retriveRolesCount(filter);
+		result.setListRoles(rolesForGrid);
+		result.setListRolesSize(roleCount.intValue());
+
+		return result;
+	}	
 	
 	public String getUserLogged() {
 		
@@ -105,6 +101,18 @@ public class SecurityServiceImpl implements SecurityService{
 		 */
 		CustomUserAuthentication user = (CustomUserAuthentication) SecurityContextHolder.getContext().getAuthentication();
 		return user.getName() + " " + user.getSurname();
+	}
+	
+	private List<RoleDto> retriveRoles(RoleDto filter) throws SecurityException{
+		
+		System.out.println("SecurityServiceImpl => retriveRoles [INICIO]");
+		List<Role> roles = roleDao.retriveRoles(filter);
+		List<RoleDto> result = new ArrayList<RoleDto>();
+		for (Role r : roles) {
+			result.add(bindFrom(r));
+		}
+		System.out.println("SecurityServiceImpl => retriveRoles [FIN]");
+		return result;
 	}
 	
 	private Role bindFrom(RoleDto dto){
@@ -124,5 +132,5 @@ public class SecurityServiceImpl implements SecurityService{
 		dto.setDescription(role.getRoleDescription());
 		return dto;
 	}
-
+	
 }
