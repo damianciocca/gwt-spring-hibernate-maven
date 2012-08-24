@@ -51,7 +51,7 @@ public class PromedioArbol {
 	
 	public static float obtenerPromedio(Nodo root){
 		
-		List<Integer> values = obtenerSumaDelArbol(root, new ArrayList<Integer>());
+		List<Integer> values = obtenerValoresDelArbol(root, new ArrayList<Integer>());
 		if (values.size() > 0){
 			int suma = 0;
 			for (Integer v : values) {
@@ -65,12 +65,12 @@ public class PromedioArbol {
 		return 0;
 	}
 	
-	private static List<Integer> obtenerSumaDelArbol(Nodo element, List<Integer> values) {
+	private static List<Integer> obtenerValoresDelArbol(Nodo element, List<Integer> values) {
 
 		values.add(element.getValue());
 		System.out.println("VALOR: " + element.getValue());
 		for (Nodo data : element.getChilds()) {
-			obtenerSumaDelArbol(data, values);
+			obtenerValoresDelArbol(data, values);
 		}
 
 		return values;
