@@ -53,7 +53,7 @@ public class PromedioArbol {
 		
 		List<Integer> values = obtenerValoresDelArbol(root, new ArrayList<Integer>());
 		if (values.size() > 0){
-			int suma = 0;
+			float suma = 0;
 			for (Integer v : values) {
 				suma = suma + v.intValue();
 			}
