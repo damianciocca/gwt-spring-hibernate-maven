@@ -33,7 +33,7 @@ public class FactorizarTest {
 	 */
 	public static void main(String args[]) {
 		
-		Map<Integer, Integer> factorizacion = factorizar(12);
+		Map<Integer, Integer> factorizacion = factorizar(13);
 		
 		Set<Integer> keySet = factorizacion.keySet();
 		for (Integer key : keySet) {
