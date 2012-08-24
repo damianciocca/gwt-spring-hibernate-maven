@@ -20,7 +20,7 @@ public class PromedioArbol {
 	 * @param arg
 	 */
 	public static void main(String arg[]){
-		
+
 		List<Nodo> lista1 = new ArrayList<Nodo>();
 		Nodo cuatro = new Nodo(4, null);
 		Nodo seis = new Nodo(6, null);
@@ -28,7 +28,7 @@ public class PromedioArbol {
 		lista1.add(cuatro);
 		lista1.add(seis);
 		lista1.add(nueve);
-		
+
 		List<Nodo> lista2 = new ArrayList<Nodo>();
 		Nodo veinte = new Nodo(20, lista1);
 		Nodo doce = new Nodo(12, null);
@@ -36,16 +36,22 @@ public class PromedioArbol {
 		lista2.add(veinte);
 		lista2.add(doce);
 		lista2.add(cinco);
-		
+
 		Nodo root = new Nodo(50, lista2);
 		obtenerPromedio(root);
 	}
-	
+
 	public static float obtenerPromedio(Nodo root){
-	
-		
-		
+
+		List<Nodo> childs = root.getChilds();
+		for (int i = 0; i <= childs.size(); i++){
+			if (childs != null){
+				System.out.println("===> " + childs.get(i).getValue());
+				obtenerPromedio(childs.get(i));
+			}
+		}
 		return 0;
 	}
+
 
 }
