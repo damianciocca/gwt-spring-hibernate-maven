@@ -3,7 +3,7 @@ package au.com.uptick.gwt.maven.sample.test.threads.example2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SegundoThread implements Runnable{
+public class NotifyAndWaitThread implements Runnable{
 	
 	List<String> lista = new ArrayList<String>();
 
