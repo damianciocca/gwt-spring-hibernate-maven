@@ -1,0 +1,12 @@
+Se trata de una analizador de logs, lo que hace es mostrar pot consola el resultado neto del tiempo de ejecucion de varios procesos
+
+Los procesos tienen un tiempo de inicio o fin, y un booleano que dice si es de inicio o fin (true si inicia, false si termina)
+
+En la clase de test esta un ejemplo de como seria una secuencia.
+
+Tengan en cuenta que es el tiempo neto de cada proceso, es decir que si entre el inicio y fin de un proceso hay varios procesos dentro,
+estos no deberian contarse como tiempo de ejecucion del proceso que los contiene.
+Otro punto a tener en cuenta, es que un proceso puede iniciar y terminar y luego volver a iniciar y terminar en otro momento,
+esto implica que se deben contar los dos tiempos de proceso de cada ejecucion y sumarlos.
+
+SE RECOMIENDA EL USO DE UNA PILA para ir sacando cuando encuentro el primer FALSE
