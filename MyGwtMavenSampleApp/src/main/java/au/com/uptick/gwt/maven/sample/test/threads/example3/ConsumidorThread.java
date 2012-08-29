@@ -12,11 +12,7 @@ public class ConsumidorThread implements Runnable{
 	public void run() {
 		
 		while (true) {
-			
-			//for (int i = 1; i < 30; i++) {
 			sharedObject.getNumero();
-			//}
-			
 		}
 	}
 
