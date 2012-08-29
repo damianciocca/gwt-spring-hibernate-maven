@@ -1,4 +1,4 @@
-package au.com.uptick.gwt.maven.sample.test.threads;
+package au.com.uptick.gwt.maven.sample.test.threads.example2;
 
 import java.util.ArrayList;
 import java.util.List;
