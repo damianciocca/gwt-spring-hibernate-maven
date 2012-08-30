@@ -2,7 +2,7 @@ package au.com.uptick.gwt.maven.sample.test.threads.example3;
 
 public class ConsumidorThread implements Runnable{
 	
-	SharedObject sharedObject;
+	SharedObject sharedObject;	
 
 	public ConsumidorThread(SharedObject sharedObject) {
 		super();
