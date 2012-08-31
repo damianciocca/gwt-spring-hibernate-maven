@@ -17,6 +17,7 @@ public class ComparingIntegersTest {
 		if (count.compareTo(0) == 0){
 			System.out.println("Son iguales");
 		}
+		
 	}
 
 }
