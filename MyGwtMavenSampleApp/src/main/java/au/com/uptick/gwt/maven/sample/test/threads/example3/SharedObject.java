@@ -11,7 +11,7 @@ public class SharedObject {
 	 */
 	public synchronized int getNumero() {
 		
-		while(!isAvailableToConsume){
+		if(!isAvailableToConsume){
 			// No esta habilitado para consumir => el consumidor no puede tomar el valor del productor.	
 			try {
 				this.wait();
@@ -31,7 +31,7 @@ public class SharedObject {
 	 */
 	public synchronized void setNumero(int numero) {
 		
-		while(isAvailableToConsume){
+		if(isAvailableToConsume){
 			// Esta habilitado para consumir => el consumidor ya puede tomar el valor del productor. 
 			// El productor tiene que esperar que el consumidor lo tome antes de poner un nuevo valor.	
 			try {
