@@ -11,13 +11,22 @@ import org.springframework.stereotype.Component;
 public class EmpleadoBean {
 	
 		private String name;
+		
 		private String surname;
-		@Autowired
+
+		//Inyeccion por constructor
+		@Autowired 			
 		private CuentaBean cuenta;
+		
+		//Inyeccion por setter
 		private DireccionBean direccion;
-		@Autowired
+		
+		//Inyeccion por constructor + nombre
+		@Autowired 
 		@Qualifier("legajo")
 		private LegajoBean legajoBean;
+		
+		//Inyeccion por metodo (prepare(..))
 		private PersonaBean personaBean;
 	
 		@Autowired
