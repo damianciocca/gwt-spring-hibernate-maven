@@ -9,11 +9,11 @@ public static void main(String arg[]){
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring/ejemplos/dos/ioc/xml/SpringIoC.xml");
 		//o bien => XmlBeanFactory context = new XmlBeanFactory(new ClassPathResource("spring/ejemplos/dos/ioc/xml/SpringIoC.xml"));
-		EmpleadoBean b = (EmpleadoBean) context.getBean("empleadoBean");
-		
+		EmpleadoBean empleado = (EmpleadoBean) context.getBean("empleadoBean");
+		CuentaBean cuenta = empleado.getCuenta();
+		System.out.println("Empleado => " + empleado);
+		System.out.println("Cuenta 	 => " + cuenta);
 	}
-
-
 }
 
 

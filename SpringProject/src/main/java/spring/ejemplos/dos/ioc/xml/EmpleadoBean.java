@@ -4,6 +4,7 @@ public class EmpleadoBean {
 	
 		private String name;
 		private String surname;
+		private CuentaBean cuenta;
 
 		public String getName() {
 			return name;
@@ -17,9 +18,17 @@ public class EmpleadoBean {
 		public void setSurname(String surname) {
 			this.surname = surname;
 		}
+		public CuentaBean getCuenta() {
+			return cuenta;
+		}
+		public void setCuenta(CuentaBean cuenta) {
+			this.cuenta = cuenta;
+		}
+		
 		@Override
 		public String toString() {
-			return "EmpleadoBean [name=" + name + ", surname=" + surname + "]";
+			return "EmpleadoBean [name=" + name + ", surname=" + surname
+					+ ", cuenta=" + cuenta.getNumber() + " - " + cuenta.getName() + "]";
 		}
-
+		
 }
