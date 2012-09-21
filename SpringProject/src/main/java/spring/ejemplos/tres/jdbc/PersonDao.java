@@ -26,6 +26,9 @@ public class PersonDao implements IDao{
 		 return result;
 	}
 	
+	/**
+	 * Mapea cada row del resultSet mediante un RowMapper
+	 */
 	class PersonRowMapper implements RowMapper<Person>{
 
 		public Person mapRow(ResultSet rs, int rowNum) throws SQLException {

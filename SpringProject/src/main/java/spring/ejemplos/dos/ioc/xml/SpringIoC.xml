@@ -7,6 +7,10 @@
 		<property name="cuenta" ref="cuentaBean"></property>
 	</bean>
 	
-	<bean id="cuentaBean" class="spring.ejemplos.dos.ioc.xml.CuentaBean" />
+	<!-- Mediante el name podemos aplicarle alias separados por coma o bien mediante la etiqueta alias -->
+	<bean id="cuentaBean" name="a,b,c,d" class="spring.ejemplos.dos.ioc.xml.CuentaBean" />
+	
+	<alias name="cuentaBean" alias="alias1"/>
+	<alias name="a" alias="alias2"/>
 
 </beans>
