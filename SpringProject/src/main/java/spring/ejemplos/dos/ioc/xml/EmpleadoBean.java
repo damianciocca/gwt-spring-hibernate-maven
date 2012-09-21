@@ -8,7 +8,7 @@ public class EmpleadoBean {
 		
 		public EmpleadoBean() {
 			super();
-			// TODO Auto-generated constructor stub
+			System.out.println("Creando instancia => EjemploBean()");
 		}
 		public EmpleadoBean(CuentaBean cuenta) {
 			this.cuenta = cuenta;

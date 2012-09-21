@@ -18,8 +18,18 @@
 	<bean id="empleadoBean2" class="spring.ejemplos.dos.ioc.xml.EmpleadoBean" >
 		 <constructor-arg ref="cuentaBean2"/>
 	</bean>
-	
-	<!-- Mediante el name podemos aplicarle alias separados por coma o bien mediante la etiqueta alias -->
-	<bean id="cuentaBean2" class="spring.ejemplos.dos.ioc.xml.CuentaBean" />
 
+	<bean id="cuentaBean2" class="spring.ejemplos.dos.ioc.xml.CuentaBean" />
+	
+	<!-- 3. Scope protoype => cada vez q se pida el objeto al contexto, este retornara una nueva instancia -->
+	<bean id="pruebaBean" class="spring.ejemplos.dos.ioc.xml.PruebaBean" scope="prototype"/>
+	
+	<!-- 4. Inicialización Perezosa:
+		 Por defecto, cuando Spring lee un fichero de configuración instancia automáticamente todos los 
+		 beans de tipo Singleton definidos. Si se quiere evitar que algún bean sea instanciado automáticamente 
+		 se puede utilizar el atributo lazy-init:
+		 De esta forma el bean se instanciará la primera vez que sea usado, 
+	-->
+	<bean id="ejemploBean" class="spring.ejemplos.dos.ioc.xml.EjemploBean" lazy-init="true"/>
+	
 </beans>
