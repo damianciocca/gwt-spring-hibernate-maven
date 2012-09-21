@@ -25,9 +25,4 @@ public class CuentaBean {
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return "CuentaBean [number=" + number + ", name=" + name + "]";
-	}
-	
 }

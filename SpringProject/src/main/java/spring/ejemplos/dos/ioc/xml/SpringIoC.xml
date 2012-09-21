@@ -3,6 +3,7 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+	<!-- 1. Una forma de inyectar las dependencias es mediante el metodo setter -->
 	<bean id="empleadoBean" class="spring.ejemplos.dos.ioc.xml.EmpleadoBean" >
 		<property name="cuenta" ref="cuentaBean"></property>
 	</bean>
@@ -12,5 +13,13 @@
 	
 	<alias name="cuentaBean" alias="alias1"/>
 	<alias name="a" alias="alias2"/>
+	
+	<!-- 2. Otra forma de inyectar las dependencias es mediante el constructor -->
+	<bean id="empleadoBean2" class="spring.ejemplos.dos.ioc.xml.EmpleadoBean" >
+		 <constructor-arg ref="cuentaBean2"/>
+	</bean>
+	
+	<!-- Mediante el name podemos aplicarle alias separados por coma o bien mediante la etiqueta alias -->
+	<bean id="cuentaBean2" class="spring.ejemplos.dos.ioc.xml.CuentaBean" />
 
 </beans>

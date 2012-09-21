@@ -5,7 +5,14 @@ public class EmpleadoBean {
 		private String name;
 		private String surname;
 		private CuentaBean cuenta;
-
+		
+		public EmpleadoBean() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+		public EmpleadoBean(CuentaBean cuenta) {
+			this.cuenta = cuenta;
+		}
 		public String getName() {
 			return name;
 		}
@@ -23,12 +30,6 @@ public class EmpleadoBean {
 		}
 		public void setCuenta(CuentaBean cuenta) {
 			this.cuenta = cuenta;
-		}
-		
-		@Override
-		public String toString() {
-			return "EmpleadoBean [name=" + name + ", surname=" + surname
-					+ ", cuenta=" + cuenta.getNumber() + " - " + cuenta.getName() + "]";
 		}
 		
 }
