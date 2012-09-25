@@ -19,7 +19,9 @@
 		que implementar el método createPizza es asunto suyo, y que lo queremos que haga es retornar un bean pizza
 		El atributo name contiene el nombre del método a inyectar, y el atributo bean la referencia al 
 		bean a instanciar. => Esta va en conjunto con el scope protoype de la clase PizzaBean
-		El atributo init-method => Se ejecutara cuando se inicialice el objeto solo una vez.
+		El atributo init-method => Se ejecutara cuando se inicialice el objeto solo una vez. Otra forma es implementar
+		la interface InitializingBean pero la contra q trae eso es que estamos metiendo en el codigo java dependencias
+		de spring.
 	 -->
 	<bean id="pizzeria2" class="spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzeriaServiceImpl2" init-method="init" lazy-init="true">
 		<lookup-method name="createPizza" bean="pizza"/>
