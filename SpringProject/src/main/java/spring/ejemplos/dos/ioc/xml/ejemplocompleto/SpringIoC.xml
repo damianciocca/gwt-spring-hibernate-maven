@@ -18,7 +18,8 @@
 		Usando la etiqueta lookup-method podemos indicar a Spring en el applicationContext.xml 
 		que implementar el método createPizza es asunto suyo, y que lo queremos que haga es retornar un bean pizza
 		El atributo name contiene el nombre del método a inyectar, y el atributo bean la referencia al 
-		bean a instanciar.
+		bean a instanciar. => Esta va en conjunto con el scope protoype de la clase PizzaBean
+		El atributo init-method => Se ejecutara cuando se inicialice el objeto solo una vez.
 	 -->
 	<bean id="pizzeria2" class="spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzeriaServiceImpl2" init-method="init" lazy-init="true">
 		<lookup-method name="createPizza" bean="pizza"/>

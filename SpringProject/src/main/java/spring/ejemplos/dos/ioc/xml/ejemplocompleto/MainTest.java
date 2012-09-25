@@ -22,10 +22,12 @@ public class MainTest {
 		System.out.println("******** EJEMPLO 1*******************");
 		// De esta manera, siempre vamos a despachar la misma pizza (objetos iguales).
 		/**
-		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@1b383e9
-		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@1b383e9
-		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@1b383e9
-		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@1b383e9
+		 * Se inicializa el objeto mediante el constructor => PizzeriaServiceImpl
+		 * Se inicializa el objeto mediante el constructor => PizzaBean
+		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@99681b
+		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@99681b
+		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@99681b
+		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@99681b
 		 */
 		PizzeriaServiceImpl pizzeria1 = (PizzeriaServiceImpl) context.getBean("pizzeria1");
 		pizzeria1.dispatch();
@@ -40,13 +42,15 @@ public class MainTest {
 		// El error es debido a que Spring realiza la inyección del método a muy bajo nivel, manipulando directamente 
 		// el bytecode de las clases a través de CGLIB, que es una librería que permite hacer esto precisamente.
 		/**
-		 * se crea la instancia => PizzaBean()
+		 * Se inicializa el objeto mediante el constructor => PizzeriaServiceImpl2
+		 * Se inicializa el objeto mediante el metodo init() => PizzeriaServiceImpl2
+		 * Se inicializa el objeto mediante el constructor => PizzaBean
 		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@12a3722
-		 * se crea la instancia => PizzaBean()
+		 * Se inicializa el objeto mediante el constructor => PizzaBean
 		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@89cf1e
-		 * se crea la instancia => PizzaBean()
+		 * Se inicializa el objeto mediante el constructor => PizzaBean
 		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@17ce4e7
-		 * se crea la instancia => PizzaBean()
+		 * Se inicializa el objeto mediante el constructor => PizzaBean
 		 * dispatching....spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean@982589
 		 */
 		PizzeriaServiceImpl2 pizzeria2 = (PizzeriaServiceImpl2) context.getBean("pizzeria2");
