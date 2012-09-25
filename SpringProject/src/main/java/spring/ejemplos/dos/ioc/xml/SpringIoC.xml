@@ -32,4 +32,25 @@
 	-->
 	<bean id="ejemploBean" class="spring.ejemplos.dos.ioc.xml.EjemploBean" lazy-init="true"/>
 	
+	<!-- 5. Autowiring
+	  	 Una forma de reducir el tamaño de los ficheros XML de configuración es utilizar la capacidad de 
+	  	 autowiring de Spring. Esta característica permite a Spring detectar automáticamente las 
+	  	 dependencias de un bean con otros, instanciando e inyectando por sí solo todos los objetos necesarios.
+	  	 
+	  	 Spring soporta cuatro formas de autowiring a través del atributo autowire:
+	  	 
+			- no: Opción por defecto, obliga a especificar las dependencias de forma manual utilizando ref.
+			- byName: Fuerza a Spring a resolver dependencias por nombre. Es decir, si el bean tiene un setter llamado setAuditorio 
+					  buscará un bean con nombre auditorio.
+			- byType: Fuerza a Spring a resolver dependencias en base a los tipos de las propiedades del bean. Es decir, Spring 
+					  examinará el tipo de las propiedades del bean y buscará algún bean que tenga el mismo tipo.
+			- constructor: Fuerza a Spring a resolver dependencias en base a los tipos de los parámetros del constructor del bean.
+			
+		NOTA: Ademas como lo instancilizamos con lazy true, vemos que ambos objetos, ZooBean y PruebaBean se crearan recien 
+		cuando se le pida al contexto de spring el objeto zooBean.
+		En caso que no pongamos lazy en true, vemos que ambos objetos se inicializan al levantar el contexto de Spring	 
+	-->
+	
+	<bean id="zooBean" class="spring.ejemplos.dos.ioc.xml.ZooBean" autowire="byType" lazy-init="true" />
+	
 </beans>

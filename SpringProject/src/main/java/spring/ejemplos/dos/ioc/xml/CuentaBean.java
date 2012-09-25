@@ -7,6 +7,7 @@ public class CuentaBean {
 	
 	public CuentaBean() {
 		super();
+		System.out.println("se crea la instancia => CuentaBean()");
 	}
 
 	public String getNumber() {

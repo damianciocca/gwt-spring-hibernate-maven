@@ -6,7 +6,7 @@ public class EjemploBean {
 
 	public EjemploBean() {
 		super();
-		System.out.println("Creando instancia => EjemploBean()");
+		System.out.println("se crea la instancia => EjemploBean()");
 	}
 
 	public String getName() {

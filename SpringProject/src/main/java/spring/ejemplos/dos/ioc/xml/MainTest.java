@@ -55,8 +55,16 @@ public class MainTest {
 		System.out.println("PruebaBean (otra referencia en memoria)  => " + pruebaBean3);
 		
 		System.out.println("*******************************");
+		// Inicializacion Perezosa
 		EjemploBean eb1 = (EjemploBean) context.getBean("ejemploBean");
 		System.out.println("EjemploBean  => " + eb1);
+		
+		System.out.println("*******************************");
+		// Autowiring por tipo 
+		ZooBean zoo = (ZooBean) context.getBean("zooBean");
+		PruebaBean bean = zoo.getBean();
+		System.out.println("ZooBean  => " + zoo);
+		System.out.println("PruebaBean  => " + bean);
 	}
 }
 

@@ -8,7 +8,7 @@ public class PruebaBean {
 
 	public PruebaBean() {
 		super();
-		System.out.println("se crea la instancia... ");
+		System.out.println("se crea la instancia => PruebaBean()");
 	}
 
 	public String getName() {

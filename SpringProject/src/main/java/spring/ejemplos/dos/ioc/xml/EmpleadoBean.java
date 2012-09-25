@@ -8,7 +8,7 @@ public class EmpleadoBean {
 		
 		public EmpleadoBean() {
 			super();
-			System.out.println("Creando instancia => EjemploBean()");
+			System.out.println("se crea la instancia => EmpleadoBean()");
 		}
 		public EmpleadoBean(CuentaBean cuenta) {
 			this.cuenta = cuenta;
