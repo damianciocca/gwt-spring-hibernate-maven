@@ -10,7 +10,7 @@
 	-->	
 	<bean id="pizza" class="spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzaBean" scope="prototype"/>
 	
-	<bean id="pizzeria1" class="spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzeriaServiceImpl" >
+	<bean id="pizzeria1" class="spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzeriaServiceImpl" lazy-init="true" >
 		<property name="pizza" ref="pizza"></property>
 	</bean>
 	
@@ -20,7 +20,7 @@
 		El atributo name contiene el nombre del método a inyectar, y el atributo bean la referencia al 
 		bean a instanciar.
 	 -->
-	<bean id="pizzeria2" class="spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzeriaServiceImpl2" >
+	<bean id="pizzeria2" class="spring.ejemplos.dos.ioc.xml.ejemplocompleto.PizzeriaServiceImpl2" init-method="init" lazy-init="true">
 		<lookup-method name="createPizza" bean="pizza"/>
 	</bean>				
 	

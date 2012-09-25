@@ -4,7 +4,7 @@ public class PizzaBean {
 
 	public PizzaBean() {
 		super();
-		System.out.println("se crea la instancia => PizzaBean()");
+		System.out.println("Se inicializa el objeto mediante el constructor => PizzaBean");
 	}
 	
 	

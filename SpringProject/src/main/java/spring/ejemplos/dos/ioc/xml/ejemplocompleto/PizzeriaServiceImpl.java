@@ -4,6 +4,11 @@ public class PizzeriaServiceImpl implements PizzeriaService{
 
 	private PizzaBean pizza;
 	
+	public PizzeriaServiceImpl() {
+		super();
+		System.out.println("Se inicializa el objeto mediante el constructor => PizzeriaServiceImpl");
+	}
+
 	public void dispatch() {
 		
 		System.out.println("dispatching...." + pizza);
