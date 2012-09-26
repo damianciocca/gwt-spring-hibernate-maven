@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- La forma de acceder a ella es declarar un bean en el fichero de configuración que se llame 
+		 "messageSource" y que tenga asignada una clase que implemente dicha interface: 
+		 La propiedad basename permite indicar el nombre del típico fichero .properties que 
+		 contiene los mensajes de la aplicación-->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+  		<property name="basename" value="spring/ejemplos/ocho/i18n/mensajes"/>
+  	</bean>
+	
+	
+</beans>
