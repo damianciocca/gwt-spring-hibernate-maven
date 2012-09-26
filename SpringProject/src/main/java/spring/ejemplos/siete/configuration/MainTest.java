@@ -5,7 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import spring.ejemplos.siete.configuration.model.CuentaBean;
 
 /**
- * http://www.inmensia.com/articulos/spring/anotaciones_componentes.html
+ * http://www.inmensia.com/articulos/spring/anotaciones_configuracion.html
  * 
  * @author dciocca
  *
