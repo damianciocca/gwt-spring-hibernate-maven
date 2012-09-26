@@ -22,5 +22,9 @@
 	<bean id="rueda" class="spring.ejemplos.dos.ioc.annotation.ejemplocompleto.Rueda"></bean>
 	
 	<bean id="chasis" class="spring.ejemplos.dos.ioc.annotation.ejemplocompleto.Chasis"></bean>
+	
+	<bean id="volante" class="spring.ejemplos.dos.ioc.annotation.ejemplocompleto.Volante"></bean>
+	
+	<bean id="espejo" class="spring.ejemplos.dos.ioc.annotation.ejemplocompleto.Espejo"></bean>
 
 </beans>

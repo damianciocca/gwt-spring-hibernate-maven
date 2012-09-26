@@ -61,10 +61,14 @@ public class MainTest {
 		Motor motor = coche.getMotor();
 		Rueda rueda = coche.getRueda();
 		Chasis chasis = coche.getChasis();
+		Pieza volante = coche.getVolante1();
+		Pieza espejo = coche.getEspejo1();
 		System.out.println("COCHE " + coche);
 		System.out.println("MOTOR " + motor);
 		System.out.println("RUEDA " + rueda);
 		System.out.println("CHASIS " + chasis);
+		System.out.println("VOLANTE " + volante);
+		System.out.println("ESPEJO " + espejo);
 	
 	}
 }
