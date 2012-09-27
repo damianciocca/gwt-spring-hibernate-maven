@@ -53,6 +53,20 @@
 		<version>1</version>
 	</dependency>
 	
+	<!-- Para las validaciones con Spring -->
+	<dependency>
+	  <groupId>org.hibernate</groupId>
+	  <artifactId>hibernate-validator</artifactId>
+	  <version>4.2.0.Final</version>
+	</dependency>
+	
+	<!-- Para las validaciones con Spring -->
+	<dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.1</version>
+    </dependency>
+	
     
   </dependencies>
   

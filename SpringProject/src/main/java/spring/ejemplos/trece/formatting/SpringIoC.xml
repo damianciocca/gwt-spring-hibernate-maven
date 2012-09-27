@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   					   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	   					   http://www.springframework.org/schema/context
+						   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+ 		<!-- Util para las anotaciones -->
+		<context:annotation-config/>
+	
+		<!-- Para evitar esta excepcion: 
+			`Failed to convert property value of type 'java.lang.String' to required type 'java.util.Date'
+		     for property 'date'; nested exception is java.lang.IllegalArgumentException: 
+		     Could not parse date: Unparseable date: "2012/01/07" 
+		     Ya que uno esta inyectando un string en un Date 
+		-->
+		<bean id="libro" class="spring.ejemplos.trece.formatting.Libro">
+			<property name="date" value="2012-01-07"></property>
+		</bean>
+		
+		<bean id="cuenta" class="spring.ejemplos.trece.formatting.number.Cuenta">
+		</bean>
+		
+		<!-- Se tiene que declarar un CustomDateEditor  
+			 Declares a CustomDateEditor class to convert a String to a java.util.Date. -->
+		<bean id="dateEditor" class="org.springframework.beans.propertyeditors.CustomDateEditor">
+ 
+			<constructor-arg>
+				<bean class="java.text.SimpleDateFormat">
+					<constructor-arg value="yyyy-MM-dd" />
+				</bean>
+			</constructor-arg>
+			
+			<constructor-arg value="true" />
+	 
+		</bean>
+ 
+ 		<!-- Y por ultimo delcaramos un CustomEditorConfigurer 
+ 			 CustomEditorConfigurer, to make Spring convert bean properties whose type is 
+ 			 java.util.Date 
+ 		 -->
+		<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+			<property name="customEditors">
+				<map>
+					<entry key="java.util.Date">
+						<ref local="dateEditor" />
+					</entry>
+				</map>
+			</property>
+		</bean>
+			
+</beans>
