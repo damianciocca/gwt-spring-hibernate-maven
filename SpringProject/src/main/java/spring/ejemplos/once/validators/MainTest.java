@@ -11,7 +11,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.ValidationUtils;
 
 /**
- * http://www.inmensia.com/articulos/spring/anotaciones_configuracion.html
+ * http://www.inmensia.com/articulos/spring/validadores.html
+ * http://www.roseindia.net/tutorial/spring/spring3/ioc/springvalidation.html
  * 
  * @author dciocca
  *
