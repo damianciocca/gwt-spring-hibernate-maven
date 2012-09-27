@@ -30,6 +30,12 @@ public class MainTest {
 		MessageSource messages = (MessageSource) context.getBean("messageSource");
 		
 		LibroValidator validator = new LibroValidator();
+		/**
+		 * La clase BeanPropertyBindingResult es un recurso necesario que se introduce ahora 
+		 * para poder ejecutar el proceso de validación, pero que se discutirá en otro 
+		 * capítulo relativo al Binding. Su propósito es extraer las propiedades del objeto 
+		 * dado para que se les pueda asociar directamente códigos de error.
+		 */
 		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(libro, "libro");
 		
 		ValidationUtils.invokeValidator(validator, libro, errors);
