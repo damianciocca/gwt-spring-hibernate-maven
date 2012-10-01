@@ -19,8 +19,8 @@ public class MainTest {
 	    DriverManagerDataSource dataSource = new DriverManagerDataSource();
 	    dataSource.setDriverClassName("oracle.jdbc.OracleDriver");
 	    dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:XE");
-	    dataSource.setUsername("prueba");
-	    dataSource.setPassword("prueba");
+	    dataSource.setUsername("hibernate_tutorial");
+	    dataSource.setPassword("hibernate_tutorial");
 	    // Inject the datasource into the dao
 	    dao.setDatasource(dataSource);
 	    List<Person> persons = dao.findAll();

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   					   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	   					   http://www.springframework.org/schema/context
+	   					   http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+           
+     <!-- Escanea los BEANS que tienen anotaciones como por ejemplo @Repository y permite las 
+     	  anotaciones como el @autowired -->       
+	<context:component-scan base-package="spring.ejemplos.diesiseis.transaction.programatic" />
+	       
+    <!-- 1. En este caso un bean de la clase DriverManagerDataSource, sobre el que se definen las propiedades 
+    	 de configuración que permiten establecer la conexión con la base de datos: 
+    	 DriverManagerDataSource sólo debería utilizarse para realizar pruebas, ya que no implementa un 
+    	 pool de conexiones-->       
+    <bean id="dataSource"
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	  <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+	  <property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+	  <property name="username" value="hibernate_tutorial"/>
+	  <property name="password" value="hibernate_tutorial"/>
+	</bean>
+	
+	<!-- 2. DataSourceTransactionManager, que será el que actúe como gestor de transacciones. Es una implementación 
+		 especializada preparada para gestionar el recurso JDBC establecido en su propiedad dataSource -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+  		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 
+	Alternativamente, si se va realizar un despliegue sobre un servidor de aplicaciones J2EE con soporte para 
+	JTA, y utilizar un recurso JDBC a través de JNDI, se podrían sustituir las dos definiciones de beans 
+	anteriores por las dos siguientes:
+  	
+  		<jee:jndi-lookup id="dataSource" jndi-name="jdbc/pruebas"/>
+  	
+  		<bean id="transactionManager"
+    	    class="org.springframework.transaction.jta.JtaTransactionManager" />
+		</beans>
+		
+	En este caso al gestor de transacciones no le hace falta introducirle una dependencia con el recurso, 
+	porque será gestionado por el servidor de aplicaciones junto con el resto de recursos disponibles.	
+	-->    
+	
+	<!-- 3. Para evitar instanciar el objeto TransactionTemplate por código, se puede declarar en el fichero XML 
+		de configuración, junto con las propiedades del mismo que se quieran inicializar, 
+		de la forma acostumbrada -->
+	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+  		<property name="transactionManager" ref="transactionManager"/>
+  		<property name="timeout" value="1000"/>
+	</bean>   
+	       
+	<bean id="cuentaService" class="spring.ejemplos.diesiseis.transaction.programatic.CuentaService"></bean>
+
+</beans>
