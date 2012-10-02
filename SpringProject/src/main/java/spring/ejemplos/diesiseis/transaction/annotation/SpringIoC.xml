@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   					   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	   					   http://www.springframework.org/schema/context
+	   					   http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	   					   http://www.springframework.org/schema/tx
+           				   http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+           				   http://www.springframework.org/schema/aop
+           				   http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+           
+     <!-- Escanea los BEANS que tienen anotaciones como por ejemplo @Repository y permite las 
+     	  anotaciones como el @autowired -->       
+	<context:component-scan base-package="spring.ejemplos.diesiseis.transaction.annotation" />
+	
+	<!-- 1. Esta anotación permite reducir la cantidad de configuración y código a escribir a la hora de tratar con transacciones. 
+		Para usarla hay que añadir la etiqueta tx:annotation-driven en el fichero de configuración para que 
+		Spring active el procesamiento de anotaciones de este tipo.
+		El atributo transaction-manager se puede omitir si el bean gestor de transacciones que se quiere utilizar se 
+		llama "transactionManager", ya que ese es el nombre por defecto
+		NOTA: Añadir la línea tx:annotation-driven y usar la anotación @Transactional es equivalente a toda la configuración 
+		del apartado anterior usando programación declarativa (mediante AOP). 
+	 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	       
+    <!-- 2. En este caso un bean de la clase DriverManagerDataSource, sobre el que se definen las propiedades 
+    	 de configuración que permiten establecer la conexión con la base de datos: 
+    	 DriverManagerDataSource sólo debería utilizarse para realizar pruebas, ya que no implementa un 
+    	 pool de conexiones-->       
+    <bean id="dataSource"
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	  <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+	  <property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+	  <property name="username" value="hibernate_tutorial"/>
+	  <property name="password" value="hibernate_tutorial"/>
+	</bean>
+	
+	<!-- 3. DataSourceTransactionManager, que será el que actúe como gestor de transacciones. Es una implementación 
+		 especializada preparada para gestionar el recurso JDBC establecido en su propiedad dataSource -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+  		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<bean id="cuentaService" class="spring.ejemplos.diesiseis.transaction.annotation.CuentaService"></bean>
+
+</beans>
