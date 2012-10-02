@@ -5,6 +5,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * http://www.inmensia.com/articulos/spring/transacciones_configuracion_anotaciones.html
+ * http://springinpractice.com/2008/03/18/annotation-based-transactions-in-spring/
  * 
  * Las implementaciones por defecto de la interface PlatformTransactionManager son JtaTransactionManager 
  * y DataSourceTransactionManager.
