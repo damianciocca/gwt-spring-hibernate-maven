@@ -7,6 +7,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * http://www.inmensia.com/articulos/spring/aop_introduccion.html
  * http://www.inmensia.com/articulos/spring/aop_poincuts_advices.html
  * 
+ * http://www.epidataconsulting.com/tikiwiki/tiki-index.php?page=Spring+AOP#
+ * 
  * @author dciocca
  *
  */
