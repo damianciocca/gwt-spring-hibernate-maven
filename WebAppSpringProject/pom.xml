@@ -8,11 +8,11 @@
 	<name>WebAppSpringProject Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
-	<parent>
+	<!--  parent>
 		<groupId>com.gemalto.uxp</groupId>
 		<artifactId>uxp.maven.scm</artifactId>
 		<version>1.0.8</version>
-	</parent>
+	</parent-->
 
 	<properties>
 		<spring.version>3.1.2.RELEASE</spring.version>
