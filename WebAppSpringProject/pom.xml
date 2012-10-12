@@ -8,11 +8,8 @@
 	<name>WebAppSpringProject Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
-	<!--  parent>
-		<groupId>com.gemalto.uxp</groupId>
-		<artifactId>uxp.maven.scm</artifactId>
-		<version>1.0.8</version>
-	</parent-->
+	<!-- parent> <groupId>com.gemalto.uxp</groupId> <artifactId>uxp.maven.scm</artifactId> 
+		<version>1.0.8</version> </parent -->
 
 	<properties>
 		<spring.version>3.1.2.RELEASE</spring.version>
@@ -34,20 +31,21 @@
 			<version>2.4</version>
 			<scope>provided</scope>
 		</dependency>
-		
-		<!-- The LoggerFactory is a utility class producing Loggers for various logging API -->
+
+		<!-- The LoggerFactory is a utility class producing Loggers for various 
+			logging API -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<artifactId>slf4j-log4j12</artifactId>
 			<groupId>org.slf4j</groupId>
 			<version>1.6.4</version>
 		</dependency>
-		
+
 		<!-- Spring Web dependency -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -56,7 +54,41 @@
 		</dependency>
 
 	</dependencies>
+	
 	<build>
-		<finalName>WebAppSpringProject</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<executable>${jdk6_javac}</executable> <!--  Esto sale del setting.xml -->
+					<source>${compilerVersion}</source>
+					<target>${compilerVersion}</target>
+				</configuration>
+			</plugin>
+			<plugin> 
+    	    	<artifactId>maven-surefire-plugin</artifactId> 
+        		<configuration>
+          			<jvm>${jdk6_java}</jvm> <!--  Esto sale del setting.xml -->
+        		</configuration>
+      		</plugin>
+		</plugins>
+		
+		<!-- Esto iria en el setting.xml en el repositorio local, aca definimos las variables jdk_, jdk5_ y jdk6_
+			 Fill with the local path from the user's PC   	
+			<properties>	   
+			  	<jdk_java>c:\Progra~2\Java\jdk1.5.0_22\bin\java.exe</jdk_java>
+			    <jdk_javac>c:\Progra~2\Java\jdk1.5.0_22\bin\javac.exe</jdk_javac>
+		        <artifactory.dav.url>dav:http://10.105.80.40:8081/artifactory </artifactory.dav.url>
+				<jdk5_java>c:\Progra~2\Java\jdk1.5.0_22\bin\java.exe</jdk5_java>		
+				<jdk5_javac>c:\Progra~2\Java\jdk1.5.0_22\bin\javac.exe</jdk5_javac>		 	
+				<jdk6_java>c:\Progra~2\Java\jdk1.6.0_35\bin\java.exe</jdk6_java>
+				<jdk6_javac>c:\Progra~2\Java\jdk1.6.0_35\bin\javac.exe</jdk6_javac>	
+				<downloadSources>true</downloadSources>
+				<downloadJavadocs>true</downloadJavadocs>
+			</properties>			
+		 -->
+		 
 	</build>
+	
 </project>
