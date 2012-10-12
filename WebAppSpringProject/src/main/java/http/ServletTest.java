@@ -48,7 +48,6 @@ public class ServletTest extends HttpServlet implements HttpRequestHandler{
 		handleRequest(req, resp);
 	}
 
-	@Override
 	public void handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
