@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ws</groupId>
+	<artifactId>WSProject</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>WSProject Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<compilerVersion>1.6</compilerVersion>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>2.1.3</version>
+		</dependency>
+
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<executable>${jdk6_javac}</executable> <!-- Esto sale del setting.xml -->
+					<source>${compilerVersion}</source>
+					<target>${compilerVersion}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<jvm>${jdk6_java}</jvm> <!-- Esto sale del setting.xml -->
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<!-- Esto iria en el setting.xml en el repositorio local, aca definimos 
+			las variables jdk_, jdk5_ y jdk6_ Fill with the local path from the user's 
+			PC <properties> <jdk_java>c:\Progra~2\Java\jdk1.5.0_22\bin\java.exe</jdk_java> 
+			<jdk_javac>c:\Progra~2\Java\jdk1.5.0_22\bin\javac.exe</jdk_javac> <artifactory.dav.url>dav:http://10.105.80.40:8081/artifactory 
+			</artifactory.dav.url> <jdk5_java>c:\Progra~2\Java\jdk1.5.0_22\bin\java.exe</jdk5_java> 
+			<jdk5_javac>c:\Progra~2\Java\jdk1.5.0_22\bin\javac.exe</jdk5_javac> <jdk6_java>c:\Progra~2\Java\jdk1.6.0_35\bin\java.exe</jdk6_java> 
+			<jdk6_javac>c:\Progra~2\Java\jdk1.6.0_35\bin\javac.exe</jdk6_javac> <downloadSources>true</downloadSources> 
+			<downloadJavadocs>true</downloadJavadocs> </properties> -->
+
+	</build>
+
+</project>
