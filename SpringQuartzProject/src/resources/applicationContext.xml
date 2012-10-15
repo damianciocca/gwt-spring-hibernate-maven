@@ -1,0 +1,50 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Bean propio: Logica del job -->
+	<bean id="runMeTask" class="com.quartz.RunMeTask" />
+
+	<!-- Spring Quartz: Definimos el JOB que actuara cuando se dispare un trigger -->
+	<bean id="runMeJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+
+		<property name="targetObject" ref="runMeTask" />
+		<property name="targetMethod" value="printMe" />
+
+	</bean>
+
+
+	<!-- Simple Trigger, run every 5 seconds -->
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+
+		<property name="jobDetail" ref="runMeJob" />
+		<property name="repeatInterval" value="5000" />
+		<property name="startDelay" value="1000" />
+
+	</bean>
+
+	<!-- Cron Trigger, run every 5 seconds: Otra forma de definir el trigger (It allows Unix cron expression to specify the dates and 
+		 times to run your job) -->
+	<!--  bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+			<property name="jobDetail" ref="runMeJob" />
+			<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean-->
+
+	<!-- Create a Scheduler factory bean to integrate both JOB detail and TRIGGER 
+		together. -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="runMeJob" />
+			</list>
+		</property>
+
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTrigger" />
+			</list>
+		</property>
+	</bean>
+
+</beans>
