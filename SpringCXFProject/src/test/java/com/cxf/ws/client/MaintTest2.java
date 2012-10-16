@@ -13,10 +13,12 @@ import com.cxf.ws.HelloWS;
  * http://www.dosideas.com/noticias/java/396-servicios-web-con-apache-cxf.html
  * http://unpocodejava.wordpress.com/2010/03/30/web-services-con-cxf/
  * 
+ * NOTA: Se neceista tener levantado el WS en el localhost;8080
+ * 
  * @author dciocca
  *
  */
-public class MaintTest {
+public class MaintTest2 {
 
 	public static void main(String arg[]){
 		
