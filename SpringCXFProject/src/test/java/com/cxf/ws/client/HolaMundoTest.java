@@ -19,6 +19,11 @@ import com.cxf.ws.Persona;
  * 
  * Deberemos contar con una interfaz Java que cumpla con la firma del servicio web. En este ejemplo, 
  * usaremos la misma clase HelloWS.java como interfaz, pero podría ser otra interfaz (siempre y cuando cumpla con la firma).
+ * 
+ * http://unpocodejava.wordpress.com/2010/03/30/web-services-con-cxf/
+ * http://www.dosideas.com/noticias/java/396-servicios-web-con-apache-cxf.html
+ * http://unpocodejava.wordpress.com/2010/03/30/web-services-con-cxf/
+ * 
  * @author dciocca
  *
  */
