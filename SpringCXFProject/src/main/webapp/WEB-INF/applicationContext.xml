@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<!-- Importar algunos recursos de Apache CXF. -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<!-- Declarar como un bean la clase implementación. -->
+	<bean id="helloWSImpl" class="com.cxf.ws.HelloWSImpl" />
+
+	<!-- Declarar el servicio web con un tag propio de Apache CXF, en donde indicaremos la dirección desde donde será accesible. -->
+	<jaxws:endpoint id="helloWS" implementor="#helloWSImpl" address="/HelloWS" />
+
+</beans>
