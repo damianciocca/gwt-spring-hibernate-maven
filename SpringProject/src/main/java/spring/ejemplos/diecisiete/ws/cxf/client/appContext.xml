@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<!-- IMPORTANTE: La creación de clientes de servicios web con Apache CXF 
+		es muy sencilla, y se integra completamente con Spring. Usando tags propios 
+		de CXF, podremos configurar el cliente como un bean más, e inyectarlo en 
+		cualquier parte de nuestra aplicación. Deberemos contar con una interfaz 
+		Java que cumpla con la firma del servicio web. En este ejemplo, creamos una 
+		llamada HolaMundoCliente.java como interfaz, (siempre y cuando cumpla con 
+		la firma). A continuación entonces realizaremos dos pasos: Crear el archivo 
+		de configuración de Spring, applicationTest.xml Crear un test JUnit para 
+		probar el cliente -->
+
+	<!-- ALTERNATIVA 1 -->
+
+	<!-- Este bean será el cliente del Web Service. Apache CXF generará un cliente 
+		que cumpla con la interfaz indicada y que accede al Web Service indicado 
+		en el atributo "address". Este bean luego puede inyectarse y utilizarse normalmente 
+		como cualquier otro objeto. -->
+<!-- 	<jaxws:client id="holaMundoCliente" -->
+<!-- 		serviceClass="spring.ejemplos.diecisiete.ws.cxf.client.HelloWS" -->
+<!-- 		address="http://localhost:8080/SpringCXFProject/HelloWS" /> -->
+
+	<!--  utilizando la interface q nos genero las herramientas de CXF -->
+	<jaxws:client id="holaMundoCliente"
+		serviceClass="spring.ejemplos.diecisiete.ws.cxf.client.cxfgeneratedcode.HelloWS"
+		address="http://localhost:8080/SpringCXFProject/HelloWS" />
+
+
+	<!-- ALTERNATIVA 2 -->
+
+	<!-- <bean id="holaMundoCliente" class="spring.ejemplos.diecisiete.ws.cxf.client.HelloWS" -->
+	<!-- factory-bean="clientFactory" factory-method="create" /> -->
+
+	<!-- <bean id="clientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean"> -->
+	<!-- <property name="serviceClass" value="spring.ejemplos.diecisiete.ws.cxf.client.HelloWS" 
+		/> -->
+	<!-- <property name="address" value="http://localhost:8080/SpringCXFProject/HelloWS" 
+		/> -->
+	<!-- </bean> -->
+</beans>
