@@ -20,17 +20,30 @@ public class MainTest {
 		
 		System.out.println("**********FIN INICIALIZACION CONTEXTO SPRING*********");
 		
+		// ALTERNATIVA 1: Version simplificada del cliente WS - Solo un pojo pelado con la anotacion webservice 
+		
 //		spring.ejemplos.diecisiete.ws.cxf.client.HelloWS ws1 = (spring.ejemplos.diecisiete.ws.cxf.client.HelloWS) context.getBean("holaMundoCliente");
 //		
 //		ws1.decirHola("Damian");
 //		
 //		ws1.buscarPersona(12);
 		
+		// ALTERNATIVA 2: Generando las clases cliente mediante cxf (wsdl2java)
+		
 		spring.ejemplos.diecisiete.ws.cxf.client.cxfgeneratedcode.HelloWS ws2 = (spring.ejemplos.diecisiete.ws.cxf.client.cxfgeneratedcode.HelloWS) context.getBean("holaMundoCliente");
 		
 		ws2.decirHola("Damian");
 		
 		ws2.buscarPersona(12);
+		
+		// ALTERNATIVA 3:Generando las clases cliente mediante JDK 6 (wsimport)
+		
+//		spring.ejemplos.diecisiete.ws.cxf.client.jaxwsgeneratedcode.HelloWS ws3 = (spring.ejemplos.diecisiete.ws.cxf.client.jaxwsgeneratedcode.HelloWS) context.getBean("holaMundoCliente");
+//		
+//		ws3.decirHola("Damian");
+//		
+//		ws3.buscarPersona(12);
+//		
 		
 		
 		
