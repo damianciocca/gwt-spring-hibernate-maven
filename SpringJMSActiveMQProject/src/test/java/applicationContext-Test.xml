@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+  xmlns:amq="http://activemq.apache.org/schema/core"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://activemq.apache.org/schema/core 
+    http://activemq.apache.org/schema/core/activemq-core-5.5.0.xsd">
+ 
+    <!--  embedded ActiveMQ Broker -->
+    <amq:broker useJmx="false" persistent="false">
+        <amq:transportConnectors>
+            <amq:transportConnector uri="tcp://localhost:0" />
+        </amq:transportConnectors>
+    </amq:broker>
+ 
+    <!--  ActiveMQ destinations  -->
+    <amq:queue id="destination"  physicalName="org.apache.activemq.spring.Test.spring.embedded"/>
+ 
+    <!-- JMS ConnectionFactory -->
+    <amq:connectionFactory id="jmsFactory" brokerURL="vm://localhost"/>
+ 
+    <!-- Spring JMS producer Template -->
+    <bean id="producerJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory">
+            <bean class="org.springframework.jms.connection.SingleConnectionFactory">
+                <property name="targetConnectionFactory">
+                    <ref local="jmsFactory" />
+                </property>
+            </bean>
+        </property>
+    </bean>
+ 
+    <!-- Spring JMS consumer Template -->
+    <bean id="consumerJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsFactory"/>
+    </bean>
+ 
+</beans>

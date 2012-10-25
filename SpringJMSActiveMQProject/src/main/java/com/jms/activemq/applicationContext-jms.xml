@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/jms 
+                           http://www.springframework.org/schema/jms/spring-jms.xsd
+                           http://activemq.apache.org/schema/core 
+                           http://activemq.apache.org/schema/core/activemq-core.xsd">
+ 	<!--
+ 	
+ 	TUTORIAL: 	
+ 		
+ 		Este es la posta:
+ 			http://www.springbyexample.org/examples/simple-spring-jms.html
+ 			
+ 		http://activemq.apache.org/how-do-i-embed-a-broker-inside-a-connection.html
+ 		
+ 		Este tutorial se utilizaria si no embebemos el broker, en este ejemplo lo estamos embebiendo por ende
+ 		no necesitamos levantarlo por afuera, lo va a levantar la misma JVM que levanta la app.
+ 			http://briansjavablog.blogspot.com.ar/2012/09/spring-jms-tutorial-with-activemq.html
+ 	
+ 		Una vez levantado el ActiveMQ ingresamos a la siguiente URL para coroborar que esta bien levantado
+ 			http://localhost:8161/admin/index.jsp
+ 			
+ 		The Spring configuration shows a context:component-scan that picks up the JMS producer and listener. 
+ 		Following this the Spring custom namespace for Apache's ActiveMQ is used to create an embedded JMS broker. 
+ 		A queue is configured for 'org.springbyexample.jms.test'. Then a JMS connection factory is made for the 
+ 		JmsTemplate to use. The template will be used by the producer to send messages
+ 		
+ 	 
+  	-->
+ 	<context:component-scan base-package="com.jms.activemq"/>
+ 	
+ 	<!-- 1 CONFIGURACION DEL BROKER EMBEBIDO -->
+ 	 
+    <!--  embedded ActiveMQ Broker -->
+    <amq:broker id="broker" useJmx="false" persistent="false" >
+        <amq:transportConnectors>
+            <amq:transportConnector uri="tcp://localhost:0" />
+        </amq:transportConnectors>
+    </amq:broker>
+ 
+ 	<!-- 2 CONFIGURACION DE LA COLA -->
+ 	
+    <!--  ActiveMQ destinations. Propiamente el nombre de la QUEUE -->
+    <amq:queue id="queue1"  physicalName="org.springbyexample.jms.test"/>
+ 
+    <!-- JMS ConnectionFactory
+    	This will create a local Datastore and use it to store the messages. 
+    	This is will help in cases where you need to start the broker as part of your application. 
+    	The VM transport allows clients to connect to each other inside the VM without the overhead of the 
+    	network communication. The connection used is not a socket connection but use direct method invocations 
+    	which enables a high performance embedded messaging system
+    	http://activemq.apache.org/vm-transport-reference.html
+    -->
+    <amq:connectionFactory id="jmsFactory" brokerURL="vm://localhost"/>
+    
+    <!-- 3 CONFIGURACION DEL JMS CONNECTION FACTORY Y TEMPLATE QUE UTILIZARA EL PRODUCTOR DE MENSAJES -->
+    
+    <!-- JMS Producer Connection Factory (por las dudas es diferente a la connection factory del consumidor)-->
+    <bean id="jmsProducerConnectionFactory" 
+          class="org.springframework.jms.connection.SingleConnectionFactory"
+          depends-on="broker"
+          p:targetConnectionFactory-ref="jmsFactory" />
+
+	<!-- JMS Template -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate"
+          p:connectionFactory-ref="jmsProducerConnectionFactory"
+          p:defaultDestination-ref="queue1" />
+ 
+ 	<!-- Luego mediante el autoscan de los componentes se levantara el componente PRODUCTOR JmsMessageProducer -->
+ 	
+ 	<!-- 4 CONFIGURACION DE LA JMS CONNECTION FACTORY Y MESSAGE LISTENER PARA EL CONSUMIDOR -->
+ 	
+ 	<!-- JMS Consumer Connection Factory (por las dudas es diferente a la connection factory del productor) -->
+    
+    <bean id="jmsConsumerConnectionFactory" 
+          class="org.springframework.jms.connection.SingleConnectionFactory"
+          depends-on="broker"
+          p:targetConnectionFactory-ref="jmsFactory" /> 
+    
+    <!-- IMPORTANTE: Como el broker es embebido (bajo el mismo proceso JVM), tanto el consumidor como el
+    	 productor se deberan ejecutar bajo el mismo proceso. es por eso q no se pueden lanzar desde diferentes lados. 
+    	 Me imagino que si quiero eso, voy a tener q tener configurado una COLA en un proceso separado y no ais embebido 
+    -->
+    <bean id="jmsConsumer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConsumerConnectionFactory" />
+		<property name="destination" ref="queue1" />
+		<property name="messageListener" ref="jmsMessagelistener" />
+		<property name="concurrentConsumers" value="1" /> <!-- NOTA si incrementamos el valor, varios consumidores intentaran obtener el valor de la cola -->
+	</bean>
+	
+	<!-- Luego se levantara el componente CONSUMIDOR JmsMessagelistener -->
+	 
+	<bean id="jmsMessagelistener" class="com.jms.activemq.JmsMessageListener"/>
+	 
+ 
+</beans>
