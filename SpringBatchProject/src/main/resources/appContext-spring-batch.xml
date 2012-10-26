@@ -393,12 +393,11 @@
 		
 		IMPORTANTE: NO ANDA YA Q CADA THREAD VA A INTENTAR TIRAR LA MIMSA QUERY
 		
-		org.springframework.jdbc.UncategorizedSQLException: Attempt to process next row failed; uncategorized SQLException 
-		for SQL [select id_planeta as codigo, nombre as nombre, diametro as diametro, tipo as tipo, observaciones 
-		as significado from PLANETA]; SQL state [null]; error code [17011]; Exhausted Resultset; 
+		org.springframework.jdbc.UncategorizedSQLException: Attempt to process next row failed; uncategorized 
+		SQLException for SQL [select id_planeta as codigo, nombre as nombre, diametro as diametro, tipo as tipo, 
+		observaciones as significado from PLANETA]; SQL state [null]; error code [17011]; Exhausted Resultset; 
 		nested exception is java.sql.SQLException: Exhausted Resultset
 		
-		Para q anda, debemos utilizar un solo thread
     -->	
     
     <batch:job id="trabajoBatchMultithread2">
@@ -413,7 +412,7 @@
     </batch:job>
     
     <bean id="miTaskExecutor2" class="org.springframework.core.task.SimpleAsyncTaskExecutor" >
-        <property name="concurrencyLimit" value="1" /> <!-- NOTA: Para q ande, en este caso debemos colocar siempre 1 -->
+        <property name="concurrencyLimit" value="1" /> <!-- Indicamos la cantidad de threads que se ejecutaran -->
     </bean>
     
      <bean id="itemReader20" class="org.springframework.batch.item.database.JdbcCursorItemReader">
