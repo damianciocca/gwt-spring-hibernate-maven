@@ -315,7 +315,119 @@
     -->
     <bean id="planetaWriter" class="com.springbatch.ejemplo4.ConsolaItemWriter"/>
     
+    <!--
+	
+	 	 ************************
+	     ********JOB 6*********** 
+	     ************************
+	     
+ 		En este ejemplo, el trabajo consiste en un unico paso "imprimirPorConsolaElResultado".
+        Este paso tiene un "itemReader10" que lee planetas y los mapea a un objeto
+        Planeta, y un "itemWriter10" que imprime objetos Planeta por consola.
+
+        Al step "imprimirPorConsolaElResultado" se le configura un taskExecutor que realiza
+        un procesamiento asincronico del mismo, con 3 elementos concurrentes.
+        De esta manera, este step se ejecuta con 3 threads. Al terminar estos
+        3 threads de ejecutarse (cuando el itemReader10 devuelva null, por no haber
+        mas elementos), se ejecutara el siguiente step (en este caso, no hay
+        ningun otro step para ejecutar).
+
+    -->
     
+     <batch:job id="trabajoBatchMultithread">
+        <batch:step id="imprimirPorConsolaElResultado">
+            <batch:tasklet task-executor="miTaskExecutor"> <!-- De esta manera indicamos q este STEP se haga en paralelo por varios threads -->
+                <batch:chunk reader="itemReader10"
+                             writer="itemWriter10"
+                             commit-interval="5"> 
+                </batch:chunk>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    
+    <bean id="miTaskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor" >
+        <property name="concurrencyLimit" value="5" /> <!-- Indicamos la cantidad de threads que se ejecutaran -->
+    </bean>
+    
+    <bean id="itemReader10" class="org.springframework.batch.item.file.FlatFileItemReader">
+        <property name="resource" value="classpath:com/springbatch/ejemplo6/planetas.csv"/>
+        <property name="lineMapper">
+            <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+                <property name="lineTokenizer">
+                    <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+                        <property name="delimiter" value="," />
+                        <property name="names" value="Codigo, Nombre, Diametro, Tipo, Significado"/>
+                    </bean>
+                </property>
+                <property name="fieldSetMapper">
+                    <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+                        <property name="prototypeBeanName" value="planeta10"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="itemWriter10" class="com.springbatch.ejemplo6.ConsolaItemWriter"/>
+    
+ 	 <!--
+        Este bean es usado por "itemReader10" (en particular, por su
+        fieldSetMapper), para convertir cada lÃ­nea del archivo de origen a un
+        objeto.
+        Su scope TIENE que ser "prototype", ya que se necesita una instancia
+        nueva por cada invocaciÃ³n.
+     -->
+    <bean id="planeta10" scope="prototype" class="com.springbatch.ejemplo6.Planeta"/>
 
+    <!--
+	
+	 	 ************************
+	     ********JOB 7*********** 
+	     ************************
+	     
+ 		En este ejemplo, el trabajo consiste en un unico paso "imprimirPorConsolaElResultado".
+        Este paso tiene un "itemReader10" que lee planetas y los mapea a un objeto
+        Planeta, y un "itemWriter10" que imprime objetos Planeta por consola.
 
+        Idem al JOB 6 pero en lugar de leer de una archivo vamos a leer de una bd de forma concurrente
+		
+		IMPORTANTE: NO ANDA YA Q CADA THREAD VA A INTENTAR TIRAR LA MIMSA QUERY
+		
+		org.springframework.jdbc.UncategorizedSQLException: Attempt to process next row failed; uncategorized SQLException 
+		for SQL [select id_planeta as codigo, nombre as nombre, diametro as diametro, tipo as tipo, observaciones 
+		as significado from PLANETA]; SQL state [null]; error code [17011]; Exhausted Resultset; 
+		nested exception is java.sql.SQLException: Exhausted Resultset
+		
+		Para q anda, debemos utilizar un solo thread
+    -->	
+    
+    <batch:job id="trabajoBatchMultithread2">
+        <batch:step id="imprimirPorConsolaElResultado2">
+            <batch:tasklet task-executor="miTaskExecutor2"> 
+                <batch:chunk reader="itemReader20"
+                             writer="itemWriter20"
+                             commit-interval="5"> 
+                </batch:chunk>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    
+    <bean id="miTaskExecutor2" class="org.springframework.core.task.SimpleAsyncTaskExecutor" >
+        <property name="concurrencyLimit" value="1" /> <!-- NOTA: Para q ande, en este caso debemos colocar siempre 1 -->
+    </bean>
+    
+     <bean id="itemReader20" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+        <property name="dataSource" ref="dataSource" />
+        <property name="sql" value="select id_planeta as codigo, nombre as nombre, diametro as diametro, tipo as tipo, observaciones as significado from PLANETA"/>
+        <property name="rowMapper">
+            <bean id="planetaMapper2" class="org.springframework.jdbc.core.BeanPropertyRowMapper">
+                <property name="mappedClass">
+                      <value type="java.lang.Class">com.springbatch.ejemplo7.Planeta</value>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="itemWriter20" class="com.springbatch.ejemplo7.ConsolaItemWriter"/>
+    
 </beans>
