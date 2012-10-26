@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	   http://cxf.apache.org/jaxws 
+	   http://cxf.apache.org/schemas/jaxws.xsd">
+	
+	<!-- ******* -->  
+	<!-- IMPORTS -->
+	<!-- ******* -->
+	   
+	<!-- Importar algunos recursos de Apache CXF. -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	
+	<!-- Importamos el properties -->
+	<context:property-placeholder location="/WEB-INF/config.properties" />
+	
+	<!-- Para que funcione las anotaciones -->
+	<context:annotation-config/>
+	
+	<!-- ** -->
+	<!-- WS -->
+	<!-- ** -->
+	
+	<!-- Declarar como un bean la clase implementación. -->
+	<bean id="searchPlanetsImpl" class="com.gemalto.latansoft.ws.SearchPlanetsImpl" />
+
+	<!-- Declarar el servicio web con un tag propio de Apache CXF, en donde indicaremos la dirección desde donde será accesible. -->
+	<jaxws:endpoint id="searchPlanets" implementor="#searchPlanetsImpl" address="/searchPlanets" />
+	
+	<!-- ** -->   
+	<!-- BD -->
+	<!-- ** -->
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg><ref bean="dataSource"/></constructor-arg>
+	</bean>
+	  
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">		
+		<property name="driverClassName"><value>${db.driverClass}</value></property>
+		<property name="url"><value>${db.jdbcUrl}</value></property>
+		<property name="username"><value>${db.user}</value></property>
+		<property name="password"><value>${db.password}</value></property>
+	</bean> 
+	
+	<!-- ***** -->
+	<!-- BEANS -->
+	<!-- ***** -->
+	
+  	<bean id="planetaJDBCResolver" class="com.gemalto.latansoft.ws.PlanetaJDBCResolver">
+  	  	<property name="jdbcTemplate" ref="jdbcTemplate"/>
+  	  	<property name="queryPlanetByName" value="SELECT id_planeta as codigo, 
+  	  													 nombre as nombre, 
+  	  													 diametro as diametro, 
+  	  													 tipo as tipo, 
+  	  													 observaciones as significado 
+  	  											  FROM planeta
+  	  											  WHERE nombre = ?"/>
+  	</bean> 
+	
+</beans>
