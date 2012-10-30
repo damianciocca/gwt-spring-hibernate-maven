@@ -12,10 +12,17 @@
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
+	<!-- WS 1 -->
 	<!-- Declarar como un bean la clase implementación. -->
 	<bean id="helloWSImpl" class="com.cxf.ws.HelloWSImpl" />
 
 	<!-- Declarar el servicio web con un tag propio de Apache CXF, en donde indicaremos la dirección desde donde será accesible. -->
 	<jaxws:endpoint id="helloWS" implementor="#helloWSImpl" address="/HelloWS" />
 
+	<!-- WS 2 -->
+	<!-- Declarar como un bean la clase implementación. -->
+	<bean id="vtrSucursalVirtualWSImpl" class="com.gemalto.latamsoft.ws.VtrSucursalVirtualWSImpl" />
+
+	<!-- Declarar el servicio web con un tag propio de Apache CXF, en donde indicaremos la dirección desde donde será accesible. -->
+	<jaxws:endpoint id="vtrSucursalVirtualWS" implementor="#vtrSucursalVirtualWSImpl" address="/VtrSucursalVirtualWS" />
 </beans>

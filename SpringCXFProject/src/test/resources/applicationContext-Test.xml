@@ -30,5 +30,10 @@
 		como cualquier otro objeto. -->
 	<jaxws:client id="holaMundoCliente" 
 				  serviceClass="com.cxf.ws.HelloWS"
-				  address="http://localhost:8080/SpringCXFProject/HelloWS" />
+				  address="http://localhost:8081/SpringCXFProject/HelloWS" />
+				  
+	<jaxws:client id="vtrSucursalVirtualWS" 
+				  serviceClass="com.gemalto.latamsoft.ws.VtrSucursalVirtualWS"
+				  address="http://localhost:8081/SpringCXFProject/VtrSucursalVirtualWS" />
+				  			  
 </beans>
