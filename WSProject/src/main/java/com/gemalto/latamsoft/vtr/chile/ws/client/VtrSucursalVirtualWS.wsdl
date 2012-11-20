@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="VtrSucursalVirtualWSImplService" targetNamespace="http://ws.chile.vtr.latamsoft.gemalto.com/" xmlns:ns1="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.chile.vtr.latamsoft.gemalto.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://ws.chile.vtr.latamsoft.gemalto.com/" xmlns:tns="http://ws.chile.vtr.latamsoft.gemalto.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="getModelByMSISDN" type="tns:getModelByMSISDN" />
+<xs:element name="getModelByMSISDNResponse" type="tns:getModelByMSISDNResponse" />
+<xs:element name="sendAllSettings" type="tns:sendAllSettings" />
+<xs:element name="sendAllSettingsResponse" type="tns:sendAllSettingsResponse" />
+<xs:element name="sendSetting" type="tns:sendSetting" />
+<xs:element name="sendSettingResponse" type="tns:sendSettingResponse" />
+<xs:complexType name="sendAllSettings">
+<xs:sequence>
+<xs:element minOccurs="0" name="msisdn" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="sendAllSettingsResponse">
+<xs:sequence />
+</xs:complexType>
+<xs:complexType name="sendSetting">
+<xs:sequence>
+<xs:element minOccurs="0" name="msisdn" type="xs:string" />
+<xs:element minOccurs="0" name="serviceName" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="sendSettingResponse">
+<xs:sequence />
+</xs:complexType>
+<xs:complexType name="getModelByMSISDN">
+<xs:sequence>
+<xs:element minOccurs="0" name="msisdn" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getModelByMSISDNResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="terminal" type="tns:terminal" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="terminal">
+<xs:sequence>
+<xs:element minOccurs="0" name="manufacturerName" type="xs:string" />
+<xs:element minOccurs="0" name="modelName" type="xs:string" />
+<xs:element maxOccurs="unbounded" minOccurs="0" name="supportedServices" nillable="true" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="VTRApiSOAPException" type="tns:VTRApiSOAPException" />
+<xs:complexType name="VTRApiSOAPException">
+<xs:sequence>
+<xs:element name="faultCode" nillable="true" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getModelByMSISDNResponse">
+    <wsdl:part element="tns:getModelByMSISDNResponse" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="sendAllSettingsResponse">
+    <wsdl:part element="tns:sendAllSettingsResponse" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="getModelByMSISDN">
+    <wsdl:part element="tns:getModelByMSISDN" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="VTRApiSOAPException">
+    <wsdl:part element="tns:VTRApiSOAPException" name="VTRApiSOAPException" />
+  </wsdl:message>
+  <wsdl:message name="sendSettingResponse">
+    <wsdl:part element="tns:sendSettingResponse" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="sendSetting">
+    <wsdl:part element="tns:sendSetting" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="sendAllSettings">
+    <wsdl:part element="tns:sendAllSettings" name="parameters" />
+  </wsdl:message>
+  <wsdl:portType name="VtrSucursalVirtualWS">
+    <wsdl:operation name="sendAllSettings">
+      <wsdl:input message="tns:sendAllSettings" name="sendAllSettings" />
+      <wsdl:output message="tns:sendAllSettingsResponse" name="sendAllSettingsResponse" />
+      <wsdl:fault message="tns:VTRApiSOAPException" name="VTRApiSOAPException" />
+    </wsdl:operation>
+    <wsdl:operation name="sendSetting">
+      <wsdl:input message="tns:sendSetting" name="sendSetting" />
+      <wsdl:output message="tns:sendSettingResponse" name="sendSettingResponse" />
+      <wsdl:fault message="tns:VTRApiSOAPException" name="VTRApiSOAPException" />
+    </wsdl:operation>
+    <wsdl:operation name="getModelByMSISDN">
+      <wsdl:input message="tns:getModelByMSISDN" name="getModelByMSISDN" />
+      <wsdl:output message="tns:getModelByMSISDNResponse" name="getModelByMSISDNResponse" />
+      <wsdl:fault message="tns:VTRApiSOAPException" name="VTRApiSOAPException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="VtrSucursalVirtualWSImplServiceSoapBinding" type="tns:VtrSucursalVirtualWS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="sendAllSettings">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="sendAllSettings">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sendAllSettingsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="VTRApiSOAPException">
+        <soap:fault name="VTRApiSOAPException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendSetting">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="sendSetting">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sendSettingResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="VTRApiSOAPException">
+        <soap:fault name="VTRApiSOAPException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getModelByMSISDN">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getModelByMSISDN">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getModelByMSISDNResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="VTRApiSOAPException">
+        <soap:fault name="VTRApiSOAPException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VtrSucursalVirtualWSImplService">
+    <wsdl:port binding="tns:VtrSucursalVirtualWSImplServiceSoapBinding" name="VtrSucursalVirtualWSImplPort">
+      <soap:address location="http://localhost:8081/vtr_chile/services/VtrSucursalVirtualWS" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
