@@ -30,6 +30,16 @@ public class MainTest {
 			System.out.println("faultCode: " + faultInfo.getFaultCode());
 			System.out.println("faultMessage: " + faultInfo.getFaultMessage());
 		}
+		
+
+		try {
+			ws.getModelByMSISDN("145");
+			
+		} catch (VTRApiSOAPException e) {
+			VTRApiSOAPFault faultInfo = e.getFaultInfo();
+			System.out.println("faultCode: " + faultInfo.getFaultCode());
+			System.out.println("faultMessage: " + faultInfo.getFaultMessage());
+		}
 
 
 
