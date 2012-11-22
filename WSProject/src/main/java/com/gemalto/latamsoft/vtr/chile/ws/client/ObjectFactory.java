@@ -26,8 +26,8 @@ public class ObjectFactory {
 
     private final static QName _GetModelByMSISDNResponse_QNAME = new QName("http://ws.chile.vtr.latamsoft.gemalto.com/", "getModelByMSISDNResponse");
     private final static QName _SendAllSettingsResponse_QNAME = new QName("http://ws.chile.vtr.latamsoft.gemalto.com/", "sendAllSettingsResponse");
+    private final static QName _VTRApiSOAPFault_QNAME = new QName("http://ws.chile.vtr.latamsoft.gemalto.com/", "VTRApiSOAPFault");
     private final static QName _GetModelByMSISDN_QNAME = new QName("http://ws.chile.vtr.latamsoft.gemalto.com/", "getModelByMSISDN");
-    private final static QName _VTRApiSOAPException_QNAME = new QName("http://ws.chile.vtr.latamsoft.gemalto.com/", "VTRApiSOAPException");
     private final static QName _SendSettingResponse_QNAME = new QName("http://ws.chile.vtr.latamsoft.gemalto.com/", "sendSettingResponse");
     private final static QName _SendAllSettings_QNAME = new QName("http://ws.chile.vtr.latamsoft.gemalto.com/", "sendAllSettings");
     private final static QName _SendSetting_QNAME = new QName("http://ws.chile.vtr.latamsoft.gemalto.com/", "sendSetting");
@@ -37,30 +37,6 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link SendAllSettings }
-     * 
-     */
-    public SendAllSettings createSendAllSettings() {
-        return new SendAllSettings();
-    }
-
-    /**
-     * Create an instance of {@link Terminal }
-     * 
-     */
-    public Terminal createTerminal() {
-        return new Terminal();
-    }
-
-    /**
-     * Create an instance of {@link GetModelByMSISDN }
-     * 
-     */
-    public GetModelByMSISDN createGetModelByMSISDN() {
-        return new GetModelByMSISDN();
     }
 
     /**
@@ -80,19 +56,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SendSetting }
+     * Create an instance of {@link Terminal }
      * 
      */
-    public SendSetting createSendSetting() {
-        return new SendSetting();
+    public Terminal createTerminal() {
+        return new Terminal();
     }
 
     /**
-     * Create an instance of {@link VTRApiSOAPException }
+     * Create an instance of {@link VTRApiSOAPFault }
      * 
      */
-    public VTRApiSOAPException createVTRApiSOAPException() {
-        return new VTRApiSOAPException();
+    public VTRApiSOAPFault createVTRApiSOAPFault() {
+        return new VTRApiSOAPFault();
+    }
+
+    /**
+     * Create an instance of {@link SendAllSettings }
+     * 
+     */
+    public SendAllSettings createSendAllSettings() {
+        return new SendAllSettings();
     }
 
     /**
@@ -101,6 +85,22 @@ public class ObjectFactory {
      */
     public GetModelByMSISDNResponse createGetModelByMSISDNResponse() {
         return new GetModelByMSISDNResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetModelByMSISDN }
+     * 
+     */
+    public GetModelByMSISDN createGetModelByMSISDN() {
+        return new GetModelByMSISDN();
+    }
+
+    /**
+     * Create an instance of {@link SendSetting }
+     * 
+     */
+    public SendSetting createSendSetting() {
+        return new SendSetting();
     }
 
     /**
@@ -122,21 +122,21 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link VTRApiSOAPFault }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.chile.vtr.latamsoft.gemalto.com/", name = "VTRApiSOAPFault")
+    public JAXBElement<VTRApiSOAPFault> createVTRApiSOAPFault(VTRApiSOAPFault value) {
+        return new JAXBElement<VTRApiSOAPFault>(_VTRApiSOAPFault_QNAME, VTRApiSOAPFault.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetModelByMSISDN }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://ws.chile.vtr.latamsoft.gemalto.com/", name = "getModelByMSISDN")
     public JAXBElement<GetModelByMSISDN> createGetModelByMSISDN(GetModelByMSISDN value) {
         return new JAXBElement<GetModelByMSISDN>(_GetModelByMSISDN_QNAME, GetModelByMSISDN.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link VTRApiSOAPException }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.chile.vtr.latamsoft.gemalto.com/", name = "VTRApiSOAPException")
-    public JAXBElement<VTRApiSOAPException> createVTRApiSOAPException(VTRApiSOAPException value) {
-        return new JAXBElement<VTRApiSOAPException>(_VTRApiSOAPException_QNAME, VTRApiSOAPException.class, null, value);
     }
 
     /**

@@ -26,7 +26,7 @@ public interface VtrSucursalVirtualWS {
     /**
      * 
      * @param msisdn
-     * @throws VTRApiSOAPException_Exception
+     * @throws VTRApiSOAPException
      */
     @WebMethod
     @RequestWrapper(localName = "sendAllSettings", targetNamespace = "http://ws.chile.vtr.latamsoft.gemalto.com/", className = "com.gemalto.latamsoft.vtr.chile.ws.client.SendAllSettings")
@@ -34,14 +34,14 @@ public interface VtrSucursalVirtualWS {
     public void sendAllSettings(
         @WebParam(name = "msisdn", targetNamespace = "")
         String msisdn)
-        throws VTRApiSOAPException_Exception
+        throws VTRApiSOAPException
     ;
 
     /**
      * 
      * @param msisdn
      * @param serviceName
-     * @throws VTRApiSOAPException_Exception
+     * @throws VTRApiSOAPException
      */
     @WebMethod
     @RequestWrapper(localName = "sendSetting", targetNamespace = "http://ws.chile.vtr.latamsoft.gemalto.com/", className = "com.gemalto.latamsoft.vtr.chile.ws.client.SendSetting")
@@ -51,7 +51,7 @@ public interface VtrSucursalVirtualWS {
         String msisdn,
         @WebParam(name = "serviceName", targetNamespace = "")
         String serviceName)
-        throws VTRApiSOAPException_Exception
+        throws VTRApiSOAPException
     ;
 
     /**
@@ -59,7 +59,7 @@ public interface VtrSucursalVirtualWS {
      * @param msisdn
      * @return
      *     returns com.gemalto.latamsoft.vtr.chile.ws.client.Terminal
-     * @throws VTRApiSOAPException_Exception
+     * @throws VTRApiSOAPException
      */
     @WebMethod
     @WebResult(name = "terminal", targetNamespace = "")
@@ -68,7 +68,7 @@ public interface VtrSucursalVirtualWS {
     public Terminal getModelByMSISDN(
         @WebParam(name = "msisdn", targetNamespace = "")
         String msisdn)
-        throws VTRApiSOAPException_Exception
+        throws VTRApiSOAPException
     ;
 
 }

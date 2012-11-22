@@ -41,10 +41,11 @@
 <xs:element maxOccurs="unbounded" minOccurs="0" name="supportedServices" nillable="true" type="xs:string" />
 </xs:sequence>
 </xs:complexType>
-<xs:element name="VTRApiSOAPException" type="tns:VTRApiSOAPException" />
-<xs:complexType name="VTRApiSOAPException">
+<xs:element name="VTRApiSOAPFault" type="tns:VTRApiSOAPFault" />
+<xs:complexType name="VTRApiSOAPFault">
 <xs:sequence>
 <xs:element name="faultCode" nillable="true" type="xs:string" />
+<xs:element name="faultMessage" nillable="true" type="xs:string" />
 </xs:sequence>
 </xs:complexType>
 </xs:schema>
@@ -59,7 +60,7 @@
     <wsdl:part element="tns:getModelByMSISDN" name="parameters" />
   </wsdl:message>
   <wsdl:message name="VTRApiSOAPException">
-    <wsdl:part element="tns:VTRApiSOAPException" name="VTRApiSOAPException" />
+    <wsdl:part element="tns:VTRApiSOAPFault" name="VTRApiSOAPException" />
   </wsdl:message>
   <wsdl:message name="sendSettingResponse">
     <wsdl:part element="tns:sendSettingResponse" name="parameters" />

@@ -14,42 +14,21 @@ public class MainTest {
 		VtrSucursalVirtualWS ws = helloService.getVtrSucursalVirtualWSImplPort();
 
 		try {
-			Terminal terminal = ws.getModelByMSISDN("123");
-			System.out.println(terminal);
-		} catch (VTRApiSOAPException_Exception e) {
-			VTRApiSOAPException faultInfo = e.getFaultInfo();
-			String faultCode = faultInfo.getFaultCode();
-			System.out.println("faultCode: " + faultCode);
-			System.out.println("faultMessage: " + e.getMessage());
+			ws.sendSetting("321", "gmail.com");
+			
+		} catch (VTRApiSOAPException e) {
+			VTRApiSOAPFault faultInfo = e.getFaultInfo();
+			System.out.println("faultCode: " + faultInfo.getFaultCode());
+			System.out.println("faultMessage: " + faultInfo.getFaultMessage());
 		}
 		
 		try {
-			Terminal terminal = ws.getModelByMSISDN("321");
-			System.out.println(terminal);
-		} catch (VTRApiSOAPException_Exception e) {
-			VTRApiSOAPException faultInfo = e.getFaultInfo();
-			String faultCode = faultInfo.getFaultCode();
-			System.out.println("faultCode: " + faultCode);
-			System.out.println("faultMessage: " + e.getMessage());
-		}
-		
-		try {
-			Terminal terminal = ws.getModelByMSISDN("111");
-			System.out.println(terminal);
-		} catch (VTRApiSOAPException_Exception e) {
-			VTRApiSOAPException faultInfo = e.getFaultInfo();
-			String faultCode = faultInfo.getFaultCode();
-			System.out.println("faultCode: " + faultCode);
-			System.out.println("faultMessage: " + e.getMessage());
-		}
-		
-		try {
-			ws.sendAllSettings("321");
-		} catch (VTRApiSOAPException_Exception e) {
-			VTRApiSOAPException faultInfo = e.getFaultInfo();
-			String faultCode = faultInfo.getFaultCode();
-			System.out.println("faultCode: " + faultCode);
-			System.out.println("faultMessage: " + e.getMessage());
+			ws.sendSetting("1", "gmail.commmmmm");
+			
+		} catch (VTRApiSOAPException e) {
+			VTRApiSOAPFault faultInfo = e.getFaultInfo();
+			System.out.println("faultCode: " + faultInfo.getFaultCode());
+			System.out.println("faultMessage: " + faultInfo.getFaultMessage());
 		}
 
 
