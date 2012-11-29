@@ -429,4 +429,41 @@
     
     <bean id="itemWriter20" class="com.springbatch.ejemplo7.ConsolaItemWriter"/>
     
+    
+    
+	<!-- 
+		 ************************
+	     ********JOB 8*********** 
+	     ************************
+	     
+	  	Leyendo un XML
+	  	
+	  	http://static.springsource.org/spring-batch/reference/html/readersAndWriters.html
+	  	
+	-->
+	
+	<batch:job id="trabajoBatch999" restartable="true">
+        <batch:step id="imprimirPorConsolaElXml">
+            <batch:tasklet>
+                <batch:chunk reader="xmlItemReader" writer="consolaXmlItemWriter" commit-interval="5"/>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    
+    <bean id="xmlItemReader" class="org.springframework.batch.item.xml.StaxEventItemReader">
+    	<property name="fragmentRootElementName" value="contact" />
+    	<property name="resource" value="classpath:com/springbatch/ejemplo8/input.xml" />
+    	<property name="unmarshaller" ref="tradeMarshaller" />
+	</bean>
+	
+	<bean id="tradeMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+		<property name="aliases">
+			<map>
+				<entry key="contact" value="com.springbatch.ejemplo8.Contact" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="consolaXmlItemWriter" class="com.springbatch.ejemplo8.ConsolaItemWriter"/>
+
 </beans>

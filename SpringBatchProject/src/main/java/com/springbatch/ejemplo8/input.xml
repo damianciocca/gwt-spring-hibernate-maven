@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contacts>
+	<contact>
+		<firstname>Dupont</firstname>
+		<lastname>Roger</lastname>
+	</contact>
+	<contact>
+		<firstname>Gerard</firstname>
+		<lastname>Gerard</lastname>
+	</contact>
+	<contact>
+		<firstname>Michael</firstname>
+		<lastname>Robert</lastname>
+	</contact>
+</contacts>
