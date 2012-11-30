@@ -440,14 +440,33 @@
 	  	
 	  	http://static.springsource.org/spring-batch/reference/html/readersAndWriters.html
 	  	
+	  	Notice Spring Batch uses StAX, which means that the whole XML file won't be loaded in memory. 
+	  	Spring Batch will "stream" it instead and send the Contact objects in chunks to the writer. 
+	  	The size of the chunk will the value in the commit-interval attribute defined previously. 	  
+	  	
 	-->
 	
 	<batch:job id="trabajoBatch999" restartable="true">
-        <batch:step id="imprimirPorConsolaElXml">
+        
+        <batch:step id="imprimirPorConsolaElXml" next="obtenerXmlYHacerAlgo">
             <batch:tasklet>
-                <batch:chunk reader="xmlItemReader" writer="consolaXmlItemWriter" commit-interval="5"/>
+                <batch:chunk reader="xmlItemReader" writer="consolaXmlItemWriter"  commit-interval="4" />               
             </batch:tasklet>
+            <batch:listeners><!--  NOTA esto hace q se publique el parametro que vamos a pasar al siguiente step -->
+        		<batch:listener ref="promotionListener"/>
+        	</batch:listeners>
+<!--             <batch:next on="*" to="obtenerXmlYHacerAlgo"/>   En caso de exito, vamos por aca -->
+<!-- 	        <batch:next on="FAILED" to="loguearError"/> 	 En caso de fracaso, vamos por este otro step. Para probar esto podemos tocar el XML y q nos tire erro de pareso -->
         </batch:step>
+        
+        <batch:step id="obtenerXmlYHacerAlgo" next="loguearError">
+			<batch:tasklet ref="retriveXMLAndDoSomething" />
+		</batch:step>
+		
+		<batch:step id="loguearError">
+			<batch:tasklet ref="logError" />
+		</batch:step>
+        
     </batch:job>
     
     <bean id="xmlItemReader" class="org.springframework.batch.item.xml.StaxEventItemReader">
@@ -465,5 +484,14 @@
 	</bean>
 	
 	<bean id="consolaXmlItemWriter" class="com.springbatch.ejemplo8.ConsolaItemWriter"/>
+	
+	<bean id="promotionListener" class="org.springframework.batch.core.listener.ExecutionContextPromotionListener">
+    	<property name="keys" value="xml"/> <!-- ATENCION: aca le ponemos el value a la property keys. Esta value sera el mismo q
+    											 utilizaremkos tanto para hacer el put en el contexto como al hacer el get del contexto -->
+	</bean>
+	
+	<bean id="retriveXMLAndDoSomething" class="com.springbatch.ejemplo8.RetriveXMLAndDoSomething"/>
+	
+	<bean id="logError" class="com.springbatch.ejemplo8.LogError"/>
 
 </beans>
