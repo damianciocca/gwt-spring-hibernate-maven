@@ -8,7 +8,9 @@
 package org.axis.ws.generated;
 
 public class CalculatorSoapBindingImpl implements org.axis.ws.generated.Calculator{
+	
     public int add(int in0, int in1) throws java.rmi.RemoteException {
+    	System.out.println("HOLA.. aca va toda la logica!!!");
         return -3;
     }
 
