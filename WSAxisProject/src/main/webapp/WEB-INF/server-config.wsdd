@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	
+	<globalConfiguration>
+		<parameter name="adminPassword" value="admin"/>
+		<parameter name="attachments.Directory" value="D:\Tomcat5.0\webapps\axis\WEB-INF\attachments"/>
+		<parameter name="sendMultiRefs" value="true"/>
+		<parameter name="sendXsiTypes" value="true"/>
+		<parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+		<parameter name="sendXMLDeclaration" value="true"/>
+		<parameter name="axis.sendMinimizedElements" value="true"/>
+		<parameter name="axis.enableListQuery" value="false"/>
+		
+		<requestFlow>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="session"/>
+			</handler>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="request"/>
+				<parameter name="extension" value=".jwr"/>
+			</handler>
+		</requestFlow>
+	</globalConfiguration>
+
+	<handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+	<handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+	<handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+	
+	<service name="AdminService" provider="java:MSG">
+		<parameter name="allowedMethods" value="AdminService"/>
+		<parameter name="enableRemoteAdmin" value="false"/>
+		<parameter name="className" value="org.apache.axis.utils.Admin"/>
+		<namespace>http://xml.apache.org/axis/wsdd/</namespace>
+	</service>
+	
+	<service name="Version" provider="java:RPC">
+		<parameter name="allowedMethods" value="getVersion"/>
+		<parameter name="className" value="org.apache.axis.Version"/>
+	</service>
+	
+	<service name="CalcService" provider="java:RPC" style="wrapped" use="literal">
+	    <operation name="add" qname="ns15:Add" returnQName="ns15:result" returnType="xsd:int" xmlns:ns15="http://simbit.com/simsave1.0/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<parameter qname="ns15:in0" type="xsd:int"/>
+			<parameter qname="ns15:in1" type="xsd:int"/>
+		</operation>
+		
+		<operation name="subtract" qname="ns15:Subtract" returnQName="ns15:result" returnType="xsd:int" xmlns:ns15="http://simbit.com/simsave1.0/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<parameter qname="ns15:in0" type="xsd:int"/>
+			<parameter qname="ns15:in1" type="xsd:int"/>
+		</operation>
+
+		<parameter name="allowedMethods" value="add subtract"/>
+		<parameter name="wsdlPortType" value="Calculator"/>
+		<parameter name="className" value="org.axis.ws.generated.CalculatorSoapBindingImpl"/>
+		<parameter name="wsdlServicePort" value="CalcService"/>
+		<parameter name="wsdlTargetNamespace" value=""/>
+		<parameter name="wsdlServiceElement" value="CalculatorService"/>
+				
+	</service>
+	
+	<transport name="http">
+		<requestFlow>
+			<handler type="URLMapper"/>
+			<handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+		</requestFlow>
+	</transport>
+	
+	<transport name="local">
+		<responseFlow>
+			<handler type="LocalResponder"/>
+		</responseFlow>
+	</transport>
+
+</deployment>
