@@ -8,10 +8,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.Marshaller;
+import javax.xml.transform.stream.StreamSource;
 
 
 /**
  * http://www.mkyong.com/java/jaxb-hello-world-example/
+ * 
+ * http://dublintech.blogspot.co.uk/2011/12/jaxb-sax-dom-performance.html
  * 
  * @author dciocca
  *
@@ -30,12 +33,21 @@ public class LeerEscribirXMLTest {
 
 		try {
 
+			// Test 1 - Using JAXB to unmarshall a Java File.	
+			//File file = new File("C:\\logs\\input2.xml");
+			//JAXBContext jaxbContext = JAXBContext.newInstance(CardContentModule.class);
+			//Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			//cm = (CardContentModule) jaxbUnmarshaller.unmarshal(file);
+			
+			// Test 2 - Using JAXB to unmarshall a Streamsource
+			// Test 2 is similar Test 1, except this time a Streamsource object wraps around a File object. The Streamsource object gives a hint to the JAXB implementation to stream the file.
 			File file = new File("C:\\logs\\input2.xml");
 			JAXBContext jaxbContext = JAXBContext.newInstance(CardContentModule.class);
-
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
-			cm = (CardContentModule) jaxbUnmarshaller.unmarshal(file);
+			StreamSource source = new StreamSource(file);
+			cm = (CardContentModule) jaxbUnmarshaller.unmarshal(source);
+			
+			
 			System.out.println(cm);
 
 		} catch (JAXBException e) {
@@ -49,12 +61,17 @@ public class LeerEscribirXMLTest {
 		
 		try {
 
+			//File file = new File("C:\\logs\\input3.xml");
+			//JAXBContext jaxbContext = JAXBContext.newInstance(MBCardModule.class);
+			//Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			//mbc = (MBCardModule) jaxbUnmarshaller.unmarshal(file);
+			
 			File file = new File("C:\\logs\\input3.xml");
 			JAXBContext jaxbContext = JAXBContext.newInstance(MBCardModule.class);
-
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
-			mbc = (MBCardModule) jaxbUnmarshaller.unmarshal(file);
+			StreamSource source = new StreamSource(file);
+			mbc = (MBCardModule) jaxbUnmarshaller.unmarshal(source);
+			
 			System.out.println(mbc);
 
 		} catch (JAXBException e) {
