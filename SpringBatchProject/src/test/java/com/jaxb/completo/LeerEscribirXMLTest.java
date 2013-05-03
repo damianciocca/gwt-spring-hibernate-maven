@@ -84,13 +84,30 @@ public class LeerEscribirXMLTest {
 		System.out.println("---------------");
 		// OBJ => XML
 		ProvisioningOrder po = new ProvisioningOrder();
+		po.setGetReport("true");
 		List<Order> orders = new ArrayList<Order>();
 		
 		List<SimCard> simCard = cm.getSimCard();
 		for (SimCard sim : simCard) {
 			
 			Order o = new Order();
-			o.setTransactionId(sim.getProfileName());
+			o.setTransactionId("TRANSACTION00001");
+			
+			UpdateSubscription us = new UpdateSubscription();
+			us.setIccidSrc("iccid");
+			us.setMsisdnSrc("msisdn");
+
+			ServiceContent sc = new ServiceContent();
+			Portal p = new Portal();
+			Final f = new Final();
+			f.setLabel("label");
+			f.setMajorVersion("major");
+			f.setMinorVersion("minor");
+			
+			p.setFinalObj(f);
+			sc.setPortal(p);
+			us.setServiceContent(sc);
+			o.setUpdateSubscription(us);
 			orders.add(o);
 			
 		}
@@ -105,6 +122,7 @@ public class LeerEscribirXMLTest {
 			// output pretty printed
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			jaxbMarshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION,"http://www.gemalto.com/schema/pm pmBatchFile.xsd");
+			jaxbMarshaller.setProperty(Marshaller.JAXB_ENCODING, "ISO-8859-1");
 
 			jaxbMarshaller.marshal(po, file);
 			jaxbMarshaller.marshal(po, System.out);
