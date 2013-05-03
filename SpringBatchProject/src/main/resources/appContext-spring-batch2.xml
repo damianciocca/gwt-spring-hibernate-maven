@@ -98,13 +98,23 @@
   		<constructor-arg value="/logs/input.xml"/>
 	</bean>
 	
-	<bean id="tradeMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+	<!-- OPCION 1 -->
+	<!--  bean id="tradeMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
 		<property name="aliases">
 			<map>
 				<entry key="contact" value="com.springbatch.ejemplo9.Contact" />
 			</map>
 		</property>
-	</bean>
+	</bean-->
+	
+	<!-- OPCION 2 -->
+	 <bean id = "tradeMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name = "classesToBeBound">
+            <array>
+                <value>com.springbatch.ejemplo9.Contact</value>
+            </array>
+        </property>
+    </bean>
 	
 	<bean id="processXml" class="com.springbatch.ejemplo9.ProcessorItem"/>
 	
@@ -129,15 +139,17 @@
   		<constructor-arg value="/logs/output.xml"/>
 	</bean>
 	
+	<!-- OPCION 1 -->
 	<!--  bean id="personMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
 		<property name="aliases">
 			<map>
-				<entry key="person" value="com.springbatch.ejemplo9.Person" />
+				<entry key="order" value="com.springbatch.ejemplo9.Orde" />
 			</map>
 		</property>
 	</bean-->
 	
 	
+	<!-- OPCION 2 -->
     <bean id = "personMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name = "classesToBeBound">
             <array>
