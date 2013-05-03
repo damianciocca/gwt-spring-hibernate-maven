@@ -493,5 +493,5 @@
 	<bean id="retriveXMLAndDoSomething" class="com.springbatch.ejemplo8.RetriveXMLAndDoSomething"/>
 	
 	<bean id="logError" class="com.springbatch.ejemplo8.LogError"/>
-
+	
 </beans>
