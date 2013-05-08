@@ -70,7 +70,7 @@
 	</bean>
 	
 	<bean id="proccessInputResource" class="org.springframework.core.io.FileSystemResource">
-  		<constructor-arg value="/logs/input3.xml"/>
+  		<constructor-arg value="/logs/SIM10000_GX98_16K.sec.xml"/>
 	</bean>
 	
 	 <bean id = "cardMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">

@@ -35,6 +35,7 @@ public class EjecutarBatchTest {
         JobParameters parameters = builder.toJobParameters();
  
         launcher.run(job, parameters);
+        System.out.println("FIN");
     }
 
 }

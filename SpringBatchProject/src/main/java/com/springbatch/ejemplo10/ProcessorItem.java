@@ -27,7 +27,7 @@ public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 
 		DocumentBuilder builder = builderfactory.newDocumentBuilder();
 		
-		InputStream is = new FileInputStream(new File("/logs/input2.xml"));
+		InputStream is = new FileInputStream(new File("/logs/SIM10000_GX98_16K.card.xml"));
 		Document xmlDocument = builder.parse(is);
 
 		XPathFactory factory = javax.xml.xpath.XPathFactory.newInstance();
