@@ -88,7 +88,7 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-
+		
 	</dependencies>
 	
 	<repositories>
@@ -105,15 +105,15 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<executable>${jdk6_javac}</executable> <!-- Esto sale del setting.xml -->
-					<source>${compilerVersion}</source>
-					<target>${compilerVersion}</target>
+					<executable>1.6</executable> <!-- Esto sale del setting.xml -->
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<jvm>${jdk6_java}</jvm> <!-- Esto sale del setting.xml -->
+					<jvm>1.6</jvm> <!-- Esto sale del setting.xml -->
 				</configuration>
 			</plugin>
 		</plugins>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MBCardModule SYSTEM "messageBuilder.dtd">
+<MBCardModule>
+<MBCard serialNumber="8955310129982184255">
+        <SecurityData securityID="3F00/7F10" keysID="1" sync="0000000001">
+                <Keys>
+                <KeyValue recordNb="3" value="A058E9DD7EF0216B" algoNumber="2" />
+                <KeyValue recordNb="4" value="0D5960B8C45EE70D" algoNumber="2" />
+                        <KeyValue recordNb="5" value="0D5960B8C45EE70D" algoNumber="2" />
+                </Keys>
+        </SecurityData>
+</MBCard>
+        
+<MBCard serialNumber="8955310129982184295">
+        <SecurityData securityID="3F00/7F10" keysID="1" sync="0000000000">
+                <Keys>
+                <KeyValue recordNb="3" value="A058E9DD7EF0216B" algoNumber="2" />
+                <KeyValue recordNb="4" value="0D5960B8C45EE70D" algoNumber="2" />
+                        <KeyValue recordNb="5" value="0D5960B8C45EE70D" algoNumber="2" />
+                </Keys>
+        </SecurityData>
+</MBCard>
+
+<MBCard serialNumber="895531012998219999999">
+        <SecurityData securityID="3F00/7F10" keysID="1" sync="0000000000">
+                <Keys>
+                <KeyValue recordNb="3" value="A058E9DD7EF0216B" algoNumber="2" />
+                <KeyValue recordNb="4" value="0D5960B8C45EE70D" algoNumber="2" />
+                        <KeyValue recordNb="5" value="0D5960B8C45EE70D" algoNumber="2" />
+                </Keys>
+        </SecurityData>
+</MBCard>
+
+<MBCard serialNumber="1212121212219999999">
+        <SecurityData securityID="3F00/7F10" keysID="1" sync="0000000000">
+                <Keys>
+                <KeyValue recordNb="3" value="A058E9DD7EF0216B" algoNumber="2" />
+                <KeyValue recordNb="4" value="0D5960B8C45EE70D" algoNumber="2" />
+                        <KeyValue recordNb="5" value="0D5960B8C45EE70D" algoNumber="2" />
+                </Keys>
+        </SecurityData>
+</MBCard>
+        
+</MBCardModule>
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--!DOCTYPE CardContentModule SYSTEM "cardframework.dtd"-->
+<CardContentModule>
+        <SimCard serialNumber="8955310129982184265" imsi="724310122065479" profileName="Vivo_Full"/>
+        <SimCard serialNumber="8955310129982184255" imsi="724310122065478" profileName="Vivo_Full"/>
+        <SimCard serialNumber="8955310129982184275" imsi="724310122065480" profileName="Vivo_Full"/>
+        
+        <SimCard serialNumber="8955310129982184295" imsi="724310122065481" profileName="Vivo_Full"/>
+
+		
+</CardContentModule>
