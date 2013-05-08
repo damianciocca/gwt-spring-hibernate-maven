@@ -22,4 +22,36 @@ public class SecurityData {
 	@XmlElement(name = "Keys")
 	private Key keys;
 
+	public String getSecurityId() {
+		return securityId;
+	}
+
+	public void setSecurityId(String securityId) {
+		this.securityId = securityId;
+	}
+
+	public String getKeysId() {
+		return keysId;
+	}
+
+	public void setKeysId(String keysId) {
+		this.keysId = keysId;
+	}
+
+	public String getSync() {
+		return sync;
+	}
+
+	public void setSync(String sync) {
+		this.sync = sync;
+	}
+
+	public Key getKeys() {
+		return keys;
+	}
+
+	public void setKeys(Key keys) {
+		this.keys = keys;
+	}
+	
 }

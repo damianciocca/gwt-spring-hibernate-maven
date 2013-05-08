@@ -40,11 +40,21 @@ public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 		XPathExpression xPathExpression2 = xPath.compile("//CardContentModule//SimCard[@serialNumber='" +serialNum + "']//@profileName");
 		String profile = xPathExpression2.evaluate(xmlDocument,XPathConstants.STRING).toString();
 		
+		XPathExpression xPathExpression3 = xPath.compile("//CardContentModule//SimCard[@serialNumber='" +serialNum + "']//@msisdn");
+		String msisdn = xPathExpression3.evaluate(xmlDocument,XPathConstants.STRING).toString();
+		
 		System.out.println("IMSI---> " + imsi);
 		System.out.println("PROFILE---> " + profile);
-
+		System.out.println("MSISDN---> " + msisdn);
+		
 		Order o = new Order();
-		o.setTransactionId("1212121");
+		o.setTransactionId(mbcard.getSerialNumber());
+		
+		UpdateSubscription us = new UpdateSubscription();
+		us.setIccidSrc("TODO");
+		us.setMsisdnSrc(msisdn);
+		
+		o.setUpdateSubscription(us);
 		
 		return o;
 	}

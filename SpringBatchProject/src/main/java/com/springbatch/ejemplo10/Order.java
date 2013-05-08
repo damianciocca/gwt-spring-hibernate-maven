@@ -13,8 +13,8 @@ public class Order {
 	@XmlAttribute(name = "transactionId")
 	private String transactionId;
 	
-//	@XmlElement(name = "UpdateSubscription")
-//	private UpdateSubscription updateSubscription;
+	@XmlElement(name = "UpdateSubscription")
+	private UpdateSubscription updateSubscription;
 
 	public String getTransactionId() {
 		return transactionId;
@@ -24,12 +24,12 @@ public class Order {
 		this.transactionId = transactionId;
 	}
 
-//	public UpdateSubscription getUpdateSubscription() {
-//		return updateSubscription;
-//	}
-//
-//	public void setUpdateSubscription(UpdateSubscription updateSubscription) {
-//		this.updateSubscription = updateSubscription;
-//	}
+	public UpdateSubscription getUpdateSubscription() {
+		return updateSubscription;
+	}
+
+	public void setUpdateSubscription(UpdateSubscription updateSubscription) {
+		this.updateSubscription = updateSubscription;
+	}
 	
 }
