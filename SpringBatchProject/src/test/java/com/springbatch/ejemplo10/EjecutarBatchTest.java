@@ -7,17 +7,22 @@ import org.junit.runner.RunWith;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {
-		"classpath:appContext-spring-batch10.xml"
-})
+
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = {"classpath:appContext-spring-batch10.xml"})
 public class EjecutarBatchTest {
 
 	@Autowired
@@ -25,31 +30,142 @@ public class EjecutarBatchTest {
 
 	@Autowired
 	private CustomStaxEventItemReader customStaxEventItemReader;
-	
+
 	@Autowired
 	private ProcessorItem processorItem; 
 
 	@Autowired
 	@Qualifier("xmlReadAndGeneratorStep")
 	private Job job;
-
-	@Test
-	public void iniciarJob() throws Exception {
-
+	
+	/**
+	 * Nota: Para lanzar el JOB como un thread aparte, no podemos lanzarlo como un TEST...
+	 * Es por esto q se opto por hacer un main y que se lance de esta manera.... Igula dejo comentado la parte del TEST
+	 * @param arg
+	 * @throws InterruptedException 
+	 */
+	public static void main(String arg[]) throws InterruptedException{
+		
+		//AppContext
+		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:appContext-spring-batch10.xml"); 
+		final Job job = (Job) context.getBean("xmlReadAndGeneratorStep");
+		final SimpleJobLauncher launcher = (SimpleJobLauncher) context.getBean("jobLauncher"); 
+		
+		//Set XML Inputs
+		CustomStaxEventItemReader customStaxEventItemReader = (CustomStaxEventItemReader) context.getBean(CustomStaxEventItemReader.class); 
+		customStaxEventItemReader.setResource(new FileSystemResource("/logs/SIM10000_GX98_16K.sec.xml"));
+		ProcessorItem processorItem = (ProcessorItem) context.getBean(ProcessorItem.class);
+		processorItem.setFilePath("/logs/SIM10000_GX98_16K.card.xml");
 
 		JobParametersBuilder builder = new JobParametersBuilder();
 		builder.addDate("Ejecucion", new Date());
 		builder.addString("jobName", "Imprimir contactos por consola");
-		JobParameters parameters = builder.toJobParameters();
-
-		// Tmb se puede setear via XML
-		customStaxEventItemReader.setResource(new FileSystemResource("/logs/SIM10000_GX98_16K.sec.xml"));
-		processorItem.setFilePath("/logs/SIM10000_GX98_16K.card.xml");
+		final JobParameters parameters = builder.toJobParameters();
 		
-		launcher.run(job, parameters);
+		Thread t1 = new Thread(new Runnable() {
 
+			// http://stackoverflow.com/questions/9114162/spring-batch-starting-a-job-from-within-a-spring-mvc-contorller-with-a-new-thre	
+			@Override
+			public void run() {
+				
+				try {
+					//Run Job
+					launcher.run(job, parameters);
+				} catch (JobExecutionAlreadyRunningException e) {
+					System.out.println("JobExecutionAlreadyRunningException");
+					e.printStackTrace();
+				} catch (JobRestartException e) {
+					System.out.println("JobRestartException");
+					e.printStackTrace();
+				} catch (JobInstanceAlreadyCompleteException e) {
+					System.out.println("JobInstanceAlreadyCompleteException");
+					e.printStackTrace();
+				} catch (JobParametersInvalidException e) {
+					System.out.println("JobParametersInvalidException");
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		
+		t1.start();
+		
+		Thread.sleep(1000);
+		
+		// En este caso como vamos al querer lanzar nuevamente el JOB, si haber terminado el anterior nos va a arrojar el siguiente error:
+		// JobExecutionAlreadyRunningException
+		// Esto esta piola en el caso que se intente desde una app web invocar dos veces seguidas al mismo JOB.
+		
+		Thread t2 = new Thread(new Runnable() {
 
+			@Override
+			public void run() {
+				
+				try {
+					//Run Job
+					launcher.run(job, parameters);
+				} catch (JobExecutionAlreadyRunningException e) {
+					System.out.println("JobExecutionAlreadyRunningException");
+					e.printStackTrace();
+				} catch (JobRestartException e) {
+					System.out.println("JobRestartException");
+					e.printStackTrace();
+				} catch (JobInstanceAlreadyCompleteException e) {
+					System.out.println("JobInstanceAlreadyCompleteException");
+					e.printStackTrace();
+				} catch (JobParametersInvalidException e) {
+					System.out.println("JobParametersInvalidException");
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		
+		t2.start();
+		
 		System.out.println("FIN");
 	}
 
+//	@Test
+//	public void iniciarJob() {
+//
+//		JobParametersBuilder builder = new JobParametersBuilder();
+//		builder.addDate("Ejecucion", new Date());
+//		builder.addString("jobName", "Imprimir contactos por consola");
+//		final JobParameters parameters = builder.toJobParameters();
+//
+//		// Tmb se puede setear via XML
+//		customStaxEventItemReader.setResource(new FileSystemResource("/logs/SIM10000_GX98_16K.sec.xml"));
+//		processorItem.setFilePath("/logs/SIM10000_GX98_16K.card.xml");
+//
+//		Thread t = new Thread(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//
+//				try {
+//					launcher.run(job, parameters);
+//				} catch (JobExecutionAlreadyRunningException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (JobRestartException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (JobInstanceAlreadyCompleteException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (JobParametersInvalidException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//
+//			}
+//		});	
+//
+//		t.start();
+//
+//		System.out.println("FIN");
+//
+//	}
+	
 }
