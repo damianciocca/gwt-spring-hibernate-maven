@@ -54,16 +54,22 @@
 	
 	<batch:job id="xmlReadAndGeneratorStep" restartable="true">
         
-        <batch:step id="readAndWriteXML" next="invocarLpm">
+        <batch:step id="readAndWriteXML">
             <batch:tasklet>
                 <batch:chunk reader="readXml" processor="processXml" writer="writeXml"  commit-interval="2" />               
             </batch:tasklet>
+            <batch:next on="*" to="invocarLpm"/>
+			<batch:next on="FAILED" to="logError"/> 	
         </batch:step>
         
         <batch:step id="invocarLpm">
 			<batch:tasklet ref="lpmInvocation" />
 		</batch:step>
         
+        <batch:step id="logError">
+			<batch:tasklet ref="logExecutionError" />
+		</batch:step>
+		
     </batch:job>
     
     <bean id="readXml" class="com.springbatch.ejemplo10.CustomStaxEventItemReader">
@@ -118,5 +124,9 @@
     <bean id="lpmInvocation" class="com.springbatch.ejemplo10.LPMInvocation">
 		<property name="mensaje" value="Hola, " />
 	</bean>
+	
+	<bean id="logExecutionError" class="com.springbatch.ejemplo10.LogExecutionError">
+	</bean>
+	
 	
 </beans>
