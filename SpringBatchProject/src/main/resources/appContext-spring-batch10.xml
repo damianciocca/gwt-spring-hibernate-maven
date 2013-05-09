@@ -121,11 +121,11 @@
         </property>
     </bean>
     
-    <bean id="lpmInvocation" class="com.springbatch.ejemplo10.LPMInvocation">
+    <bean id="lpmInvocation" class="com.springbatch.ejemplo10.LPMInvocationStep">
 		<property name="mensaje" value="Hola, " />
 	</bean>
 	
-	<bean id="logExecutionError" class="com.springbatch.ejemplo10.LogExecutionError">
+	<bean id="logExecutionError" class="com.springbatch.ejemplo10.LogExecutionErrorStep">
 	</bean>
 	
 	
