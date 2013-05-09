@@ -15,6 +15,8 @@ import org.springframework.batch.item.ItemProcessor;
 import org.w3c.dom.Document;
 
 public class ProcessorItem implements ItemProcessor<MBCard,Order>{
+	
+	String filePath;
 
 	public Order process(MBCard mbcard) throws Exception {
 		
@@ -27,7 +29,7 @@ public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 
 		DocumentBuilder builder = builderfactory.newDocumentBuilder();
 		
-		InputStream is = new FileInputStream(new File("/logs/SIM10000_GX98_16K.card.xml"));
+		InputStream is = new FileInputStream(new File(filePath));
 		Document xmlDocument = builder.parse(is);
 
 		XPathFactory factory = javax.xml.xpath.XPathFactory.newInstance();
@@ -56,7 +58,16 @@ public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 		
 		o.setUpdateSubscription(us);
 		
+		
 		return o;
 	}
 
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	
 }
