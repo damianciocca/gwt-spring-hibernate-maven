@@ -60,6 +60,8 @@ public class EjecutarBatchTest {
 		JobParametersBuilder builder = new JobParametersBuilder();
 		builder.addDate("Ejecucion", new Date());
 		builder.addString("jobName", "Imprimir contactos por consola");
+		builder.addString("INPUT1", "/logs/SIM10000_GX98_16K.sec.xml");
+		builder.addString("INPUT2", "/logs/SIM10000_GX98_16K.card.xml");
 		final JobParameters parameters = builder.toJobParameters();
 		
 		Thread t1 = new Thread(new Runnable() {
