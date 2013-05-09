@@ -2,7 +2,9 @@ package com.springbatch.ejemplo10;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,6 +15,9 @@ import javax.xml.xpath.XPathFactory;
 
 import org.springframework.batch.item.ItemProcessor;
 import org.w3c.dom.Document;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 	
@@ -28,6 +33,16 @@ public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 		builderfactory.setNamespaceAware(true);
 
 		DocumentBuilder builder = builderfactory.newDocumentBuilder();
+		
+		// IMPORTANTE: Con esto evitamos que nos pincha cuando levantamos un XML que tiene un DTD asociado
+		//<!DOCTYPE CardContentModule SYSTEM "cardframework.dtd">
+		builder.setEntityResolver(new EntityResolver() {
+			@Override
+			public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+				System.out.println("Ignoring " + publicId + ", " + systemId);
+				return new InputSource(new StringReader(""));
+			}
+		});
 		
 		InputStream is = new FileInputStream(new File(filePath));
 		Document xmlDocument = builder.parse(is);

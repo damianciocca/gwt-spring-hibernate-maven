@@ -90,38 +90,38 @@ public class EjecutarBatchTest {
 		
 		t1.start();
 		
-		Thread.sleep(1000);
+		//Thread.sleep(1000);
 		
-		// En este caso como vamos al querer lanzar nuevamente el JOB, si haber terminado el anterior nos va a arrojar el siguiente error:
+		// En este caso, como vamos a querer lanzar nuevamente el JOB (es la misma instancia), sin haber terminado el anterior nos va a arrojar el siguiente error:
 		// JobExecutionAlreadyRunningException
 		// Esto esta piola en el caso que se intente desde una app web invocar dos veces seguidas al mismo JOB.
 		
-		Thread t2 = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				
-				try {
-					//Run Job
-					launcher.run(job, parameters);
-				} catch (JobExecutionAlreadyRunningException e) {
-					System.out.println("JobExecutionAlreadyRunningException");
-					e.printStackTrace();
-				} catch (JobRestartException e) {
-					System.out.println("JobRestartException");
-					e.printStackTrace();
-				} catch (JobInstanceAlreadyCompleteException e) {
-					System.out.println("JobInstanceAlreadyCompleteException");
-					e.printStackTrace();
-				} catch (JobParametersInvalidException e) {
-					System.out.println("JobParametersInvalidException");
-					e.printStackTrace();
-				}
-				
-			}
-		});
-		
-		t2.start();
+//		Thread t2 = new Thread(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				
+//				try {
+//					//Run Job
+//					launcher.run(job, parameters);
+//				} catch (JobExecutionAlreadyRunningException e) {
+//					System.out.println("JobExecutionAlreadyRunningException");
+//					e.printStackTrace();
+//				} catch (JobRestartException e) {
+//					System.out.println("JobRestartException");
+//					e.printStackTrace();
+//				} catch (JobInstanceAlreadyCompleteException e) {
+//					System.out.println("JobInstanceAlreadyCompleteException");
+//					e.printStackTrace();
+//				} catch (JobParametersInvalidException e) {
+//					System.out.println("JobParametersInvalidException");
+//					e.printStackTrace();
+//				}
+//				
+//			}
+//		});
+//		
+//		t2.start();
 		
 		System.out.println("FIN");
 	}
