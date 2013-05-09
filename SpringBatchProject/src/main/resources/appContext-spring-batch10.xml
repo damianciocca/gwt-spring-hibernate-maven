@@ -54,11 +54,15 @@
 	
 	<batch:job id="xmlReadAndGeneratorStep" restartable="true">
         
-        <batch:step id="readAndWriteXML">
+        <batch:step id="readAndWriteXML" next="invocarLpm">
             <batch:tasklet>
                 <batch:chunk reader="readXml" processor="processXml" writer="writeXml"  commit-interval="2" />               
             </batch:tasklet>
         </batch:step>
+        
+        <batch:step id="invocarLpm">
+			<batch:tasklet ref="lpmInvocation" />
+		</batch:step>
         
     </batch:job>
     
@@ -110,5 +114,9 @@
             </array>
         </property>
     </bean>
+    
+    <bean id="lpmInvocation" class="com.springbatch.ejemplo10.LPMInvocation">
+		<property name="mensaje" value="Hola, " />
+	</bean>
 	
 </beans>

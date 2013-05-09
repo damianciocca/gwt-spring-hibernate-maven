@@ -58,7 +58,7 @@ public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 		
 		o.setUpdateSubscription(us);
 		
-		
+		//throw new RuntimeException("error...");
 		return o;
 	}
 
