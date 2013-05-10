@@ -100,15 +100,19 @@
 	
 	<bean id="processXml" class="com.springbatch.ejemplo10.ProcessorItem"/>
 	
-	<bean id="writeXml" class="org.springframework.batch.item.xml.StaxEventItemWriter">
+<!-- 	<bean id="writeXml" class="org.springframework.batch.item.xml.StaxEventItemWriter"> -->
+<!-- 	 Si usamos este writer con el atributo XMLNS, nos pincha...: Caused by: javax.xml.stream.XMLStreamException: xmlns has been already bound to . Rebinding it to http://www.gemalto.com/schema/pm is an error -->
+		<bean id="writeXml" class="com.springbatch.ejemplo10.CustomStaxEventItemWriter">
+		<!-- Para este extendemos del writer que viene por default de springbatch y lo modificamos  -->
 	    <property name="resource" ref="proccessOutputResource" />
 	    <property name="marshaller" ref="orderMarshaller" />
+	    <property name="encoding" value="ISO-8859-1"/>
 	    <property name="rootTagName" value="ProvisioningOrders"/>
 	    <property name="rootElementAttributes">
    			<map>
    				<entry key="xmlns:xsi" value="http://www.w3.org/2001/XMLSchema-instance"/>
    				<entry key="xsi:schemaLocation" value="http://www.gemalto.com/schema/pm pmBatchFile.xsd"/>
-   				<entry key="xmlns" value=""/>
+   				<entry key="xmlns" value="http://www.gemalto.com/schema/pm"/> <!--  NOTA: Esto lo corregimos extendiendo y modificando el StaxEventItemWriter  -->
    				<entry key="generateReport" value="true"/>
    			</map>
  		</property>
