@@ -22,11 +22,9 @@ public class LPMInvocationStep implements Tasklet {
 	}
 
 	/*
-	 * NECESITAMOS SABER COMO ESTE PASO PUEDE DARSE CUENTA Q EL XML GENERADO ESTA VACIO Y ASI EVITAR
-	 * LLAMAR AL LPM
-	 * 
-	 *  todo: TAL VEZ UNA OPCION SERIA SABER QUE LA CANTIDAD DE CHUNK PROCESADOS FUE 0.....
-	 * 
+	 * IMPORTANTE: En caso que no procese ningun registro, como tenemos un step listener que verifica cuantos
+	 * registros fueron procesados, vamos a saber de antemano si se procesaron o no.
+	 * En caso q se hayan procesado, va a venir el flujo a este STEP, en caso contrario, no va a llegar aca.
 	 */
 	public RepeatStatus execute(StepContribution arg0, ChunkContext arg1) throws Exception {
 

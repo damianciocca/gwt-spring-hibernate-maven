@@ -92,7 +92,7 @@ public class EjecutarBatchTest {
 		
 		t1.start();
 		
-		//Thread.sleep(1000);
+//		Thread.sleep(1000);
 		
 		// En este caso, como vamos a querer lanzar nuevamente el JOB (es la misma instancia), sin haber terminado el anterior nos va a arrojar el siguiente error:
 		// JobExecutionAlreadyRunningException

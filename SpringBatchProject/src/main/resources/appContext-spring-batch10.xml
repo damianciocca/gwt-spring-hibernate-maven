@@ -60,6 +60,9 @@
             </batch:tasklet>
             <batch:next on="*" to="invocarLpm"/>
 			<batch:next on="FAILED" to="logError"/> 	
+			<batch:listeners>
+				<batch:listener ref="stepListener"></batch:listener> <!-- ESTO ESCUCHARA ANTES DE INICIAR EL STEP Y DESPUES DE EJECUTARLO... -->
+			</batch:listeners>
         </batch:step>
         
         <batch:step id="invocarLpm">
@@ -71,6 +74,9 @@
 		</batch:step>
 		
     </batch:job>
+    
+    <bean id="stepListener" class="com.springbatch.ejemplo10.StepListener">
+	</bean>
     
     <bean id="readXml" class="com.springbatch.ejemplo10.CustomStaxEventItemReader">
     	<property name="fragmentRootElementName" value="MBCard" />
