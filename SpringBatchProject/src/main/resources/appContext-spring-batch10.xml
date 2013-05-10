@@ -5,11 +5,14 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:batch="http://www.springframework.org/schema/batch"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-       http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+       http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 	
 	<!-- 
 		Un JobRepository es el encargado de almacenar información sobre la corrida de los Jobs.
@@ -45,13 +48,41 @@
 		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
 		<property name="jobRepository" ref="jobRepository" />
 	</bean>
+	
+	
+	<!-- 
+	
+		 *******************************
+	     ******** SCHEDULING  ********** 
+	     En caso de querer que ester JOB se lance de manera automatica cada tantos minutos, vamos a descomentar 
+	     esta parte y vamos a ejecutar la clase llamada Launcher.java 
+	     
+	     http://javadigest.wordpress.com/2012/05/27/spring-batch-example-with-springs-built-in-scheduling-support/
+	     *******************************
+	-->
+	
+	<!-- 
+	<bean id="myLauncher" class="com.springbatch.ejemplo10.Launcher">
+		<property name="jobLauncher" ref="jobLauncher"></property>
+		<property name="job" ref="xmlReadAndGeneratorStep"></property>
+	</bean>
+ 	-->
+ 	<!-- 
+	<task:scheduled-tasks>
+	-->
+		<!-- cada un minuto -->	
+		<!--  task:scheduled ref="myLauncher" method="launch" cron="1 * * * * *" /-->
+		<!-- otra opcion cada seis segundos-->
+		<!-- <task:scheduled ref="myLauncher" method="launch" fixed-delay="6000" /> -->
+	<!--  /task:scheduled-tasks-->
+	
 
 	<!-- 
 		 ************************
 	     ********JOB  *********** 
 	     ************************
 	-->
-	
+
 	<batch:job id="xmlReadAndGeneratorStep" restartable="true">
         
         <batch:step id="readAndWriteXML">
