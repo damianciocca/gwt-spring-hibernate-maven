@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -90,6 +92,23 @@ public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 		sc.setPortal(p);
 		
 		us.setServiceContent(sc);
+		
+		SubscribeTo st = new SubscribeTo();
+		Capabilities c = new Capabilities();
+		List<Capability> cList = new ArrayList<Capability>();
+		Capability c1 = new Capability();
+		c1.setKey("Prepaid");
+		c1.setValue("false");
+		Capability c2 = new Capability();
+		c2.setKey("postpaid");
+		c2.setValue("true");
+		cList.add(c1);
+		cList.add(c2);
+		
+		c.setCapability(cList);
+		st.setCapabilities(c);
+		
+		us.setSubscribeTo(st);
 		
 		o.setUpdateSubscription(us);
 		

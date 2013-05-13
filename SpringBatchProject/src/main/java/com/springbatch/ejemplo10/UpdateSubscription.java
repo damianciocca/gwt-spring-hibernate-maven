@@ -7,7 +7,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UpdateSubscription", propOrder = { "serviceContent",
+@XmlType(name = "UpdateSubscription", propOrder = { "subscribeTo", 
+													"serviceContent",
 													"serviceExecutionProtocol",
 													"communicationProtocol",
 													"groupId",
@@ -48,6 +49,10 @@ public class UpdateSubscription {
 	
 	@XmlElement(name = "ServiceContent")
 	private ServiceContent serviceContent;
+	
+	@XmlElement(name = "SubscribeTo")
+	private SubscribeTo subscribeTo;
+	
 
 	public String getIccidSrc() {
 		return iccidSrc;
@@ -127,6 +132,14 @@ public class UpdateSubscription {
 
 	public void setServiceExecutionProtocol(String serviceExecutionProtocol) {
 		this.serviceExecutionProtocol = serviceExecutionProtocol;
+	}
+
+	public SubscribeTo getSubscribeTo() {
+		return subscribeTo;
+	}
+
+	public void setSubscribeTo(SubscribeTo subscribeTo) {
+		this.subscribeTo = subscribeTo;
 	}
 	
 }
