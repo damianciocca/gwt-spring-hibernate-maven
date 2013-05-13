@@ -94,6 +94,7 @@ public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 		us.setServiceContent(sc);
 		
 		SubscribeTo st = new SubscribeTo();
+		
 		Capabilities c = new Capabilities();
 		List<Capability> cList = new ArrayList<Capability>();
 		Capability c1 = new Capability();
@@ -104,11 +105,25 @@ public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 		c2.setValue("true");
 		cList.add(c1);
 		cList.add(c2);
-		
 		c.setCapability(cList);
+		
 		st.setCapabilities(c);
 		
+		
+		SubscribedOptions so = new SubscribedOptions();
+		List<SubscribedOption> soList = new ArrayList<SubscribedOption>();
+		SubscribedOption so1 = new SubscribedOption();
+		so1.setName("NFC");
+		so1.setState("ACTIVATED");
+		soList.add(so1);
+		so.setSubscribedOptions(soList);
+		
+		st.setSubscribedOptions(so);
+		
 		us.setSubscribeTo(st);
+		us.setExecScript("public class UpdateHPLMN2 " +
+						 "{ " +
+						 "   public void script ()....");
 		
 		o.setUpdateSubscription(us);
 		

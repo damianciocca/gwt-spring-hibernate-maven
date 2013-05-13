@@ -9,6 +9,9 @@ public class SubscribeTo {
 
 	@XmlElement(name = "Capabilities")
 	Capabilities capabilities;
+	
+	@XmlElement(name = "SubscribedOptions")
+	private SubscribedOptions subscribedOptions;
 
 	public Capabilities getCapabilities() {
 		return capabilities;
@@ -16,6 +19,14 @@ public class SubscribeTo {
 
 	public void setCapabilities(Capabilities capabilities) {
 		this.capabilities = capabilities;
+	}
+
+	public SubscribedOptions getSubscribedOptions() {
+		return subscribedOptions;
+	}
+
+	public void setSubscribedOptions(SubscribedOptions subscribedOptions) {
+		this.subscribedOptions = subscribedOptions;
 	}
 	
 }
