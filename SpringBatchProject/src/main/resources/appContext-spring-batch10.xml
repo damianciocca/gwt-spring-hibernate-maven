@@ -85,9 +85,29 @@
 
 	<batch:job id="xmlReadAndGeneratorStep" restartable="true">
         
-        <batch:step id="readAndWriteXML">
+        <batch:step id="start" next="decision">
+        	<batch:tasklet ref="startInvocation" />
+		</batch:step>
+		
+		<batch:decision decider="decider" id="decision">
+			<batch:next on="CHANGE_MSISDN" to="readAndWriteXMLChangeMsisdn"/> 
+        	<batch:next on="UPDATE_SUBSCRIBER" to="readAndWriteXMLUpdateSubscriber"/>
+        </batch:decision>
+		
+        <batch:step id="readAndWriteXMLChangeMsisdn">
             <batch:tasklet>
-                <batch:chunk reader="readXml" processor="processXml" writer="writeXml"  commit-interval="2" />               
+                <batch:chunk reader="readXml" processor="processXmlChangeMsisdn" writer="writeXml"  commit-interval="2" />               
+            </batch:tasklet>
+            <batch:next on="*" to="invocarLpm"/>
+			<batch:next on="FAILED" to="logError"/> 	
+			<batch:listeners>
+				<batch:listener ref="stepListener"></batch:listener> <!-- ESTO ESCUCHARA ANTES DE INICIAR EL STEP Y DESPUES DE EJECUTARLO... -->
+			</batch:listeners>
+        </batch:step>
+        
+        <batch:step id="readAndWriteXMLUpdateSubscriber">
+            <batch:tasklet>
+                <batch:chunk reader="readXml" processor="processXmlUpdateSubscriber" writer="writeXml"  commit-interval="2" />               
             </batch:tasklet>
             <batch:next on="*" to="invocarLpm"/>
 			<batch:next on="FAILED" to="logError"/> 	
@@ -106,7 +126,13 @@
 		
     </batch:job>
     
-    <bean id="stepListener" class="com.springbatch.ejemplo10.StepListener">
+    <bean id="decider" class="com.springbatch.ejemplo10.MyDecider">
+    </bean>
+    
+    <bean id="startInvocation" class="com.springbatch.ejemplo10.StartInvocation">
+	</bean>
+    
+	<bean id="stepListener" class="com.springbatch.ejemplo10.StepListener">
 	</bean>
     
     <bean id="readXml" class="com.springbatch.ejemplo10.CustomStaxEventItemReader">
@@ -129,11 +155,14 @@
         </property>
     </bean>
 	
-	<bean id="processXml" class="com.springbatch.ejemplo10.ProcessorItem"/>
+	<bean id="processXmlChangeMsisdn" class="com.springbatch.ejemplo10.ProcessorItemChangeMsisdn"/>
+	
+	<bean id="processXmlUpdateSubscriber" class="com.springbatch.ejemplo10.ProcessorItemUpdateSubscriber"/>
+	
 	
 <!-- 	<bean id="writeXml" class="org.springframework.batch.item.xml.StaxEventItemWriter"> -->
 <!-- 	 Si usamos este writer con el atributo XMLNS, nos pincha...: Caused by: javax.xml.stream.XMLStreamException: xmlns has been already bound to . Rebinding it to http://www.gemalto.com/schema/pm is an error -->
-		<bean id="writeXml" class="com.springbatch.ejemplo10.CustomStaxEventItemWriter">
+	<bean id="writeXml" class="com.springbatch.ejemplo10.CustomStaxEventItemWriter">
 		<!-- Para este extendemos del writer que viene por default de springbatch y lo modificamos  -->
 	    <property name="resource" ref="proccessOutputResource" />
 	    <property name="marshaller" ref="orderMarshaller" />
@@ -157,7 +186,8 @@
     <bean id = "orderMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name = "classesToBeBound">
             <array>
-                <value>com.springbatch.ejemplo10.Order</value>
+				<value>com.springbatch.ejemplo10.Order</value>
+				<value>com.springbatch.ejemplo10.OrderForChangeMsisdn</value> 
             </array>
         </property>
     </bean>

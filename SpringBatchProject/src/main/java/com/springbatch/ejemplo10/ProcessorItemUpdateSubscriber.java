@@ -21,9 +21,14 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-public class ProcessorItem implements ItemProcessor<MBCard,Order>{
+public class ProcessorItemUpdateSubscriber implements ItemProcessor<MBCard,Order>{
 	
 	String filePath;
+
+	
+	/**
+	 * NOTA: esto comentado es para el UPDATE SUBSCRIPTION XML 
+	 */
 
 	public Order process(MBCard mbcard) throws Exception {
 		

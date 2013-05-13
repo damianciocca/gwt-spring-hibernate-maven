@@ -42,7 +42,7 @@ public class Launcher {
 		//Set XML Inputs
 		CustomStaxEventItemReader customStaxEventItemReader = (CustomStaxEventItemReader) context.getBean(CustomStaxEventItemReader.class); 
 		customStaxEventItemReader.setResource(new FileSystemResource("/logs/SIM10000_GX98_16K.sec.xml"));
-		ProcessorItem processorItem = (ProcessorItem) context.getBean(ProcessorItem.class);
+		ProcessorItemUpdateSubscriber processorItem = (ProcessorItemUpdateSubscriber) context.getBean(ProcessorItemUpdateSubscriber.class);
 		processorItem.setFilePath("/logs/SIM10000_GX98_16K.card.xml");
 
 	}
