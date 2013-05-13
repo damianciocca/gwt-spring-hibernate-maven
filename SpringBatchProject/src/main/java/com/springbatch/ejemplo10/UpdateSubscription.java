@@ -7,8 +7,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UpdateSubscription", propOrder = { "subscribeTo", 
-													"serviceContent",
+@XmlType(name = "UpdateSubscription", propOrder = { "serviceContent",
+													"subscribeTo",
 													"serviceExecutionProtocol",
 													"communicationProtocol",
 													"groupId",
@@ -49,7 +49,7 @@ public class UpdateSubscription {
 	
 	@XmlElement(name = "ServiceContent")
 	private ServiceContent serviceContent;
-	
+
 	@XmlElement(name = "SubscribeTo")
 	private SubscribeTo subscribeTo;
 	
