@@ -15,7 +15,7 @@ public class Order {
 	
 	@XmlElement(name = "UpdateSubscription")
 	private UpdateSubscription updateSubscription;
-
+	
 	public String getTransactionId() {
 		return transactionId;
 	}
@@ -31,5 +31,5 @@ public class Order {
 	public void setUpdateSubscription(UpdateSubscription updateSubscription) {
 		this.updateSubscription = updateSubscription;
 	}
-	
+
 }

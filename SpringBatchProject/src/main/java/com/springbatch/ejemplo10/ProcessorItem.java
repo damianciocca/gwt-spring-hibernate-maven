@@ -70,6 +70,26 @@ public class ProcessorItem implements ItemProcessor<MBCard,Order>{
 		UpdateSubscription us = new UpdateSubscription();
 		us.setIccidSrc("TODO");
 		us.setMsisdnSrc(msisdn);
+		us.setImsi(imsi);
+		us.setFinalState("ACTIVE");
+		us.setCause("Activated by user");
+		us.setImei(mbcard.getSerialNumber());
+		us.setGroupId("01");
+		us.setCommunicationProtocol("SMS");
+		us.setServiceExecutionProtocol("SMS");
+		
+		
+		
+		ServiceContent sc = new ServiceContent();
+		Portal p = new Portal();
+		Final f = new Final();
+		f.setLabel("Post-Paid");
+		f.setMajorVersion("1");
+		f.setMinorVersion("0");
+		p.setFinalObj(f);
+		sc.setPortal(p);
+		
+		us.setServiceContent(sc);
 		
 		o.setUpdateSubscription(us);
 		
