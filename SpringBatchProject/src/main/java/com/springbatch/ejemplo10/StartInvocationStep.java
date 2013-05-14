@@ -5,7 +5,7 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 
-public class StartInvocation implements Tasklet {
+public class StartInvocationStep implements Tasklet {
 
 	public RepeatStatus execute(StepContribution arg0, ChunkContext arg1) throws Exception {
 

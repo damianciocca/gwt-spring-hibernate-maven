@@ -94,6 +94,7 @@
         	<batch:next on="UPDATE_SUBSCRIBER" to="readAndWriteXMLUpdateSubscriber"/>
         </batch:decision>
 		
+		<!-- Este steo cambia el process del xml, utiliza otro.. El resto es todo igual al step readAndWriteXMLUpdateSubscriber -->
         <batch:step id="readAndWriteXMLChangeMsisdn">
             <batch:tasklet>
                 <batch:chunk reader="readXml" processor="processXmlChangeMsisdn" writer="writeXml"  commit-interval="2" />               
@@ -105,6 +106,7 @@
 			</batch:listeners>
         </batch:step>
         
+        <!-- Este steo cambia el process del xml, utiliza otro.. El resto es todo igual al step readAndWriteXMLChangeMsisdn -->
         <batch:step id="readAndWriteXMLUpdateSubscriber">
             <batch:tasklet>
                 <batch:chunk reader="readXml" processor="processXmlUpdateSubscriber" writer="writeXml"  commit-interval="2" />               
@@ -129,7 +131,7 @@
     <bean id="decider" class="com.springbatch.ejemplo10.MyDecider">
     </bean>
     
-    <bean id="startInvocation" class="com.springbatch.ejemplo10.StartInvocation">
+    <bean id="startInvocation" class="com.springbatch.ejemplo10.StartInvocationStep">
 	</bean>
     
 	<bean id="stepListener" class="com.springbatch.ejemplo10.StepListener">
@@ -160,8 +162,9 @@
 	<bean id="processXmlUpdateSubscriber" class="com.springbatch.ejemplo10.ProcessorItemUpdateSubscriber"/>
 	
 	
-<!-- 	<bean id="writeXml" class="org.springframework.batch.item.xml.StaxEventItemWriter"> -->
-<!-- 	 Si usamos este writer con el atributo XMLNS, nos pincha...: Caused by: javax.xml.stream.XMLStreamException: xmlns has been already bound to . Rebinding it to http://www.gemalto.com/schema/pm is an error -->
+<!--<bean id="writeXml" class="org.springframework.batch.item.xml.StaxEventItemWriter"> -->
+<!--Si usamos este writer (StaxEventItemWriter) con el root attribute XMLNS, nos pincha...: Caused by: javax.xml.stream.XMLStreamException: 
+	xmlns has been already bound to . Rebinding it to http://www.gemalto.com/schema/pm is an error -->
 	<bean id="writeXml" class="com.springbatch.ejemplo10.CustomStaxEventItemWriter">
 		<!-- Para este extendemos del writer que viene por default de springbatch y lo modificamos  -->
 	    <property name="resource" ref="proccessOutputResource" />

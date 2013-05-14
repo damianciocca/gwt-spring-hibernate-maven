@@ -74,7 +74,7 @@ public class EjecutarBatchTest {
 		// Con este parametro vamos a decidir si vamos por un tipo de itemProcessor o por otro...
 		// Antes de lanzar el JOB tenemos que saber que tipo de action se va a tomar.. 
 		builder.addString("ACTION_TYPE", "UPDATE_SUBSCRIBER");
-		//builder.addString("ACTION_TYPE", "CHANGE_MSISDN");
+//		builder.addString("ACTION_TYPE", "CHANGE_MSISDN");
 		
 		final JobParameters parameters = builder.toJobParameters();
 		
