@@ -65,7 +65,7 @@ public class EjecutarBatchTest {
 		processorItem2.setFilePath("/logs/SIM10000_GX98_16K.card.xml");
 		
 		
-		JobParametersBuilder builder = new JobParametersBuilder();
+		final JobParametersBuilder builder = new JobParametersBuilder();
 		builder.addDate("Ejecucion", new Date());
 		builder.addString("jobName", "Imprimir contactos por consola");
 		builder.addString("INPUT1", "/logs/SIM10000_GX98_16K.sec.xml");
@@ -73,8 +73,8 @@ public class EjecutarBatchTest {
 		
 		// Con este parametro vamos a decidir si vamos por un tipo de itemProcessor o por otro...
 		// Antes de lanzar el JOB tenemos que saber que tipo de action se va a tomar.. 
-		builder.addString("ACTION_TYPE", "UPDATE_SUBSCRIBER");
-//		builder.addString("ACTION_TYPE", "CHANGE_MSISDN");
+//		builder.addString("ACTION_TYPE", "UPDATE_SUBSCRIBER");
+		builder.addString("ACTION_TYPE", "CHANGE_MSISDN");
 		
 		final JobParameters parameters = builder.toJobParameters();
 		
@@ -111,6 +111,11 @@ public class EjecutarBatchTest {
 		// En este caso, como vamos a querer lanzar nuevamente el JOB (es la misma instancia), sin haber terminado el anterior nos va a arrojar el siguiente error:
 		// JobExecutionAlreadyRunningException
 		// Esto esta piola en el caso que se intente desde una app web invocar dos veces seguidas al mismo JOB.
+		// NOTA: para q tire este error, el JOB tiene q ser restartable es decir, tener el atributo restartable=true.
+		
+		// En cambio si el JOB no es restarteable, es decir tiene el atributo restartable=false, al lanzar dos instancias nos va a 
+		// tirar el siguiente error en caso q intente ejecutar una segunda instancia del JOB cuando otra instancia esta corriendo
+		// org.springframework.batch.core.repository.JobRestartException: JobInstance already exists and is not restartable
 		
 //		Thread t2 = new Thread(new Runnable() {
 //

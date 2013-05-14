@@ -6,6 +6,11 @@ import org.springframework.batch.core.StepExecutionListener;
 
 public class StepListener implements StepExecutionListener {
 
+	/**
+	 * The StepExecutionListener inspects the readCount property of the StepExecution during the }
+	 * 'afterStep' phase to determine if no items were read. If that is the case, an exit code 
+	 * of FAILED is returned, indicating that the Step should fail.
+	 */
 	@Override
 	public ExitStatus afterStep(StepExecution arg0) {
 		

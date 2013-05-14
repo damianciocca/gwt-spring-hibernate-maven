@@ -81,6 +81,13 @@
 		 ************************
 	     ********JOB  *********** 
 	     ************************
+	     
+	     http://static.springsource.org/spring-batch/reference/html/whatsNew.html
+	     http://static.springsource.org/spring-batch/reference/html/domain.html
+	     http://static.springsource.org/spring-batch/reference/html/configureJob.html
+	     http://static.springsource.org/spring-batch/reference/html/configureStep.html
+	     http://static.springsource.org/spring-batch/reference/html/configureStep.html#controllingStepFlow
+	     
 	-->
 
 	<batch:job id="xmlReadAndGeneratorStep" restartable="true">
@@ -89,6 +96,7 @@
         	<batch:tasklet ref="startInvocation" />
 		</batch:step>
 		
+		<!--  Este es un custom decider que permite devolver un valor para poder tomar decisiones para saber con q step seguir -->
 		<batch:decision decider="decider" id="decision">
 			<batch:next on="CHANGE_MSISDN" to="readAndWriteXMLChangeMsisdn"/> 
         	<batch:next on="UPDATE_SUBSCRIBER" to="readAndWriteXMLUpdateSubscriber"/>
