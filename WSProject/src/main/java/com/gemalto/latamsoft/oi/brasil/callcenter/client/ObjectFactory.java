@@ -59,14 +59,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RecuperarCompraAvulsaRequestType }
-     * 
-     */
-    public RecuperarCompraAvulsaRequestType createRecuperarCompraAvulsaRequestType() {
-        return new RecuperarCompraAvulsaRequestType();
-    }
-
-    /**
      * Create an instance of {@link RecuperarCompraAvulsaResponseType }
      * 
      */
@@ -80,6 +72,14 @@ public class ObjectFactory {
      */
     public RecuperarCompraAvulsa createRecuperarCompraAvulsa() {
         return new RecuperarCompraAvulsa();
+    }
+
+    /**
+     * Create an instance of {@link RecuperarCompraAvulsaRequestType }
+     * 
+     */
+    public RecuperarCompraAvulsaRequestType createRecuperarCompraAvulsaRequestType() {
+        return new RecuperarCompraAvulsaRequestType();
     }
 
     /**
