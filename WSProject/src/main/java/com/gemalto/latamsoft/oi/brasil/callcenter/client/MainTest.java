@@ -15,6 +15,7 @@ public class MainTest {
 		RecuperarCompraAvulsaWsImplService helloService = new RecuperarCompraAvulsaWsImplService();
 		RecuperarCompraAvulsaWs recuperarCompraAvulsaWsImplPort = helloService.getRecuperarCompraAvulsaWsImplPort();
 		
+		// To override the URL endpoint..
 		BindingProvider bp = (BindingProvider)recuperarCompraAvulsaWsImplPort;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://localhost:8081/oi-brasil-callcenter-soap-ws/services/RecuperarCompraAvulsaWs");
 
