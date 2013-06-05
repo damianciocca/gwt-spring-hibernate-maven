@@ -36,11 +36,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RecuperarCompraAvulsaDataType }
+     * 
+     */
+    public RecuperarCompraAvulsaDataType createRecuperarCompraAvulsaDataType() {
+        return new RecuperarCompraAvulsaDataType();
+    }
+
+    /**
      * Create an instance of {@link RecuperarCompraAvulsaRequestType }
      * 
      */
     public RecuperarCompraAvulsaRequestType createRecuperarCompraAvulsaRequestType() {
         return new RecuperarCompraAvulsaRequestType();
+    }
+
+    /**
+     * Create an instance of {@link ResponseControlTypeCompraAvulsa }
+     * 
+     */
+    public ResponseControlTypeCompraAvulsa createResponseControlTypeCompraAvulsa() {
+        return new ResponseControlTypeCompraAvulsa();
+    }
+
+    /**
+     * Create an instance of {@link RecuperarCompraAvulsa }
+     * 
+     */
+    public RecuperarCompraAvulsa createRecuperarCompraAvulsa() {
+        return new RecuperarCompraAvulsa();
     }
 
     /**
@@ -57,30 +81,6 @@ public class ObjectFactory {
      */
     public RecuperarCompraAvulsaResponse createRecuperarCompraAvulsaResponse() {
         return new RecuperarCompraAvulsaResponse();
-    }
-
-    /**
-     * Create an instance of {@link RecuperarCompraAvulsaDataType }
-     * 
-     */
-    public RecuperarCompraAvulsaDataType createRecuperarCompraAvulsaDataType() {
-        return new RecuperarCompraAvulsaDataType();
-    }
-
-    /**
-     * Create an instance of {@link RecuperarCompraAvulsa }
-     * 
-     */
-    public RecuperarCompraAvulsa createRecuperarCompraAvulsa() {
-        return new RecuperarCompraAvulsa();
-    }
-
-    /**
-     * Create an instance of {@link ResponseControlTypeCompraAvulsa }
-     * 
-     */
-    public ResponseControlTypeCompraAvulsa createResponseControlTypeCompraAvulsa() {
-        return new ResponseControlTypeCompraAvulsa();
     }
 
     /**
