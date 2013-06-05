@@ -12,15 +12,15 @@ public class MainTest {
 
 	public static void main(String[] args) {
 
-		RecuperarCompraAvulsaWsImplService helloService = new RecuperarCompraAvulsaWsImplService();
-		RecuperarCompraAvulsaWs recuperarCompraAvulsaWsImplPort = helloService.getRecuperarCompraAvulsaWsImplPort();
+		RecuperarCompraAvulsaWs_Service service = new RecuperarCompraAvulsaWs_Service();
+		RecuperarCompraAvulsaWs port = service.getRecuperarCompraAvulsa();
 		
 		// To override the URL endpoint..
-		BindingProvider bp = (BindingProvider)recuperarCompraAvulsaWsImplPort;
+		BindingProvider bp = (BindingProvider)port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://localhost:8081/oi-brasil-callcenter-soap-ws/services/RecuperarCompraAvulsaWs");
 
 		System.out.println("ANTES");
-		recuperarCompraAvulsaWsImplPort.recuperarCompraAvulsa(new RecuperarCompraAvulsaRequestType());
+		port.recuperarCompraAvulsa(new RecuperarCompraAvulsaRequestType());
 		System.out.println("DESPUES");
 
 	}
