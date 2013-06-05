@@ -8,22 +8,22 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for recuperarCompraAvulsaRequestType complex type.
+ * <p>Java class for RecuperarCompraAvulsaRequestType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="recuperarCompraAvulsaRequestType">
+ * &lt;complexType name="RecuperarCompraAvulsaRequestType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="usuario" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="senha" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="msisdn" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="dataInicio" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="dataFim" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="transacao" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="protocolo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="usuario" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="senha" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="msisdn" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0" form="qualified"/>
+ *         &lt;element name="dataInicio" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0" form="qualified"/>
+ *         &lt;element name="dataFim" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0" form="qualified"/>
+ *         &lt;element name="transacao" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="protocolo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "recuperarCompraAvulsaRequestType", propOrder = {
+@XmlType(name = "RecuperarCompraAvulsaRequestType", namespace = "http://alsb.telemar/xsd/RecuperarCompraAvulsaRequest", propOrder = {
     "usuario",
     "senha",
     "msisdn",

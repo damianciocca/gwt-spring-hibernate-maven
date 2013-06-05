@@ -19,8 +19,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="responseControl" type="{http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/}ResponseControlTypeCompraAvulsa" minOccurs="0"/>
- *         &lt;element name="recuperarCompraAvulsaData" type="{http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/}recuperarCompraAvulsaDataType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="responseControl" type="{http://alsb.telemar/soap/esb}ResponseControlTypeCompraAvulsa" form="qualified"/>
+ *         &lt;element name="RecuperarCompraAvulsaData" type="{http://alsb.telemar/soap/esb}RecuperarCompraAvulsaDataType" maxOccurs="unbounded" minOccurs="0" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,14 +30,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RecuperarCompraAvulsaResponseType", propOrder = {
+@XmlType(name = "RecuperarCompraAvulsaResponseType", namespace = "http://alsb.telemar/xsd/RecuperarCompraAvulsaResponse", propOrder = {
     "responseControl",
     "recuperarCompraAvulsaData"
 })
 public class RecuperarCompraAvulsaResponseType {
 
+    @XmlElement(required = true)
     protected ResponseControlTypeCompraAvulsa responseControl;
-    @XmlElement(nillable = true)
+    @XmlElement(name = "RecuperarCompraAvulsaData")
     protected List<RecuperarCompraAvulsaDataType> recuperarCompraAvulsaData;
 
     /**

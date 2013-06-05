@@ -16,7 +16,7 @@ import javax.xml.ws.ResponseWrapper;
  * Generated source version: 2.1
  * 
  */
-@WebService(name = "RecuperarCompraAvulsaWs", targetNamespace = "http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/")
+@WebService(name = "RecuperarCompraAvulsaWs", targetNamespace = "http://alsb.telemar/xsd")
 @XmlSeeAlso({
     ObjectFactory.class
 })
@@ -30,11 +30,11 @@ public interface RecuperarCompraAvulsaWs {
      *     returns com.gemalto.latamsoft.oi.brasil.callcenter.client.RecuperarCompraAvulsaResponseType
      */
     @WebMethod(operationName = "RecuperarCompraAvulsa")
-    @WebResult(name = "RecuperarCompraAvulsaResponse", targetNamespace = "")
-    @RequestWrapper(localName = "RecuperarCompraAvulsa", targetNamespace = "http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/", className = "com.gemalto.latamsoft.oi.brasil.callcenter.client.RecuperarCompraAvulsa")
-    @ResponseWrapper(localName = "RecuperarCompraAvulsaResponse", targetNamespace = "http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/", className = "com.gemalto.latamsoft.oi.brasil.callcenter.client.RecuperarCompraAvulsaResponse")
+    @WebResult(name = "RecuperarCompraAvulsaResponse", targetNamespace = "http://alsb.telemar/xsd/RecuperarCompraAvulsaResponse")
+    @RequestWrapper(localName = "RecuperarCompraAvulsa", targetNamespace = "http://alsb.telemar/xsd", className = "com.gemalto.latamsoft.oi.brasil.callcenter.client.RecuperarCompraAvulsa")
+    @ResponseWrapper(localName = "RecuperarCompraAvulsaResponse", targetNamespace = "http://alsb.telemar/xsd", className = "com.gemalto.latamsoft.oi.brasil.callcenter.client.RecuperarCompraAvulsaResponse")
     public RecuperarCompraAvulsaResponseType recuperarCompraAvulsa(
-        @WebParam(name = "RecuperarCompraAvulsaRequest", targetNamespace = "")
+        @WebParam(name = "RecuperarCompraAvulsaRequest", targetNamespace = "http://alsb.telemar/xsd/RecuperarCompraAvulsaRequest")
         RecuperarCompraAvulsaRequestType recuperarCompraAvulsaRequest);
 
 }

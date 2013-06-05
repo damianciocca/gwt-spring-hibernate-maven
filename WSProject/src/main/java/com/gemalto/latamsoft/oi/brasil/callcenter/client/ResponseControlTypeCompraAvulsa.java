@@ -3,6 +3,7 @@ package com.gemalto.latamsoft.oi.brasil.callcenter.client;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -16,10 +17,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="code" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="reason" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="detail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="transacao" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="code" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="reason" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="detail" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="transacao" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResponseControlTypeCompraAvulsa", propOrder = {
+@XmlType(name = "ResponseControlTypeCompraAvulsa", namespace = "http://alsb.telemar/soap/esb", propOrder = {
     "code",
     "reason",
     "detail",
@@ -37,9 +38,13 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ResponseControlTypeCompraAvulsa {
 
+    @XmlElement(required = true)
     protected String code;
+    @XmlElement(required = true)
     protected String reason;
+    @XmlElement(required = true)
     protected String detail;
+    @XmlElement(required = true)
     protected String transacao;
 
     /**

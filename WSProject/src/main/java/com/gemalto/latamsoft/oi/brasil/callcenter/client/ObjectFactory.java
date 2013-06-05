@@ -24,14 +24,47 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _RecuperarCompraAvulsaResponse_QNAME = new QName("http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/", "RecuperarCompraAvulsaResponse");
-    private final static QName _RecuperarCompraAvulsa_QNAME = new QName("http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/", "RecuperarCompraAvulsa");
+    private final static QName _RecuperarCompraAvulsaResponse_QNAME = new QName("http://alsb.telemar/xsd/RecuperarCompraAvulsaResponse", "RecuperarCompraAvulsaResponse");
+    private final static QName _ResponseControl_QNAME = new QName("http://alsb.telemar/soap/esb", "ResponseControl");
+    private final static QName _RecuperarCompraAvulsaRequest_QNAME = new QName("http://alsb.telemar/xsd/RecuperarCompraAvulsaRequest", "RecuperarCompraAvulsaRequest");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.gemalto.latamsoft.oi.brasil.callcenter.client
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link RecuperarCompraAvulsaResponse }
+     * 
+     */
+    public RecuperarCompraAvulsaResponse createRecuperarCompraAvulsaResponse() {
+        return new RecuperarCompraAvulsaResponse();
+    }
+
+    /**
+     * Create an instance of {@link RecuperarCompraAvulsaRequestType }
+     * 
+     */
+    public RecuperarCompraAvulsaRequestType createRecuperarCompraAvulsaRequestType() {
+        return new RecuperarCompraAvulsaRequestType();
+    }
+
+    /**
+     * Create an instance of {@link RecuperarCompraAvulsa }
+     * 
+     */
+    public RecuperarCompraAvulsa createRecuperarCompraAvulsa() {
+        return new RecuperarCompraAvulsa();
+    }
+
+    /**
+     * Create an instance of {@link RecuperarCompraAvulsaResponseType }
+     * 
+     */
+    public RecuperarCompraAvulsaResponseType createRecuperarCompraAvulsaResponseType() {
+        return new RecuperarCompraAvulsaResponseType();
     }
 
     /**
@@ -51,53 +84,30 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RecuperarCompraAvulsaResponse }
+     * Create an instance of {@link JAXBElement }{@code <}{@link RecuperarCompraAvulsaResponseType }{@code >}}
      * 
      */
-    public RecuperarCompraAvulsaResponse createRecuperarCompraAvulsaResponse() {
-        return new RecuperarCompraAvulsaResponse();
+    @XmlElementDecl(namespace = "http://alsb.telemar/xsd/RecuperarCompraAvulsaResponse", name = "RecuperarCompraAvulsaResponse")
+    public JAXBElement<RecuperarCompraAvulsaResponseType> createRecuperarCompraAvulsaResponse(RecuperarCompraAvulsaResponseType value) {
+        return new JAXBElement<RecuperarCompraAvulsaResponseType>(_RecuperarCompraAvulsaResponse_QNAME, RecuperarCompraAvulsaResponseType.class, null, value);
     }
 
     /**
-     * Create an instance of {@link RecuperarCompraAvulsaResponseType }
+     * Create an instance of {@link JAXBElement }{@code <}{@link ResponseControlTypeCompraAvulsa }{@code >}}
      * 
      */
-    public RecuperarCompraAvulsaResponseType createRecuperarCompraAvulsaResponseType() {
-        return new RecuperarCompraAvulsaResponseType();
+    @XmlElementDecl(namespace = "http://alsb.telemar/soap/esb", name = "ResponseControl")
+    public JAXBElement<ResponseControlTypeCompraAvulsa> createResponseControl(ResponseControlTypeCompraAvulsa value) {
+        return new JAXBElement<ResponseControlTypeCompraAvulsa>(_ResponseControl_QNAME, ResponseControlTypeCompraAvulsa.class, null, value);
     }
 
     /**
-     * Create an instance of {@link RecuperarCompraAvulsa }
+     * Create an instance of {@link JAXBElement }{@code <}{@link RecuperarCompraAvulsaRequestType }{@code >}}
      * 
      */
-    public RecuperarCompraAvulsa createRecuperarCompraAvulsa() {
-        return new RecuperarCompraAvulsa();
-    }
-
-    /**
-     * Create an instance of {@link RecuperarCompraAvulsaRequestType }
-     * 
-     */
-    public RecuperarCompraAvulsaRequestType createRecuperarCompraAvulsaRequestType() {
-        return new RecuperarCompraAvulsaRequestType();
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link RecuperarCompraAvulsaResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/", name = "RecuperarCompraAvulsaResponse")
-    public JAXBElement<RecuperarCompraAvulsaResponse> createRecuperarCompraAvulsaResponse(RecuperarCompraAvulsaResponse value) {
-        return new JAXBElement<RecuperarCompraAvulsaResponse>(_RecuperarCompraAvulsaResponse_QNAME, RecuperarCompraAvulsaResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link RecuperarCompraAvulsa }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/", name = "RecuperarCompraAvulsa")
-    public JAXBElement<RecuperarCompraAvulsa> createRecuperarCompraAvulsa(RecuperarCompraAvulsa value) {
-        return new JAXBElement<RecuperarCompraAvulsa>(_RecuperarCompraAvulsa_QNAME, RecuperarCompraAvulsa.class, null, value);
+    @XmlElementDecl(namespace = "http://alsb.telemar/xsd/RecuperarCompraAvulsaRequest", name = "RecuperarCompraAvulsaRequest")
+    public JAXBElement<RecuperarCompraAvulsaRequestType> createRecuperarCompraAvulsaRequest(RecuperarCompraAvulsaRequestType value) {
+        return new JAXBElement<RecuperarCompraAvulsaRequestType>(_RecuperarCompraAvulsaRequest_QNAME, RecuperarCompraAvulsaRequestType.class, null, value);
     }
 
 }

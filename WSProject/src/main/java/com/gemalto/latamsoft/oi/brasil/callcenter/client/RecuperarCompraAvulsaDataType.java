@@ -3,33 +3,32 @@ package com.gemalto.latamsoft.oi.brasil.callcenter.client;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for recuperarCompraAvulsaDataType complex type.
+ * <p>Java class for RecuperarCompraAvulsaDataType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="recuperarCompraAvulsaDataType">
+ * &lt;complexType name="RecuperarCompraAvulsaDataType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="idServico" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="nomeServico" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="laTarifacao" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="laNavegacao" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="statusServico" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="dataAtivacao" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="dataCancelamento" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="tipoConteudo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="urlReenvio" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="urlCancelamento" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="valorTarifa" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="canalVenda" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="protocolo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="provedor" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="idServico" type="{http://www.w3.org/2001/XMLSchema}int" form="qualified"/>
+ *         &lt;element name="conteudo" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="laTarifacao" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0" form="qualified"/>
+ *         &lt;element name="laNavegacao" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0" form="qualified"/>
+ *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0" form="qualified"/>
+ *         &lt;element name="dataCompra" type="{http://www.w3.org/2001/XMLSchema}long" form="qualified"/>
+ *         &lt;element name="tipoConteudo" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="urlReenvio" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="valorTarifa" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="canalVenda" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0" form="qualified"/>
+ *         &lt;element name="protocolo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0" form="qualified"/>
+ *         &lt;element name="provedor" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,17 +38,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "recuperarCompraAvulsaDataType", propOrder = {
+@XmlType(name = "RecuperarCompraAvulsaDataType", namespace = "http://alsb.telemar/soap/esb", propOrder = {
     "idServico",
-    "nomeServico",
+    "conteudo",
     "laTarifacao",
     "laNavegacao",
-    "statusServico",
-    "dataAtivacao",
-    "dataCancelamento",
+    "status",
+    "dataCompra",
     "tipoConteudo",
     "urlReenvio",
-    "urlCancelamento",
     "valorTarifa",
     "canalVenda",
     "protocolo",
@@ -58,15 +55,17 @@ import javax.xml.bind.annotation.XmlType;
 public class RecuperarCompraAvulsaDataType {
 
     protected int idServico;
-    protected String nomeServico;
-    protected int laTarifacao;
-    protected int laNavegacao;
-    protected String statusServico;
-    protected long dataAtivacao;
-    protected long dataCancelamento;
+    @XmlElement(required = true)
+    protected String conteudo;
+    protected Integer laTarifacao;
+    protected Integer laNavegacao;
+    protected String status;
+    protected long dataCompra;
+    @XmlElement(required = true)
     protected String tipoConteudo;
+    @XmlElement(required = true)
     protected String urlReenvio;
-    protected String urlCancelamento;
+    @XmlElement(required = true)
     protected String valorTarifa;
     protected String canalVenda;
     protected String protocolo;
@@ -89,115 +88,115 @@ public class RecuperarCompraAvulsaDataType {
     }
 
     /**
-     * Gets the value of the nomeServico property.
+     * Gets the value of the conteudo property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getNomeServico() {
-        return nomeServico;
+    public String getConteudo() {
+        return conteudo;
     }
 
     /**
-     * Sets the value of the nomeServico property.
+     * Sets the value of the conteudo property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setNomeServico(String value) {
-        this.nomeServico = value;
+    public void setConteudo(String value) {
+        this.conteudo = value;
     }
 
     /**
      * Gets the value of the laTarifacao property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
      */
-    public int getLaTarifacao() {
+    public Integer getLaTarifacao() {
         return laTarifacao;
     }
 
     /**
      * Sets the value of the laTarifacao property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
      */
-    public void setLaTarifacao(int value) {
+    public void setLaTarifacao(Integer value) {
         this.laTarifacao = value;
     }
 
     /**
      * Gets the value of the laNavegacao property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
      */
-    public int getLaNavegacao() {
+    public Integer getLaNavegacao() {
         return laNavegacao;
     }
 
     /**
      * Sets the value of the laNavegacao property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
      */
-    public void setLaNavegacao(int value) {
+    public void setLaNavegacao(Integer value) {
         this.laNavegacao = value;
     }
 
     /**
-     * Gets the value of the statusServico property.
+     * Gets the value of the status property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getStatusServico() {
-        return statusServico;
+    public String getStatus() {
+        return status;
     }
 
     /**
-     * Sets the value of the statusServico property.
+     * Sets the value of the status property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setStatusServico(String value) {
-        this.statusServico = value;
+    public void setStatus(String value) {
+        this.status = value;
     }
 
     /**
-     * Gets the value of the dataAtivacao property.
+     * Gets the value of the dataCompra property.
      * 
      */
-    public long getDataAtivacao() {
-        return dataAtivacao;
+    public long getDataCompra() {
+        return dataCompra;
     }
 
     /**
-     * Sets the value of the dataAtivacao property.
+     * Sets the value of the dataCompra property.
      * 
      */
-    public void setDataAtivacao(long value) {
-        this.dataAtivacao = value;
-    }
-
-    /**
-     * Gets the value of the dataCancelamento property.
-     * 
-     */
-    public long getDataCancelamento() {
-        return dataCancelamento;
-    }
-
-    /**
-     * Sets the value of the dataCancelamento property.
-     * 
-     */
-    public void setDataCancelamento(long value) {
-        this.dataCancelamento = value;
+    public void setDataCompra(long value) {
+        this.dataCompra = value;
     }
 
     /**
@@ -246,30 +245,6 @@ public class RecuperarCompraAvulsaDataType {
      */
     public void setUrlReenvio(String value) {
         this.urlReenvio = value;
-    }
-
-    /**
-     * Gets the value of the urlCancelamento property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUrlCancelamento() {
-        return urlCancelamento;
-    }
-
-    /**
-     * Sets the value of the urlCancelamento property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setUrlCancelamento(String value) {
-        this.urlCancelamento = value;
     }
 
     /**

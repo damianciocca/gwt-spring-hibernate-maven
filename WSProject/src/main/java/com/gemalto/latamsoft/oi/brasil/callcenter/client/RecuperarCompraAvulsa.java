@@ -4,20 +4,21 @@ package com.gemalto.latamsoft.oi.brasil.callcenter.client;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for RecuperarCompraAvulsa complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="RecuperarCompraAvulsa">
+ * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="RecuperarCompraAvulsaRequest" type="{http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/}recuperarCompraAvulsaRequestType" minOccurs="0"/>
+ *         &lt;element ref="{http://alsb.telemar/xsd/RecuperarCompraAvulsaRequest}RecuperarCompraAvulsaRequest"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,12 +28,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RecuperarCompraAvulsa", propOrder = {
+@XmlType(name = "", propOrder = {
     "recuperarCompraAvulsaRequest"
 })
+@XmlRootElement(name = "RecuperarCompraAvulsa")
 public class RecuperarCompraAvulsa {
 
-    @XmlElement(name = "RecuperarCompraAvulsaRequest")
+    @XmlElement(name = "RecuperarCompraAvulsaRequest", namespace = "http://alsb.telemar/xsd/RecuperarCompraAvulsaRequest", required = true)
     protected RecuperarCompraAvulsaRequestType recuperarCompraAvulsaRequest;
 
     /**

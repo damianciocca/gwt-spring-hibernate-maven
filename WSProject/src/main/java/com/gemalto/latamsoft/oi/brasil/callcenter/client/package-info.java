@@ -1,2 +1,2 @@
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/")
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://alsb.telemar/xsd", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package com.gemalto.latamsoft.oi.brasil.callcenter.client;
