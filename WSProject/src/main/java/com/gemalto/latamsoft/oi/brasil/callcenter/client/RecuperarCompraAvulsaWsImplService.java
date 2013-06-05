@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.1
  * 
  */
-@WebServiceClient(name = "RecuperarCompraAvulsaWsImplService", targetNamespace = "http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/", wsdlLocation = "http://localhost:8081/oi-brasil-callcenter-soap-ws/services/RecuperarCompraAvulsaWs?wsdl")
+@WebServiceClient(name = "RecuperarCompraAvulsaWsImplService", targetNamespace = "http://xsd.alsb.telemar/", wsdlLocation = "http://localhost:8081/oi-brasil-callcenter-soap-ws/services/RecuperarCompraAvulsaWs?wsdl")
 public class RecuperarCompraAvulsaWsImplService
     extends Service
 {
@@ -43,7 +43,7 @@ public class RecuperarCompraAvulsaWsImplService
     }
 
     public RecuperarCompraAvulsaWsImplService() {
-        super(RECUPERARCOMPRAAVULSAWSIMPLSERVICE_WSDL_LOCATION, new QName("http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/", "RecuperarCompraAvulsaWsImplService"));
+        super(RECUPERARCOMPRAAVULSAWSIMPLSERVICE_WSDL_LOCATION, new QName("http://xsd.alsb.telemar/", "RecuperarCompraAvulsaWsImplService"));
     }
 
     /**
@@ -53,7 +53,7 @@ public class RecuperarCompraAvulsaWsImplService
      */
     @WebEndpoint(name = "RecuperarCompraAvulsaWsImplPort")
     public RecuperarCompraAvulsaWs getRecuperarCompraAvulsaWsImplPort() {
-        return super.getPort(new QName("http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/", "RecuperarCompraAvulsaWsImplPort"), RecuperarCompraAvulsaWs.class);
+        return super.getPort(new QName("http://xsd.alsb.telemar/", "RecuperarCompraAvulsaWsImplPort"), RecuperarCompraAvulsaWs.class);
     }
 
     /**
@@ -65,7 +65,7 @@ public class RecuperarCompraAvulsaWsImplService
      */
     @WebEndpoint(name = "RecuperarCompraAvulsaWsImplPort")
     public RecuperarCompraAvulsaWs getRecuperarCompraAvulsaWsImplPort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://ws.callcenter.brasil.oi.latamsoft.gemalto.com/", "RecuperarCompraAvulsaWsImplPort"), RecuperarCompraAvulsaWs.class, features);
+        return super.getPort(new QName("http://xsd.alsb.telemar/", "RecuperarCompraAvulsaWsImplPort"), RecuperarCompraAvulsaWs.class, features);
     }
 
 }
