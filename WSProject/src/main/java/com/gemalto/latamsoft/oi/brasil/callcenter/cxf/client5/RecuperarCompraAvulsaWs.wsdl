@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s0:definitions name="RecuperarCompraAvulsaWsDefinitions" targetNamespace="http://alsb.telemar/xsd" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns="" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s1="http://alsb.telemar/xsd">
+  <s0:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://alsb.telemar/xsd/RecuperarCompraAvulsaRequest" xmlns="http://alsb.telemar/xsd/RecuperarCompraAvulsaRequest" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://alsb.telemar/xsd" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:element name="RecuperarCompraAvulsaRequest" type="RecuperarCompraAvulsaRequestType"/>
+			<xs:complexType name="RecuperarCompraAvulsaRequestType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1" name="usuario" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="1" name="senha" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="msisdn" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="dataInicio" type="xs:long"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="dataFim" type="xs:long"/>
+					<xs:element maxOccurs="1" minOccurs="1" name="transacao" type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="protocolo" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+    <xsd:schema elementFormDefault="qualified" targetNamespace="http://alsb.telemar/soap/esb" xmlns:esb="http://alsb.telemar/soap/esb" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://alsb.telemar/xsd" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:element name="ResponseControl" type="esb:ResponseControlTypeCompraAvulsa"/>
+			<xsd:complexType name="RecuperarCompraAvulsaDataType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="idServico" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="conteudo" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="laTarifacao" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="laNavegacao" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="status" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="dataCompra" type="xsd:long"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="tipoConteudo" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="urlReenvio" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="valorTarifa" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="canalVenda" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="protocolo" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="provedor" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ResponseControlTypeCompraAvulsa">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="code" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="reason" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="detail" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="transacao" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://alsb.telemar/xsd/RecuperarCompraAvulsaResponse" xmlns="http://alsb.telemar/xsd/RecuperarCompraAvulsaResponse" xmlns:ctrl="http://alsb.telemar/soap/esb" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://alsb.telemar/xsd" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:import namespace="http://alsb.telemar/soap/esb"/>
+			<xs:element name="RecuperarCompraAvulsaResponse" type="RecuperarCompraAvulsaResponseType"/>
+			<xs:complexType name="RecuperarCompraAvulsaResponseType">
+				<xs:sequence>
+					<xs:element name="responseControl" type="ctrl:ResponseControlTypeCompraAvulsa"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="RecuperarCompraAvulsaData" type="ctrl:RecuperarCompraAvulsaDataType"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://alsb.telemar/xsd" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://alsb.telemar/xsd" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:import namespace="http://alsb.telemar/xsd/RecuperarCompraAvulsaRequest"/>
+			<xs:import namespace="http://alsb.telemar/xsd/RecuperarCompraAvulsaResponse"/>
+			<xs:element name="RecuperarCompraAvulsa">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="env:RecuperarCompraAvulsaRequest" xmlns:env="http://alsb.telemar/xsd/RecuperarCompraAvulsaRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RecuperarCompraAvulsaResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="env:RecuperarCompraAvulsaResponse" xmlns:env="http://alsb.telemar/xsd/RecuperarCompraAvulsaResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+  </s0:types>
+  <s0:message name="RecuperarCompraAvulsaResponse">
+    <s0:part name="parameters" element="s1:RecuperarCompraAvulsaResponse">
+    </s0:part>
+  </s0:message>
+  <s0:message name="RecuperarCompraAvulsa">
+    <s0:part name="parameters" element="s1:RecuperarCompraAvulsa">
+    </s0:part>
+  </s0:message>
+  <s0:portType name="RecuperarCompraAvulsaWs">
+    <s0:operation name="RecuperarCompraAvulsa" parameterOrder="parameters">
+      <s0:input message="s1:RecuperarCompraAvulsa">
+    </s0:input>
+      <s0:output message="s1:RecuperarCompraAvulsaResponse">
+    </s0:output>
+    </s0:operation>
+  </s0:portType>
+  <s0:binding name="RecuperarCompraAvulsaWsSoapBinding" type="s1:RecuperarCompraAvulsaWs">
+    <s2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <s0:operation name="RecuperarCompraAvulsa">
+      <s2:operation soapAction="" style="document"/>
+      <s0:input>
+        <s2:body parts="parameters" use="literal"/>
+      </s0:input>
+      <s0:output>
+        <s2:body parts="parameters" use="literal"/>
+      </s0:output>
+    </s0:operation>
+  </s0:binding>
+  <s0:service name="RecuperarCompraAvulsaWs">
+    <s0:port name="RecuperarCompraAvulsa" binding="s1:RecuperarCompraAvulsaWsSoapBinding">
+      <s2:address location="http://localhost:8086/WebServiceProject/services/RecuperarCompraAvulsa"/>
+    </s0:port>
+  </s0:service>
+</s0:definitions>
