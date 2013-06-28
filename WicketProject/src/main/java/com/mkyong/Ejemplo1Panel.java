@@ -8,11 +8,11 @@ import org.apache.wicket.markup.html.panel.Panel;
  * @author dciocca
  *
  */
-public class Page1Panel extends Panel {
+public class Ejemplo1Panel extends Panel {
 
-	public Page1Panel(String id) {
+	public Ejemplo1Panel(String id) {
 		super(id);
-		add(new Label("message", "Esto es el panel interno.."));
+		add(new Label("message", "Esto es un primer ejemplo de panel interno.."));
 	}
 
 }

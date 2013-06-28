@@ -11,7 +11,8 @@ public class Page1 extends WebPage {
 	public Page1(final PageParameters parameters) {
 
 		add(new Label("message", "Esta es la segunda pagina..."));
-		add(new Page1Panel("panel"));
+		add(new Ejemplo1Panel("panel1"));
+		add(new Ejemplo2Panel("panel2"));
 
 	}
 

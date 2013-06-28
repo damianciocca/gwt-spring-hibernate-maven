@@ -17,7 +17,57 @@ public class Hello extends WebPage {
 		add(new Label("message", "Hello World, Wicket!!!!!!!!!!!!!!!!!"));
 		
 		// Create the modal window.  
-        final ModalWindow modal;  
+        addOneModalLink();  
+        
+     // Create the modal window.  
+        addSecondModalLink();  
+
+	}
+
+	private void addSecondModalLink() {
+		
+		final ModalWindow modal;  
+        add(modal = new ModalWindow("modal2"));  
+        modal.setCookieName("modal-2");
+        
+        modal.setPageCreator(new ModalWindow.PageCreator() {  
+            public Page createPage() {  
+                
+            	// Use this constructor to pass a reference of this page.  
+                return new ModalContentPage(Hello.this.getPageReference(), 
+                							modal, 
+                							new Ejemplo2Panel("panel")); // este ID es el ID q esta en el HTML del ModalContentPage  
+            }  
+        });  
+        
+        modal.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {  
+            public void onClose(AjaxRequestTarget target) {  
+            
+            	System.out.println("saliendo... setWindowClosedCallback");
+            }  
+        });  
+        modal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback() {  
+            public boolean onCloseButtonClicked(AjaxRequestTarget target) {  
+                
+            	System.out.println("saliendo... setCloseButtonCallback");
+            	return true;  
+            }  
+        });  
+        
+        // Add the link that opens the modal window.  
+        add(new AjaxLink<Void>("showModalLink2") {  
+            @Override  
+            public void onClick(AjaxRequestTarget target) {  
+            	
+            	System.out.println("saliendo... AjaxLink onClick");
+                modal.show(target);  
+            }  
+        });
+	}
+
+	private void addOneModalLink() {
+		
+		final ModalWindow modal;  
         add(modal = new ModalWindow("modal"));  
         modal.setCookieName("modal-1");
         
@@ -27,7 +77,7 @@ public class Hello extends WebPage {
             	// Use this constructor to pass a reference of this page.  
                 return new ModalContentPage(Hello.this.getPageReference(), 
                 							modal, 
-                							new Page1Panel("panel"));  
+                							new Ejemplo1Panel("panel"));  // este ID es el ID q esta en el HTML del ModalContentPage
             }  
         });  
         
@@ -53,8 +103,7 @@ public class Hello extends WebPage {
             	System.out.println("saliendo... AjaxLink onClick");
                 modal.show(target);  
             }  
-        });  
-
+        });
 	}
 
 }

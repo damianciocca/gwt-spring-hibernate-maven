@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- 
+	 you'll see that we have one new and unique tag - the <wicket:panel> tag. 
+	 This new tag tells wicket how much of the HTML source actually belongs to 
+	 the panel. Why is this important? It allows us to provide gobs of template 
+	 HTML around the panel, or what is often called 'preview markup'. 
+	 This markup allows for multiple things to be done - first, the panel 
+	 HTML page can now have custom documentation embedded in it. 
+	 This would allow us to show it to someone who wanted to use our panel 
+	 (let's say for the moment that we shipped it as a 'wicket extensions' library), 
+	 and they could learn how to use it just by looking at this file.
+	 In addition, this HTML allows us to supply boilerplate template layout 
+	 that may not be necessary when the panel is used in context to a page - 
+	 this allows the preview to look decent (or at least indicative to what you 
+	 would want to see), without having to do anything magical. You'll also notice 
+	 that I added a little header so we'd know that the panel was responsible for the 
+	 rendering. -->
+	<wicket:panel>
+		<h1>Ejemplo1Panel...</h1>
+		<span wicket:id="message"></span>
+	</wicket:panel>
+</body>
+</html>
