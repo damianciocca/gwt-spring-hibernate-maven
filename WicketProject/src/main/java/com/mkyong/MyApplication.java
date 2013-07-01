@@ -11,6 +11,9 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 // Integracion con spring:
 // http://www.mkyong.com/wicket/wicket-spring-integration-example/
 
+// Form:
+// http://www.mkyong.com/wicket/wicket-propertymodel-example/
+
 public class MyApplication extends WebApplication {
 
 	@Override
