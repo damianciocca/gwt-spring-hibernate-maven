@@ -5,6 +5,11 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
 // Wicket:
+// Existen dos formas de levantar modales:
+// 	1. modales con webPage
+// 	2. modales con paneles
+// http://www.wicket-library.com/wicket-examples/ajax/modal-window?6
+
 // http://www.mkyong.com/wicket/wicket-hello-world-example-with-maven-tutorial/
 // http://javaeenotes.blogspot.com.ar/2011/05/creating-modal-window-page-with-apache.html
 
